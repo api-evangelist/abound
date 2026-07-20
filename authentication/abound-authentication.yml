@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  api_key_in: []
+  oauth2_flows: []
+  oauth2: false
+  note: No OAuth surface - a single bearer credential; scopes/ is therefore not applicable.
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/abound-v4-openapi.yml
+  credential_format: appId.appSecret
+  description: The bearer token is the concatenation of the Abound appId and appSecret separated by a
+    period, e.g. appId_xxx.appSecret_yyy. A single credential selects the account; the environment is
+    selected by base URL, not by a key prefix.
+  applied_to_operations: 55
+  total_operations: 55
+secondary_credentials:
+- name: access token
+  purpose: Short-lived token minted for Abound drop-in UI components.
+  operation: accessTokensCreate
+  source_operation: openapi/abound-v4-openapi.yml#accessTokensCreate
+webhook_verification:
+  header: Abound-Signature
+  algorithm: HMAC
+  description: An HMAC signature of the webhook payload.
+  source: openapi/abound-v4-openapi.yml#/webhooks
