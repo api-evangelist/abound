@@ -1,0 +1,40 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/abound-v4-openapi.yml
+note: >-
+  Agent Skills for the Abound v4 API. Every step is grounded in an operationId that exists verbatim
+  in openapi/abound-v4-openapi.yml, which was itself recovered from the first-party Fern API
+  Definition shipped in @withabound/node-sdk@6.0.68. Abound is retired and the API hosts no longer
+  resolve, so these skills are historical operating documentation rather than live runbooks.
+status: historical
+skills:
+- file: abound-collect-w9-and-verify-tin.md
+  name: Collect a W-9 and verify the payee TIN
+  api: openapi/abound-v4-openapi.yml
+  operations:
+  - usersCreate
+  - formW9Create
+  - tinVerificationsRetrieve
+  - tinVerificationsList
+- file: abound-file-1099-nec.md
+  name: Create, file and mail a Form 1099-NEC
+  api: openapi/abound-v4-openapi.yml
+  operations:
+  - form1099NecCreate
+  - form1099NecFile
+  - form1099NecRetrieve
+  - form1099NecMail
+  - form1099NecDelete
+  - mailingsRetrieve
+- file: abound-correct-or-void-1099.md
+  name: Correct or void a filed 1099
+  api: openapi/abound-v4-openapi.yml
+  operations:
+  - form1099NecCorrect
+  - form1099NecVoid
+  - form1099NecRetrieve
+  - form1099NecList
+- file: abound-consume-webhooks.md
+  name: Consume Abound webhooks
+  api: asyncapi/abound-webhooks-asyncapi.yml
+  operations: []

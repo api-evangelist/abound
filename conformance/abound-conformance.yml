@@ -1,0 +1,54 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme; single bearer credential
+- id: oidc
+  conforms: false
+  evidence: no openIdConnect securityScheme
+- id: http-bearer-rfc6750
+  conforms: true
+  evidence: securitySchemes.bearerAuth type http scheme bearer
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors are application/json with custom envelopes, not application/problem+json
+- id: idempotency-key
+  conforms: true
+  evidence: Idempotency-Key header accepted on all 25 POST operations
+- id: pagination
+  conforms: true
+  evidence: page query parameter, max 100 records per response
+- id: webhooks-hmac-signature
+  conforms: true
+  evidence: Abound-Signature header carries an HMAC of the payload
+- id: iso-3166-2
+  conforms: true
+  evidence: address.country and tax-treaty country documented as ISO 3166-2
+- id: iso-8601
+  conforms: true
+  evidence: createdAt and webhook timestamp documented as ISO 8601
+- id: irs-tin-matching
+  conforms: true
+  evidence: TIN Verifications resource with MATCH/MISMATCH/PENDING status against IRS records
+- id: irs-information-returns
+  conforms: true
+  evidence: Form 1099-NEC/MISC/K/INT create-file-correct-void lifecycle with federal and state filing
+- id: json-api
+  conforms: false
+  evidence: plain JSON arrays/objects, not JSON:API
+- id: odata
+  conforms: false
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false
+compliance_program:
+  published: false
+  note: No trust center, certification page or compliance program could be verified - the company web
+    presence is fully offline. No Compliance pointer is emitted.

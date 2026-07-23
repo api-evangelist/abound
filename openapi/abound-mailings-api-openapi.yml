@@ -1,0 +1,440 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT Mailings API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: Mailings
+paths:
+  /v4/mailings:
+    get:
+      operationId: mailingsList
+      tags:
+      - Mailings
+      summary: List all mailings
+      description: Returns a list of mailings. Up to 100 mailings are returned per request.
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Page'
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/MailingStatusEnum'
+        description: Filters the list of mailings based on the `status` field.
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MailingSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/mailings/{mailingId}:
+    get:
+      operationId: mailingsRetrieve
+      tags:
+      - Mailings
+      summary: Retrieve a mailing
+      description: Retrieves the details of an existing mailing.
+      parameters:
+      - name: mailingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/MailingId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    put:
+      operationId: mailingsUpdate
+      tags:
+      - Mailings
+      summary: Update a mailing
+      description: Updates an existing mailing. Once a mailing has reached the `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body parameters not provided will be removed.
+      parameters:
+      - name: mailingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/MailingId'
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingRequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    delete:
+      operationId: mailingsDelete
+      tags:
+      - Mailings
+      summary: Delete a mailing
+      description: Deletes a mailing. Once a mailing has reached the `PROCESSING_FOR_DELIVERY` status, it cannot be deleted.
+      parameters:
+      - name: mailingId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/MailingId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    MailingSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingRequestSchema'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier for this mailing.
+          createdAt:
+            type: string
+            format: date-time
+            description: The creation date and time of the mailing in `ISO 8601` format.
+          url:
+            type: string
+            description: The URL to the mailed document.
+          status:
+            allOf:
+            - $ref: '#/components/schemas/MailingStatusEnum'
+            description: The status of the mailing.
+          userId:
+            $ref: '#/components/schemas/UserId'
+          mailedFromId:
+            type: string
+            description: The `documentId` of the mailed document.
+        required:
+        - createdAt
+        - id
+        - mailedFromId
+        - status
+        - url
+      examples:
+      - id: mailingId_sampleFV9b73IvAD
+        createdAt: '2024-01-01T00:00:00.000Z'
+        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+        status: CREATED
+        to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+        mailedFromId: documentId_sampletTtqNfulW8
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    MailingId:
+      type: string
+      description: The unique identifier for an existing mailing.
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

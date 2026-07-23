@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml
+format: custom-json
+rfc9457: false
+discrimination: status-code
+note: 'Abound did not use RFC 9457 application/problem+json. Errors are discriminated by HTTP status code
+  with two envelopes: a field-level list for 400 and a single message for the rest.'
+problems:
+- status: 400
+  title: Bad Request
+  schema: ErrorBadRequestSchema
+  envelope: '{ "errors": [ { "field": string?, "message": string } ] }'
+  example:
+    errors:
+    - field: metadata.key
+      message: Expected metadata.key to be of type string, but received number
+  remediation: Fix the offending field named in errors[].field and retry.
+  operations_declaring: 55
+- status: 401
+  title: Unauthorized
+  schema: DefaultErrorSchema
+  envelope: '{ "message": string }'
+  example:
+    message: Unauthorized
+  remediation: 'Send Authorization: Bearer <appId>.<appSecret> for the correct environment.'
+  operations_declaring: 55
+- status: 404
+  title: Not Found
+  schema: DefaultErrorSchema
+  envelope: '{ "message": string }'
+  example:
+    message: Not Found
+  remediation: Verify the resource id and that it belongs to the authenticated account and environment.
+  operations_declaring: 55
+- status: 409
+  title: Conflict
+  schema: DefaultErrorSchema
+  envelope: '{ "message": string }'
+  example:
+    message: Conflict
+  remediation: The record already exists - reuse the existing resource (e.g. a duplicate user foreignId).
+  operations_declaring: 2
+- status: 500
+  title: Internal Server Error
+  schema: DefaultErrorSchema
+  envelope: '{ "message": string }'
+  example:
+    message: Internal Server Error
+  remediation: Retry with the same Idempotency-Key; escalate if persistent.
+  operations_declaring: 54

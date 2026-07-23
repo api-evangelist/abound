@@ -1,0 +1,321 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT TIN Verifications API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: TIN Verifications
+paths:
+  /v4/tin-verifications:
+    get:
+      operationId: tinVerificationsList
+      tags:
+      - TIN Verifications
+      summary: List all TIN Verifications
+      description: Returns a list of TIN Verifications. Up to 100 TIN Verifications are returned per request.
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Page'
+      - name: tinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/TinFingerprintQueryParam'
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/TinVerificationStatusQueryParam'
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TinVerificationSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    post:
+      operationId: tinVerificationsCreate
+      tags:
+      - TIN Verifications
+      summary: Create a TIN Verification
+      description: Creates an asynchronous TIN Verification.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TinVerificationRequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TinVerificationSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/tin-verifications/{tinVerificationId}:
+    get:
+      operationId: tinVerificationsRetrieve
+      tags:
+      - TIN Verifications
+      summary: Retrieve a TIN Verification
+      description: Retrieves the details of an existing TIN Verification.
+      parameters:
+      - name: tinVerificationId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/TinVerificationId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TinVerificationSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    TinVerificationRequestSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The legal name (first + last) or business name.
+        tin:
+          type: string
+          description: The tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only.
+          minLength: 9
+          maxLength: 9
+        userId:
+          $ref: '#/components/schemas/UserId'
+      required:
+      - name
+      - tin
+      examples:
+      - name: Ada Lovelace
+        tin: '000000000'
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    TinVerificationSchema:
+      allOf:
+      - $ref: '#/components/schemas/TinVerificationRequestSchema'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier for this TIN Verification.
+          createdAt:
+            type: string
+            format: date-time
+            description: The creation date and time of the TIN Verification in `ISO 8601` format.
+          status:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinFingerprint:
+            type: string
+            description: The fingerprint for this TIN Verification.
+        required:
+        - createdAt
+        - id
+        - status
+        - tinFingerprint
+      examples:
+      - name: Ada Lovelace
+        id: tinVerificationId_sample41SD71AV8f
+        createdAt: '2024-01-01T00:00:00.000Z'
+        status: MATCH
+        tin: '*******00'
+        tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+        tinType: INDIVIDUAL
+    TinVerificationStatusQueryParam:
+      type: string
+      description: Filters the list of TIN Verifications based on the `status` field.
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    TinFingerprintQueryParam:
+      type: string
+      description: Filters the list of TIN Verifications based on the `tinFingerprint` field.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

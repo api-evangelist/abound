@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml#accessTokensCreate
+note: Abound shipped client-side "Drop-In UI Components" for payee-facing tax form collection. The component
+  loader/bundle URLs were served from the now-offline docs and CDN hosts and could not be recovered; only
+  the server-side contract that mints their credential survives in the API definition.
+families:
+- family: Drop-In UI Components
+  description: Prebuilt, embeddable payee-facing surfaces for collecting tax forms (notably W-9 collection)
+    inside a platform's own product, shifting the data-entry burden from the platform to the end user.
+  authentication:
+    style: short-lived access token
+    mint_operation: accessTokensCreate
+    source_operation: openapi/abound-v4-openapi.yml#accessTokensCreate
+    parameter: expiresIn
+    example_expires_in_seconds: 900
+    description: Creates an access token for authenticating Drop-In UI Components.
+  loader_library: null
+  recovered: partial

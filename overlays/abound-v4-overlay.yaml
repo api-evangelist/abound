@@ -1,0 +1,24 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Abound API v4
+  version: 1.0.0
+extends: openapi/abound-v4-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: abound
+    x-apievangelist-status: retired
+    x-apievangelist-source: https://registry.npmjs.org/@withabound/node-sdk/-/node-sdk-6.0.68.tgz
+    x-apievangelist-recovery: Recovered from the first-party Fern API Definition shipped inside the official
+      npm package after the provider web presence went offline.
+- target: $.servers[?(@.url=='https://production-api.withabound.com')]
+  update:
+    x-reachable: false
+    x-probed: '2026-07-19'
+- target: $.servers[?(@.url=='https://sandbox-api.withabound.com')]
+  update:
+    x-reachable: false
+    x-probed: '2026-07-19'
+- target: $.components.securitySchemes.bearerAuth
+  update:
+    x-credential-format: appId.appSecret

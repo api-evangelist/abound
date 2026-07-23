@@ -1,0 +1,36 @@
+generated: '2026-07-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+note: >-
+  The withabound.com zone has no delegated nameservers, so every withabound.com host is NXDOMAIN
+  and the negative results below (no HTTPS, no DNSSEC, no CAA, no SPF, no DMARC) reflect a retired
+  service rather than a weak security posture. www.npmjs.com appears only because the surviving
+  first-party SDK is the API's humanURL. See lifecycle/abound-lifecycle.yml.
+hosts:
+- host: withabound.com
+  https: false
+- host: www.npmjs.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 12 04:22:28 2026 GMT
+  hsts: null
+- host: production-api.withabound.com
+  https: false
+domains:
+- domain: withabound.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
+- domain: npmjs.com
+  dnssec: true
+  caa:
+  - 0 issue "digicert.com; cansignhttpexchanges=yes"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "sectigo.com"
+  - 0 issue "ssl.com"
+  - 0 issuewild "comodoca.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

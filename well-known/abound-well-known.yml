@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: probed
+source: DNS resolution of every Abound host in apis.yml and openapi/abound-v4-openapi.yml
+result: none
+note: >-
+  No /.well-known/ surface could be probed. The withabound.com zone has no delegated nameservers,
+  so every candidate host resolves NXDOMAIN and no HTTP request can be made. This is a record of
+  the attempt, not a finding of absence at the time the service was live. No WellKnown or
+  SecurityTxt pointer is emitted in apis.yml because nothing was retrieved.
+hosts_probed:
+- host: withabound.com
+  dns: NXDOMAIN
+- host: www.withabound.com
+  dns: NXDOMAIN
+- host: docs.withabound.com
+  dns: NXDOMAIN
+- host: production-api.withabound.com
+  dns: NXDOMAIN
+- host: sandbox-api.withabound.com
+  dns: NXDOMAIN
+paths_intended:
+- /.well-known/security.txt
+- /.well-known/openid-configuration
+- /.well-known/oauth-authorization-server
+- /.well-known/api-catalog
+- /.well-known/ai-plugin.json
+documents: []

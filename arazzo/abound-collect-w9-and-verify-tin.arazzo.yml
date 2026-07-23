@@ -1,0 +1,80 @@
+# Native Arazzo workflow authored by the API Evangelist enrichment pipeline from the
+# recovered first-party Abound v4 API definition (@withabound/node-sdk). Abound is retired;
+# every operationId below is verified against openapi/abound-v4-openapi.yml.
+# method: generated  source: openapi/abound-v4-openapi.yml
+arazzo: 1.0.1
+info:
+  title: Collect a W-9 and verify the payee TIN
+  version: '1.0.0'
+  summary: Create a user, collect their Form W-9, then run and read back a real-time TIN verification against the IRS.
+sourceDescriptions:
+- name: abound
+  url: ../openapi/abound-v4-openapi.yml
+  type: openapi
+workflows:
+- workflowId: collectW9AndVerifyTin
+  summary: Onboard a payee, capture a W-9, and confirm the TIN matches before any 1099 is filed.
+  description: >-
+    The pre-filing onboarding path. Create the end-user, collect a signed Form W-9, then create a
+    TIN verification and poll it until status is MATCH. Put an Idempotency-Key on every POST.
+  inputs:
+    type: object
+    properties:
+      idempotencyKey:
+        type: string
+        description: Client-generated key echoed on every write to make retries safe.
+      w9:
+        type: object
+        description: W9RequestSchema body (payee name, TIN or tinFingerprint, address, optional userId).
+      tinVerification:
+        type: object
+        description: TinVerificationRequestSchema body (name + TIN or tinFingerprint, tinType).
+  steps:
+  - stepId: createUser
+    description: Create the end-user the W-9 and 1099s will hang off.
+    operationId: usersCreate
+    requestBody:
+      contentType: application/json
+      payload:
+        foreignId: $inputs.w9.userForeignId
+    outputs:
+      userId: $response.body#/id
+  - stepId: collectW9
+    description: Collect and store the payee Form W-9. Kicks off a TIN verification if the name+TIN pair is new.
+    operationId: formW9Create
+    parameters:
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    requestBody:
+      contentType: application/json
+      payload: $inputs.w9
+    outputs:
+      w9DocumentId: $response.body#/id
+  - stepId: verifyTin
+    description: Create an asynchronous TIN verification against the IRS.
+    operationId: tinVerificationsCreate
+    parameters:
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    requestBody:
+      contentType: application/json
+      payload: $inputs.tinVerification
+    outputs:
+      tinVerificationId: $response.body#/id
+      initialStatus: $response.body#/status
+  - stepId: readTinResult
+    description: Read the verification back until status resolves to MATCH or MISMATCH (or subscribe to the TIN_VERIFICATION_MATCH webhook instead of polling).
+    operationId: tinVerificationsRetrieve
+    parameters:
+    - name: tinVerificationId
+      in: path
+      value: $steps.verifyTin.outputs.tinVerificationId
+    outputs:
+      status: $response.body#/status
+  outputs:
+    userId: $steps.createUser.outputs.userId
+    w9DocumentId: $steps.collectW9.outputs.w9DocumentId
+    tinVerificationId: $steps.verifyTin.outputs.tinVerificationId
+    tinStatus: $steps.readTinResult.outputs.status

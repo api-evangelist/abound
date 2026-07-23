@@ -1,0 +1,1374 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT 1099-MISC API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: 1099-MISC
+paths:
+  /v4/documents/1099-misc:
+    get:
+      operationId: form1099MiscList
+      tags:
+      - 1099-MISC
+      summary: List all 1099-MISC documents
+      description: Returns a list of 1099-MISC documents.
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Page'
+      - name: filingYear
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/FilingYear'
+      - name: payeeTinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PayeeTinFingerprint'
+      - name: payerTinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PayerTinFingerprint'
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Form1099StatusEnum'
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    post:
+      operationId: form1099MiscCreate
+      tags:
+      - 1099-MISC
+      summary: Create a 1099-MISC
+      description: Creates a 1099-MISC document and subsequently kicks off a TIN Verification, if the name and TIN combo has not been used before.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscRequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/1099-misc/{documentId}:
+    get:
+      operationId: form1099MiscRetrieve
+      tags:
+      - 1099-MISC
+      summary: Retrieve a 1099-MISC
+      description: Retrieves the details of an existing 1099-MISC document.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    delete:
+      operationId: form1099MiscDelete
+      tags:
+      - 1099-MISC
+      summary: Delete a 1099-MISC
+      description: Deletes a 1099-MISC document. Once an action (`/file`, `/correct`, `/void`) has been executed on a 1099-MISC, it cannot be deleted.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OkSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/1099-misc/{documentId}/correct:
+    post:
+      operationId: form1099MiscCorrect
+      tags:
+      - 1099-MISC
+      summary: Correct a 1099-MISC
+      description: Files a new corrected 1099-MISC and relates it to the original document. A 1099-MISC can be corrected only after it has reached the `FILED` status. Automatically handles both one-transaction and two-transaction corrections.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscCorrectRequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/1099-misc/{documentId}/file:
+    post:
+      operationId: form1099MiscFile
+      tags:
+      - 1099-MISC
+      summary: File a 1099-MISC
+      description: Files a 1099-MISC document.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/1099-misc/{documentId}/mail:
+    post:
+      operationId: form1099MiscMail
+      tags:
+      - 1099-MISC
+      summary: Mail a 1099-MISC
+      description: Mails a 1099-MISC document.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingRequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MailingSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/1099-misc/{documentId}/void:
+    post:
+      operationId: form1099MiscVoid
+      tags:
+      - 1099-MISC
+      summary: Void a 1099-MISC
+      description: Files a new voided 1099-MISC and relates it to the original document. A 1099-MISC can be voided only after it has reached the `FILED` status.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form1099MiscSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    Form1099FilingStateEnum:
+      type: string
+      enum:
+      - AK
+      - AL
+      - AR
+      - AZ
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - HI
+      - IA
+      - ID
+      - IL
+      - IN
+      - KY
+      - KS
+      - LA
+      - MA
+      - MD
+      - ME
+      - MI
+      - MN
+      - MO
+      - MS
+      - MT
+      - N/A
+      - NC
+      - ND
+      - NE
+      - NH
+      - NJ
+      - NM
+      - NV
+      - NY
+      - OH
+      - OK
+      - OR
+      - PA
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VA
+      - VT
+      - WA
+      - WI
+      - WV
+      - WY
+      description: The filing state code. The abbreviation of the state (`CA` for California). If a state filing is not desired, use `N/A`.
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    Form1099MiscCorrectRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099BaseCorrectRequestSchema'
+      - type: object
+        properties:
+          formFields:
+            $ref: '#/components/schemas/Form1099MiscFormFieldsRequestSchema'
+        required:
+        - formFields
+      examples:
+      - payee:
+          name: Ada Lovelace
+          tin: '000000000'
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+        formFields:
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 10000
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 258434
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
+    Form1099MiscRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099BaseRequestSchema'
+      - type: object
+        properties:
+          formFields:
+            $ref: '#/components/schemas/Form1099MiscFormFieldsRequestSchema'
+        required:
+        - formFields
+      examples:
+      - filingYear: 2024
+        payer:
+          name: Hooli
+          tin: '111111111'
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          phoneNumber: '+16501014096'
+        payee:
+          name: Ada Lovelace
+          tin: '000000000'
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+        formFields:
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 97109
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 345543
+            stateTaxWithheld: 0
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    Form1099BaseCorrectRequestSchema:
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - payee
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    Form1099MiscFormFieldsSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099FormFieldsBaseSchema'
+      - $ref: '#/components/schemas/Form1099MiscFormFieldsRequestSchema'
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    Form1099StateTaxInfoWithStateIncomeSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099StateTaxInfoSchema'
+      - type: object
+        properties:
+          stateIncome:
+            type: integer
+            description: The state income. Value must be in cents.
+            minimum: 0
+        required:
+        - stateIncome
+    Form1099BaseRequestSchema:
+      type: object
+      properties:
+        filingYear:
+          $ref: '#/components/schemas/FilingYear'
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payer:
+          $ref: '#/components/schemas/PayerRequestSchema'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - filingYear
+      - payee
+      - payer
+    Form1099FormFieldsBaseSchema:
+      type: object
+      properties:
+        isVoid:
+          type: boolean
+          description: If `true`, the void checkbox will be marked on the 1099 document.
+        isCorrected:
+          type: boolean
+          description: If `true`, the corrected checkbox will be marked on the 1099 document.
+      required:
+      - isCorrected
+      - isVoid
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    PayeeSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payee of the document.
+    Form1099BaseSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/DocumentId'
+        createdAt:
+          type: string
+          format: date-time
+          description: The `ISO 8601` timestamp when the document was created.
+        filingYear:
+          $ref: '#/components/schemas/FilingYear'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Form1099StatusEnum'
+          description: 'The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The document has passed data validation and the PDFs have been generated.<br/>&nbsp;&nbsp;• `FILED`: The payee''s TIN has been verified and the 1099 has been filed with the appropriate tax authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been acknowledged and accepted by the appropriate tax authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN verification `MISMATCH` or has been rejected by one or more tax authories.'
+        payerUrl:
+          type: string
+          description: The URL to the payer's 1099 document. Both the Payer's and Payee's TINs are not masked in this document.
+        payeeUrl:
+          type: string
+          description: The URL to the payee's 1099 document. The Payee's TIN is masked in this document. The Payer's TIN is not masked.
+        payer:
+          $ref: '#/components/schemas/PayerSchema'
+        payee:
+          $ref: '#/components/schemas/PayeeSchema'
+        correctedById:
+          type: string
+          description: The `documentId` of the corrected 1099 document.
+        correctedFromId:
+          type: string
+          description: The `documentId` of the original 1099 document.
+        voidedById:
+          type: string
+          description: The `documentId` of the voided 1099 document.
+        voidedFromId:
+          type: string
+          description: The `documentId` of the original 1099 document.
+        userId:
+          $ref: '#/components/schemas/UserId'
+      required:
+      - createdAt
+      - filingYear
+      - id
+      - payee
+      - payeeUrl
+      - payer
+      - payerUrl
+      - status
+    Form1099StatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    PayerTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
+    PayeeRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payee's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+        required:
+        - name
+        - tin
+      description: The payee of the document.
+    Form1099MiscFormFieldsRequestSchema:
+      type: object
+      properties:
+        hasFatcaFilingRequirement:
+          type: boolean
+          description: If the FATCA filing requirement box is checked, the payer is reporting on this Form 1099 to satisfy its account reporting requirement under chapter 4 of the Internal Revenue Code. You may also have a filing requirement. See the Instructions for Form 8938.
+        accountNumber:
+          type: string
+          description: May show an account or other unique number the payer assigned to distinguish your account. This field is also required if `fatca` is `true`. Abound will auto-generated this field if not provided.
+          maxLength: 20
+        rents:
+          type: integer
+          description: Report rents from real estate on Schedule E (Form 1040). However, report rents on Schedule C (Form 1040) if you provided significant services to the tenant, sold real estate as a business, or rented personal property as a business. Value must be in cents.
+        royalties:
+          type: integer
+          description: Report royalties from oil, gas, or mineral properties; copyrights; and patents on Schedule E (Form 1040). However, report payments for a working interest as explained in the Schedule E (Form 1040) instructions. For royalties on timber, coal, and iron ore, see Pub. 544. Value must be in cents.
+        otherIncome:
+          type: integer
+          description: Generally, report this amount on the “Other income” line of Schedule 1 (Form 1040) and identify the payment. The amount shown may be payments received as the beneficiary of a deceased employee, prizes, awards, taxable damages, Indian gaming profits, or other taxable income. See Pub. 525. If it is trade or business income, report this amount on Schedule C or F (Form 1040). Value must be in cents.
+        federalIncomeTaxWithheld:
+          type: integer
+          description: Shows backup withholding or withholding on Indian gaming profits.Generally, a payer must backup withhold if you did not furnish your TIN. See Form W-9 and Pub. 505 for more information. Report this amount on your income tax return as tax withheld. Abound does not currently support `federalIncomeTaxWithheld` reporting on the 1099-MISC, please contact us for more information.
+        fishingBoatProceeds:
+          type: integer
+          description: Shows the amount paid to you as a fishing boat crew member by the operator, who considers you to be self-employed. Self-employed individuals must report this amount on Schedule C (Form 1040). See Pub. 334. Value must be in cents.
+        medicalAndHealthCarePayments:
+          type: integer
+          description: For individuals, report on Schedule C (Form 1040). Value must be in cents. Value must be in cents.
+        hasDirectSalesOver5000:
+          type: boolean
+          description: If checked, consumer products totaling $5,000 or more were sold to you for resale, on a buy-sell, a deposit-commission, or other basis. Generally, report any income from your sale of these products on Schedule C (Form 1040).
+        substitutePaymentsInLieuOfDividendsOrInterest:
+          type: integer
+          description: Shows substitute payments in lieu of dividends or tax-exempt interest received by your broker on your behalf as a result of a loan of your securities. Report on the “Other income” line of Schedule 1 (Form 1040). Value must be in cents.
+        cropInsuranceProceeds:
+          type: integer
+          description: Report this amount on Schedule F (Form 1040). Value must be in cents.
+        grossProceedsPaidToAnAttorney:
+          type: integer
+          description: Shows gross proceeds paid to an attorney in connection with legal services. Report only the taxable part as income on your return. Value must be in cents.
+        fishPurchasedForResale:
+          type: integer
+          description: Shows the amount of cash you received for the sale of fish if you are in the trade or business of catching fish. Value must be in cents.
+        section409ADeferrals:
+          type: integer
+          description: May show current year deferrals as a nonemployee under a nonqualified deferred compensation (NQDC) plan that is subject to the requirements of section 409A plus any earnings on current and prior year deferrals.  Value must be in cents.
+        excessGoldenParachutePayments:
+          type: integer
+          description: Shows your total compensation of excess golden parachute payments subject to a 20% excise tax. See your tax return instructions for where to report. Value must be in cents.
+        nonqualifiedDeferredCompensation:
+          type: integer
+          description: Shows income as a nonemployee under an NQDC plan that does not meet the requirements of section 409A. Any amount included in box 12 that is currently taxable is also included in this box. Report this amount as income on your tax return. This income is also subject to a substantial additional tax to be reported on Form 1040, 1040-SR, or 1040-NR. See the instructions for your tax return. Value must be in cents.
+        stateTaxInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form1099StateTaxInfoWithStateIncomeSchema'
+          description: An array that contains up to two state tax information objects. Abound currently only supports one state tax information object in this array. Abound does not currently support state-level tax withholding reporting on the 1099-MISC, please contact us for more information.
+      required:
+      - stateTaxInfo
+      description: The 1099-MISC form fields.
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    MailingSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingRequestSchema'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier for this mailing.
+          createdAt:
+            type: string
+            format: date-time
+            description: The creation date and time of the mailing in `ISO 8601` format.
+          url:
+            type: string
+            description: The URL to the mailed document.
+          status:
+            allOf:
+            - $ref: '#/components/schemas/MailingStatusEnum'
+            description: The status of the mailing.
+          userId:
+            $ref: '#/components/schemas/UserId'
+          mailedFromId:
+            type: string
+            description: The `documentId` of the mailed document.
+        required:
+        - createdAt
+        - id
+        - mailedFromId
+        - status
+        - url
+      examples:
+      - id: mailingId_sampleFV9b73IvAD
+        createdAt: '2024-01-01T00:00:00.000Z'
+        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+        status: CREATED
+        to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+        mailedFromId: documentId_sampletTtqNfulW8
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    Form1099StateTaxInfoSchema:
+      type: object
+      properties:
+        filingState:
+          $ref: '#/components/schemas/Form1099FilingStateEnum'
+        payeeStateId:
+          type: string
+          description: The payee's state identification number.
+          deprecated: true
+        payerStateId:
+          type: string
+          description: The payer's state identification number.
+          deprecated: true
+        stateTaxWithheld:
+          type: integer
+          description: The state tax withheld. Value must be in cents. Abound does not currently support `stateTaxWithheld` reporting, please contact us for more information.
+          minimum: 0
+          maximum: 0
+      required:
+      - filingState
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    Form1099MiscSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099BaseSchema'
+      - type: object
+        properties:
+          formFields:
+            $ref: '#/components/schemas/Form1099MiscFormFieldsSchema'
+        required:
+        - formFields
+      examples:
+      - id: documentId_sampleGNPOKNmIgF
+        formFields:
+          isCorrected: false
+          isVoid: false
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 97109
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 345543
+            stateTaxWithheld: 0
+        filingYear: 2024
+        createdAt: '2024-01-01T00:00:00.000Z'
+        status: CREATED
+        payer:
+          name: Hooli
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          phoneNumber: '+16501014096'
+          tin: '*******11'
+          tinType: BUSINESS
+          tinFingerprint: tinFingerprint_sample847jI1LwxF
+          tinVerificationId: tinVerificationId_sample1b0E6efa89
+          tinVerificationStatus: MATCH
+        payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          tin: '*******00'
+          tinType: INDIVIDUAL
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinVerificationId: tinVerificationId_sample41SD71AV8f
+          tinVerificationStatus: MATCH
+        payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
+        payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
+      - id: documentId_sampleGNPOKNmIgF
+        formFields:
+          isCorrected: false
+          isVoid: false
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 97109
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 345543
+            stateTaxWithheld: 0
+        filingYear: 2024
+        createdAt: '2024-01-01T00:00:00.000Z'
+        status: FILED
+        payer:
+          name: Hooli
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          phoneNumber: '+16501014096'
+          tin: '*******11'
+          tinType: BUSINESS
+          tinFingerprint: tinFingerprint_sample847jI1LwxF
+          tinVerificationId: tinVerificationId_sample1b0E6efa89
+          tinVerificationStatus: MATCH
+        payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          tin: '*******00'
+          tinType: INDIVIDUAL
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinVerificationId: tinVerificationId_sample41SD71AV8f
+          tinVerificationStatus: MATCH
+        payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-C.pdf
+        payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-COPY-B.pdf
+      - id: documentId_sampleaTA4jltVVx
+        correctedFromId: documentId_sampleGNPOKNmIgF
+        formFields:
+          isCorrected: true
+          isVoid: false
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 10000
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 258434
+            stateTaxWithheld: 0
+        filingYear: 2024
+        createdAt: '2024-01-01T00:00:00.000Z'
+        status: FILED
+        payer:
+          name: Hooli
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          phoneNumber: '+16501014096'
+          tin: '*******11'
+          tinType: BUSINESS
+          tinFingerprint: tinFingerprint_sample847jI1LwxF
+          tinVerificationId: tinVerificationId_sample1b0E6efa89
+          tinVerificationStatus: MATCH
+        payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          tin: '*******00'
+          tinType: INDIVIDUAL
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinVerificationId: tinVerificationId_sample41SD71AV8f
+          tinVerificationStatus: MATCH
+        payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-C.pdf
+        payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-CORRECTED-COPY-B.pdf
+      - id: documentId_sampleStGnVcbd57
+        voidedFromId: documentId_sampleGNPOKNmIgF
+        formFields:
+          isCorrected: false
+          isVoid: true
+          cropInsuranceProceeds: 97109
+          excessGoldenParachutePayments: 97109
+          federalIncomeTaxWithheld: 0
+          fishPurchasedForResale: 97109
+          fishingBoatProceeds: 97109
+          grossProceedsPaidToAnAttorney: 97109
+          hasDirectSalesOver5000: false
+          hasFatcaFilingRequirement: true
+          medicalAndHealthCarePayments: 97109
+          nonqualifiedDeferredCompensation: 97109
+          substitutePaymentsInLieuOfDividendsOrInterest: 97109
+          otherIncome: 97109
+          rents: 97109
+          royalties: 97109
+          section409ADeferrals: 97109
+          accountNumber: A00AskD1ZTO4YB8oBHav
+          stateTaxInfo:
+          - filingState: CA
+            stateIncome: 345543
+            stateTaxWithheld: 0
+        filingYear: 2024
+        createdAt: '2024-01-01T00:00:00.000Z'
+        status: FILED
+        payer:
+          name: Hooli
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          phoneNumber: '+16501014096'
+          tin: '*******11'
+          tinType: BUSINESS
+          tinFingerprint: tinFingerprint_sample847jI1LwxF
+          tinVerificationId: tinVerificationId_sample1b0E6efa89
+          tinVerificationStatus: MATCH
+        payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          tin: '*******00'
+          tinType: INDIVIDUAL
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinVerificationId: tinVerificationId_sample41SD71AV8f
+          tinVerificationStatus: MATCH
+        payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-C.pdf
+        payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-MISC-VOID-COPY-B.pdf
+    FilingYear:
+      type: integer
+      description: The filing year associated with this document.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

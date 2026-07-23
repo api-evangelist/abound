@@ -1,0 +1,233 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/abound-v4-openapi.yml
+note: No official Abound MCP server was found, and none can now exist - the service is retired and its
+  hosts no longer resolve. This is a derived candidate tool surface kept for catalog completeness and
+  historical modelling only; it is NOT callable.
+callable: false
+server:
+  name: abound
+  transport: http
+  url: null
+tools:
+- name: access_tokens_create
+  description: Create an access token
+  source_operation: openapi/abound-v4-openapi.yml#accessTokensCreate
+  http: POST /v4/access-tokens
+- name: electronic_delivery_consents_list
+  description: List all Electronic Delivery Consents
+  source_operation: openapi/abound-v4-openapi.yml#electronicDeliveryConsentsList
+  http: GET /v4/electronic-delivery-consents
+- name: form1099_int_correct
+  description: Correct a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntCorrect
+  http: POST /v4/documents/1099-int/{documentId}/correct
+- name: form1099_int_create
+  description: Create a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntCreate
+  http: POST /v4/documents/1099-int
+- name: form1099_int_delete
+  description: Delete a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntDelete
+  http: DELETE /v4/documents/1099-int/{documentId}
+- name: form1099_int_file
+  description: File a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntFile
+  http: POST /v4/documents/1099-int/{documentId}/file
+- name: form1099_int_list
+  description: List all 1099-INT documents
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntList
+  http: GET /v4/documents/1099-int
+- name: form1099_int_mail
+  description: Mail a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntMail
+  http: POST /v4/documents/1099-int/{documentId}/mail
+- name: form1099_int_retrieve
+  description: Retrieve a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntRetrieve
+  http: GET /v4/documents/1099-int/{documentId}
+- name: form1099_int_void
+  description: Void a 1099-INT
+  source_operation: openapi/abound-v4-openapi.yml#form1099IntVoid
+  http: POST /v4/documents/1099-int/{documentId}/void
+- name: form1099_k_correct
+  description: Correct a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KCorrect
+  http: POST /v4/documents/1099-k/{documentId}/correct
+- name: form1099_k_create
+  description: Create a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KCreate
+  http: POST /v4/documents/1099-k
+- name: form1099_k_delete
+  description: Delete a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KDelete
+  http: DELETE /v4/documents/1099-k/{documentId}
+- name: form1099_k_file
+  description: File a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KFile
+  http: POST /v4/documents/1099-k/{documentId}/file
+- name: form1099_k_list
+  description: List all 1099-K documents
+  source_operation: openapi/abound-v4-openapi.yml#form1099KList
+  http: GET /v4/documents/1099-k
+- name: form1099_k_mail
+  description: Mail a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KMail
+  http: POST /v4/documents/1099-k/{documentId}/mail
+- name: form1099_k_retrieve
+  description: Retrieve a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KRetrieve
+  http: GET /v4/documents/1099-k/{documentId}
+- name: form1099_k_void
+  description: Void a 1099-K
+  source_operation: openapi/abound-v4-openapi.yml#form1099KVoid
+  http: POST /v4/documents/1099-k/{documentId}/void
+- name: form1099_misc_correct
+  description: Correct a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscCorrect
+  http: POST /v4/documents/1099-misc/{documentId}/correct
+- name: form1099_misc_create
+  description: Create a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscCreate
+  http: POST /v4/documents/1099-misc
+- name: form1099_misc_delete
+  description: Delete a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscDelete
+  http: DELETE /v4/documents/1099-misc/{documentId}
+- name: form1099_misc_file
+  description: File a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscFile
+  http: POST /v4/documents/1099-misc/{documentId}/file
+- name: form1099_misc_list
+  description: List all 1099-MISC documents
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscList
+  http: GET /v4/documents/1099-misc
+- name: form1099_misc_mail
+  description: Mail a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscMail
+  http: POST /v4/documents/1099-misc/{documentId}/mail
+- name: form1099_misc_retrieve
+  description: Retrieve a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscRetrieve
+  http: GET /v4/documents/1099-misc/{documentId}
+- name: form1099_misc_void
+  description: Void a 1099-MISC
+  source_operation: openapi/abound-v4-openapi.yml#form1099MiscVoid
+  http: POST /v4/documents/1099-misc/{documentId}/void
+- name: form1099_nec_correct
+  description: Correct a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecCorrect
+  http: POST /v4/documents/1099-nec/{documentId}/correct
+- name: form1099_nec_create
+  description: Create a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecCreate
+  http: POST /v4/documents/1099-nec
+- name: form1099_nec_delete
+  description: Delete a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecDelete
+  http: DELETE /v4/documents/1099-nec/{documentId}
+- name: form1099_nec_file
+  description: File a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecFile
+  http: POST /v4/documents/1099-nec/{documentId}/file
+- name: form1099_nec_list
+  description: List all 1099-NEC documents
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecList
+  http: GET /v4/documents/1099-nec
+- name: form1099_nec_mail
+  description: Mail a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecMail
+  http: POST /v4/documents/1099-nec/{documentId}/mail
+- name: form1099_nec_retrieve
+  description: Retrieve a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecRetrieve
+  http: GET /v4/documents/1099-nec/{documentId}
+- name: form1099_nec_void
+  description: Void a 1099-NEC
+  source_operation: openapi/abound-v4-openapi.yml#form1099NecVoid
+  http: POST /v4/documents/1099-nec/{documentId}/void
+- name: form_w8ben_create
+  description: Create a W-8BEN
+  source_operation: openapi/abound-v4-openapi.yml#formW8benCreate
+  http: POST /v4/documents/w-8ben
+- name: form_w8ben_e_create
+  description: Create a W-8BEN-E
+  source_operation: openapi/abound-v4-openapi.yml#formW8benECreate
+  http: POST /v4/documents/w-8ben-e
+- name: form_w8ben_e_list
+  description: List all W-8BEN-E documents
+  source_operation: openapi/abound-v4-openapi.yml#formW8benEList
+  http: GET /v4/documents/w-8ben-e
+- name: form_w8ben_e_retrieve
+  description: Retrieve a W-8BEN-E
+  source_operation: openapi/abound-v4-openapi.yml#formW8benERetrieve
+  http: GET /v4/documents/w-8ben-e/{documentId}
+- name: form_w8ben_list
+  description: List all W-8BEN documents
+  source_operation: openapi/abound-v4-openapi.yml#formW8benList
+  http: GET /v4/documents/w-8ben
+- name: form_w8ben_retrieve
+  description: Retrieve a W-8BEN
+  source_operation: openapi/abound-v4-openapi.yml#formW8benRetrieve
+  http: GET /v4/documents/w-8ben/{documentId}
+- name: form_w9_create
+  description: Create a W-9
+  source_operation: openapi/abound-v4-openapi.yml#formW9Create
+  http: POST /v4/documents/w-9
+- name: form_w9_list
+  description: List all W-9 documents
+  source_operation: openapi/abound-v4-openapi.yml#formW9List
+  http: GET /v4/documents/w-9
+- name: form_w9_retrieve
+  description: Retrieve a W-9
+  source_operation: openapi/abound-v4-openapi.yml#formW9Retrieve
+  http: GET /v4/documents/w-9/{documentId}
+- name: mailings_delete
+  description: Delete a mailing
+  source_operation: openapi/abound-v4-openapi.yml#mailingsDelete
+  http: DELETE /v4/mailings/{mailingId}
+- name: mailings_list
+  description: List all mailings
+  source_operation: openapi/abound-v4-openapi.yml#mailingsList
+  http: GET /v4/mailings
+- name: mailings_retrieve
+  description: Retrieve a mailing
+  source_operation: openapi/abound-v4-openapi.yml#mailingsRetrieve
+  http: GET /v4/mailings/{mailingId}
+- name: mailings_update
+  description: Update a mailing
+  source_operation: openapi/abound-v4-openapi.yml#mailingsUpdate
+  http: PUT /v4/mailings/{mailingId}
+- name: tax_treaties_list
+  description: List all tax treaties
+  source_operation: openapi/abound-v4-openapi.yml#taxTreatiesList
+  http: GET /v4/tax-treaties
+- name: tin_verifications_create
+  description: Create a TIN Verification
+  source_operation: openapi/abound-v4-openapi.yml#tinVerificationsCreate
+  http: POST /v4/tin-verifications
+- name: tin_verifications_list
+  description: List all TIN Verifications
+  source_operation: openapi/abound-v4-openapi.yml#tinVerificationsList
+  http: GET /v4/tin-verifications
+- name: tin_verifications_retrieve
+  description: Retrieve a TIN Verification
+  source_operation: openapi/abound-v4-openapi.yml#tinVerificationsRetrieve
+  http: GET /v4/tin-verifications/{tinVerificationId}
+- name: users_create
+  description: Create a user
+  source_operation: openapi/abound-v4-openapi.yml#usersCreate
+  http: POST /v4/users
+- name: users_list
+  description: List all users
+  source_operation: openapi/abound-v4-openapi.yml#usersList
+  http: GET /v4/users
+- name: users_retrieve
+  description: Retrieve a user
+  source_operation: openapi/abound-v4-openapi.yml#usersRetrieve
+  http: GET /v4/users/{userId}
+- name: users_update
+  description: Update a user
+  source_operation: openapi/abound-v4-openapi.yml#usersUpdate
+  http: PUT /v4/users/{userId}

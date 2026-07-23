@@ -1,0 +1,173 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT Electronic Delivery Consents API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: Electronic Delivery Consents
+paths:
+  /v4/electronic-delivery-consents:
+    get:
+      operationId: electronicDeliveryConsentsList
+      tags:
+      - Electronic Delivery Consents
+      summary: List all Electronic Delivery Consents
+      description: Returns a list of Electronic Delivery Consents.
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Page'
+      - name: status
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/EDeliveryConsentStatusEnum'
+      - name: email
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Filters the list of Electronic Delivery Consents based on the `email` field.
+      - name: tinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/TinFingerprint'
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EDeliveryConsentSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    EDeliveryConsentStatusEnum:
+      type: string
+      enum:
+      - ASSENTED
+      - WITHDRAWN
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    EDeliveryConsentSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this electronic delivery consent.
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date and time of the electronic delivery consent in `ISO 8601` format.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/EDeliveryConsentStatusEnum'
+          description: The status of the electronic delivery consent.
+        email:
+          type: string
+          description: The email address associated with the electronic delivery consent. Abound assume's you have taken the proper steps to verify the ownership of this email address.
+        tinFingerprint:
+          allOf:
+          - $ref: '#/components/schemas/TinFingerprint'
+          description: The TIN fingerprint for this electronic delivery consent.
+      required:
+      - createdAt
+      - email
+      - id
+      - status
+      - tinFingerprint
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

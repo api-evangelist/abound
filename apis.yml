@@ -1,7 +1,28 @@
 aid: abound
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/abound.png
 name: Abound
-description: Abound is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: 'Abound was a US tax-compliance API company for platforms, marketplaces and fintechs
+  serving the 1099 economy. Its v4 REST API covered the full information-return lifecycle: collecting
+  Form W-9, W-8BEN and W-8BEN-E from payees, running real-time TIN verification against the IRS,
+  then generating, filing, correcting, voiding and physically mailing Form 1099-NEC, 1099-MISC,
+  1099-K and 1099-INT to federal and state tax authorities. It also shipped drop-in UI components
+  for payee onboarding, a 44-event webhook surface, and an official TypeScript SDK. Abound was
+  acquired (announced November 2024) and the service has since been retired: the withabound.com DNS
+  zone is fully de-delegated, the API and docs hosts no longer resolve, and the GitHub organization
+  has been removed. This profile preserves the API surface, recovered from the first-party Fern API
+  Definition shipped inside the official npm package.'
 url: https://raw.githubusercontent.com/api-evangelist/abound/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,12 +30,181 @@ x-backed-by:
 - 500-global
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-status: retired
+x-status-evidence: withabound.com has no delegated nameservers (NXDOMAIN on apex, www, docs,
+  status, production-api and sandbox-api); github.com/withabound returns 404. Probed 2026-07-19.
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Taxes
+- Tax Compliance
+- Regulatory Compliance
+- Financial Services
+- Identity Verification
+- Government
+- Documents
+- Webhooks
+- Retired
+apis:
+- aid: abound:abound-1099-int-api
+  name: Abound 1099-INT API
+  description: The 1099-INT API from Abound — 6 operation(s) for 1099-int.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - 1099-INT
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-1099-int-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-1099-k-api
+  name: Abound 1099-K API
+  description: The 1099-K API from Abound — 6 operation(s) for 1099-k.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - 1099-K
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-1099-k-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-1099-misc-api
+  name: Abound 1099-MISC API
+  description: The 1099-MISC API from Abound — 6 operation(s) for 1099-misc.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - 1099-MISC
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-1099-misc-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-1099-nec-api
+  name: Abound 1099-NEC API
+  description: The 1099-NEC API from Abound — 6 operation(s) for 1099-nec.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - 1099-NEC
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-1099-nec-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-access-tokens-api
+  name: Abound Access Tokens API
+  description: The Access Tokens API from Abound — 1 operation(s) for access tokens.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - Access Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-access-tokens-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-electronic-delivery-consents-api
+  name: Abound Electronic Delivery Consents API
+  description: >-
+    The Electronic Delivery Consents API from Abound — 1 operation(s) for electronic delivery consents.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - Electronic Delivery Consents
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-electronic-delivery-consents-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-mailings-api
+  name: Abound Mailings API
+  description: The Mailings API from Abound — 2 operation(s) for mailings.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - Mailings
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-mailings-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-tax-treaties-api
+  name: Abound Tax Treaties API
+  description: The Tax Treaties API from Abound — 1 operation(s) for tax treaties.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - Tax Treaties
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-tax-treaties-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-tin-verifications-api
+  name: Abound TIN Verifications API
+  description: The TIN Verifications API from Abound — 2 operation(s) for tin verifications.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - TIN Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-tin-verifications-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-users-api
+  name: Abound Users API
+  description: The Users API from Abound — 2 operation(s) for users.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-users-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-w-8ben-api
+  name: Abound W-8BEN API
+  description: The W-8BEN API from Abound — 2 operation(s) for w-8ben.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - W-8BEN
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-w-8ben-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-w-8ben-e-api
+  name: Abound W-8BEN-E API
+  description: The W-8BEN-E API from Abound — 2 operation(s) for w-8ben-e.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - W-8BEN-E
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-w-8ben-e-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
+- aid: abound:abound-w-9-api
+  name: Abound W-9 API
+  description: The W-9 API from Abound — 2 operation(s) for w-9.
+  humanURL: https://www.npmjs.com/package/@withabound/node-sdk
+  baseURL: https://production-api.withabound.com
+  tags:
+  - W-9
+  properties:
+  - type: OpenAPI
+    url: openapi/abound-w-9-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/abound-webhooks-asyncapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +213,51 @@ maintainers:
 common:
 - type: Website
   url: https://withabound.com
+- type: Packages
+  url: packages/abound-packages.yml
+- type: SDKs
+  url: packages/abound-packages.yml
+- type: Authentication
+  url: authentication/abound-authentication.yml
+- type: Conventions
+  url: conventions/abound-conventions.yml
+- type: Idempotency
+  url: conventions/abound-conventions.yml
+- type: ErrorCatalog
+  url: errors/abound-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/abound-lifecycle.yml
+- type: Conformance
+  url: conformance/abound-conformance.yml
+- type: DataModel
+  url: data-model/abound-data-model.yml
+- type: Components
+  url: components/abound-components.yml
+- type: Sandbox
+  url: sandbox/abound-sandbox.yml
+- type: Webhooks
+  url: asyncapi/abound-webhooks-asyncapi.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/abound-mcp.yml
+- type: LLMsTxt
+  url: llms/abound-llms.txt
+- type: DomainSecurity
+  url: security/abound-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/abound-agentic-access.yml
+- type: Arazzo
+  name: Collect a W-9 and verify the payee TIN
+  url: arazzo/abound-collect-w9-and-verify-tin.arazzo.yml
+- type: Arazzo
+  name: Create, file and mail a Form 1099-NEC
+  url: arazzo/abound-file-1099-nec.arazzo.yml
+- type: Arazzo
+  name: Correct or void a filed 1099-NEC
+  url: arazzo/abound-correct-or-void-1099.arazzo.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 4
+  pass: local-v1

@@ -1,0 +1,38 @@
+{
+  "provider": "abound",
+  "sources": [
+    "abound-1099-int-api-openapi.yml",
+    "abound-1099-k-api-openapi.yml",
+    "abound-1099-misc-api-openapi.yml",
+    "abound-1099-nec-api-openapi.yml",
+    "abound-access-tokens-api-openapi.yml",
+    "abound-electronic-delivery-consents-api-openapi.yml",
+    "abound-mailings-api-openapi.yml",
+    "abound-tax-treaties-api-openapi.yml",
+    "abound-tin-verifications-api-openapi.yml",
+    "abound-users-api-openapi.yml",
+    "abound-w-8ben-api-openapi.yml",
+    "abound-w-8ben-e-api-openapi.yml",
+    "abound-w-9-api-openapi.yml"
+  ],
+  "outputs": [
+    "abound-1099-int-api-openapi.yml",
+    "abound-1099-k-api-openapi.yml",
+    "abound-1099-misc-api-openapi.yml",
+    "abound-1099-nec-api-openapi.yml",
+    "abound-access-tokens-api-openapi.yml",
+    "abound-electronic-delivery-consents-api-openapi.yml",
+    "abound-mailings-api-openapi.yml",
+    "abound-tax-treaties-api-openapi.yml",
+    "abound-tin-verifications-api-openapi.yml",
+    "abound-users-api-openapi.yml",
+    "abound-w-8ben-api-openapi.yml",
+    "abound-w-8ben-e-api-openapi.yml",
+    "abound-w-9-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

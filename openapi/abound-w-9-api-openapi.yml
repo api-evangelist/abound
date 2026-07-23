@@ -1,0 +1,591 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT W-9 API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: W-9
+paths:
+  /v4/documents/w-9:
+    get:
+      operationId: formW9List
+      tags:
+      - W-9
+      summary: List all W-9 documents
+      description: Returns a list of W-9 documents.
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/Page'
+      - name: payeeTinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PayeeTinFingerprint'
+      - name: payerTinFingerprint
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/PayerTinFingerprint'
+      - name: userId
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/UserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/W9Schema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+    post:
+      operationId: formW9Create
+      tags:
+      - W-9
+      summary: Create a W-9
+      description: Creates a W-9 document and subsequently kicks off a TIN verification, if the name and TIN combo has not been used before.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/W9RequestSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/W9Schema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+  /v4/documents/w-9/{documentId}:
+    get:
+      operationId: formW9Retrieve
+      tags:
+      - W-9
+      summary: Retrieve a W-9
+      description: Retrieves the details of an existing W-9 document.
+      parameters:
+      - name: documentId
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/DocumentId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/W9Schema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    ElectronicSignatureOfPayeeSchema:
+      type: object
+      properties:
+        signature:
+          type: string
+          description: The signature of the payee.
+        printedName:
+          type: string
+          description: The printed name of the payee.
+        signedAt:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format of the signature.
+        ipAddress:
+          type: string
+          description: The IP address of the payee when signing this document.
+      required:
+      - ipAddress
+      - printedName
+      - signature
+      - signedAt
+      description: The electronic signature of the payee.
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    W9FormFieldsSchema:
+      type: object
+      properties:
+        taxClassification:
+          allOf:
+          - $ref: '#/components/schemas/W9TaxClassificationSchema'
+          description: The U.S. federal tax classification of the person.
+        otherTaxClassification:
+          type: string
+          description: The tax classification of the payee if `taxClassification` is `OTHER`.
+        hasIndirectForeignOwnership:
+          type: boolean
+          description: If your `taxClassification` is `PARTNERSHIP`, `TRUST`, `ESTATE`, or `LLC_PARTNERSHIP`, and you are providing this form to a partnership, trust, or estate in which you have an ownership interest, pass `true` if you have any foreign partners, owners, or beneficiaries.
+        exemptPayeeCode:
+          allOf:
+          - $ref: '#/components/schemas/W9ExemptPayeeCodeSchema'
+          description: The code to identify a payee that is exempt from backup withholding.
+        exemptFatcaCode:
+          allOf:
+          - $ref: '#/components/schemas/W9ExemptFatcaCodeSchema'
+          description: The code to identify a payee that is exempt from reporting under FATCA.
+        accountNumbers:
+          type: array
+          items:
+            type: string
+          description: The account numbers to list on this W-9.
+        isSubjectToBackupWithholding:
+          type: boolean
+          description: If the payee is subject to backup withholding, pass `true`.
+        certifiedAt:
+          type: string
+          format: date-time
+          description: The certification date and time in `ISO 8601` format. This field is deprecated. Please use `electronicSignature` instead.
+          deprecated: true
+        electronicSignature:
+          allOf:
+          - $ref: '#/components/schemas/ElectronicSignatureOfPayeeSchema'
+          description: The electronic signature of the payee.
+      required:
+      - taxClassification
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    W9ExemptFatcaCodeSchema:
+      type: string
+      enum:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - NOT_APPLICABLE
+      description: The code to identify a payee that is exempt from reporting under FATCA.
+    PayeeSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payee of the document.
+    W9TaxClassificationSchema:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - SOLE_PROPRIETOR
+      - C_CORPORATION
+      - S_CORPORATION
+      - PARTNERSHIP
+      - TRUST
+      - ESTATE
+      - LLC_PARTNERSHIP
+      - LLC_C_CORPORATION
+      - LLC_S_CORPORATION
+      - OTHER
+      description: The U.S. federal tax classification of the person.
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    PayerTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
+    W9Schema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the W-9 document.
+        createdAt:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format when the W-9 document was created.
+        url:
+          type: string
+          description: The URL to the W-9 document.
+        payee:
+          $ref: '#/components/schemas/PayeeSchema'
+        payer:
+          $ref: '#/components/schemas/PayerSchema'
+        formFields:
+          $ref: '#/components/schemas/W9FormFieldsSchema'
+        userId:
+          $ref: '#/components/schemas/UserId'
+      required:
+      - createdAt
+      - formFields
+      - id
+      - payee
+      - url
+      examples:
+      - id: documentId_sampleVppNzzIbQT
+        createdAt: '2024-01-01T00:00:00.000Z'
+        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-W-9.pdf
+        payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          country: US
+          postalCode: '94043'
+          state: CA
+          tin: '*******00'
+          tinType: INDIVIDUAL
+          tinFingerprint: tinFingerprint_samplehy2BWO6JJG
+          tinVerificationId: tinVerificationId_sample41SD71AV8f
+          tinVerificationStatus: MATCH
+        formFields:
+          accountNumbers:
+          - '1234567890'
+          - '1234567891'
+          taxClassification: INDIVIDUAL
+          isSubjectToBackupWithholding: false
+          electronicSignature:
+            signature: Ada Lovelace
+            printedName: Ada Lovelace
+            signedAt: '2024-01-01T00:00:00.000Z'
+            ipAddress: 127.0.0.1
+    PayeeRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payee's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+        required:
+        - name
+        - tin
+      description: The payee of the document.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    W9RequestSchema:
+      type: object
+      properties:
+        payee:
+          $ref: '#/components/schemas/PayeeWithOptionalTinTypeRequestSchema'
+        payer:
+          $ref: '#/components/schemas/PayerRequestSchema'
+        formFields:
+          $ref: '#/components/schemas/W9FormFieldsSchema'
+        userId:
+          $ref: '#/components/schemas/UserId'
+      required:
+      - formFields
+      - payee
+      examples:
+      - payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          country: US
+          postalCode: '94043'
+          state: CA
+          tin: '000000000'
+          tinType: INDIVIDUAL
+        formFields:
+          taxClassification: INDIVIDUAL
+          isSubjectToBackupWithholding: false
+          electronicSignature:
+            signature: Ada Lovelace
+            printedName: Ada Lovelace
+            signedAt: '2024-01-01T00:00:00.000Z'
+            ipAddress: 127.0.0.1
+    W9ExemptPayeeCodeSchema:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+      - '11'
+      - '12'
+      - '13'
+      description: The code to identify a payee that is exempt from backup withholding.
+    PayeeWithOptionalTinTypeRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - type: object
+        properties:
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+      description: The payee of the document.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

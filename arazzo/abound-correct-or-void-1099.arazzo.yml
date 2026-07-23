@@ -1,0 +1,95 @@
+# Native Arazzo workflow authored by the API Evangelist enrichment pipeline from the
+# recovered first-party Abound v4 API definition (@withabound/node-sdk). Abound is retired;
+# every operationId below is verified against openapi/abound-v4-openapi.yml.
+# method: generated  source: openapi/abound-v4-openapi.yml
+arazzo: 1.0.1
+info:
+  title: Correct or void a filed 1099-NEC
+  version: '1.0.0'
+  summary: Fix a filed return - either file a correction or void it entirely. Both only work after the document is FILED.
+sourceDescriptions:
+- name: abound
+  url: ../openapi/abound-v4-openapi.yml
+  type: openapi
+workflows:
+- workflowId: correct1099Nec
+  summary: File a correction against an already-filed 1099-NEC and read the corrected document back.
+  description: >-
+    Correction path. form1099NecCorrect only works once the document is FILED (you cannot correct a
+    CREATED document - delete and recreate it instead). Idempotency-Key required. Watch for the
+    TEN99_NEC_CORRECTED webhook.
+  inputs:
+    type: object
+    properties:
+      idempotencyKey:
+        type: string
+      documentId:
+        type: string
+        description: The id of the previously filed 1099-NEC (documentId_...).
+      correction:
+        type: object
+        description: Corrected 1099-NEC fields to file.
+  steps:
+  - stepId: correct1099
+    description: File a correction against the filed document.
+    operationId: form1099NecCorrect
+    parameters:
+    - name: documentId
+      in: path
+      value: $inputs.documentId
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    requestBody:
+      contentType: application/json
+      payload: $inputs.correction
+    outputs:
+      status: $response.body#/status
+  - stepId: confirmCorrection
+    description: Read the corrected document back to confirm the correction was accepted.
+    operationId: form1099NecRetrieve
+    parameters:
+    - name: documentId
+      in: path
+      value: $inputs.documentId
+    outputs:
+      status: $response.body#/status
+  outputs:
+    correctedStatus: $steps.confirmCorrection.outputs.status
+- workflowId: void1099Nec
+  summary: Void a filed 1099-NEC and confirm it was voided.
+  description: >-
+    Void path. form1099NecVoid only works after FILED. Idempotency-Key required. Watch for the
+    TEN99_NEC_VOIDED webhook.
+  inputs:
+    type: object
+    properties:
+      idempotencyKey:
+        type: string
+      documentId:
+        type: string
+        description: The id of the previously filed 1099-NEC (documentId_...).
+  steps:
+  - stepId: void1099
+    description: Void the filed document.
+    operationId: form1099NecVoid
+    parameters:
+    - name: documentId
+      in: path
+      value: $inputs.documentId
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    outputs:
+      status: $response.body#/status
+  - stepId: confirmVoid
+    description: Read the document back to confirm it was voided.
+    operationId: form1099NecRetrieve
+    parameters:
+    - name: documentId
+      in: path
+      value: $inputs.documentId
+    outputs:
+      status: $response.body#/status
+  outputs:
+    voidedStatus: $steps.confirmVoid.outputs.status

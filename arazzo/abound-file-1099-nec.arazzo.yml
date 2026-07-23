@@ -1,0 +1,86 @@
+# Native Arazzo workflow authored by the API Evangelist enrichment pipeline from the
+# recovered first-party Abound v4 API definition (@withabound/node-sdk). Abound is retired;
+# every operationId below is verified against openapi/abound-v4-openapi.yml.
+# method: generated  source: openapi/abound-v4-openapi.yml
+arazzo: 1.0.1
+info:
+  title: Create, file and mail a Form 1099-NEC
+  version: '1.0.0'
+  summary: Run the full 1099-NEC lifecycle - create the document, file it with federal and state authorities, then mail the payee copy.
+sourceDescriptions:
+- name: abound
+  url: ../openapi/abound-v4-openapi.yml
+  type: openapi
+workflows:
+- workflowId: file1099Nec
+  summary: Create a 1099-NEC, confirm the payee TIN matched, file it, then mail the payee copy.
+  description: >-
+    The marquee end-of-year flow. The same shape applies to form1099Misc*, form1099K* and
+    form1099Int* - only the formFields differ. All monetary values are in cents. Filing is
+    irreversible, so an Idempotency-Key on every POST is mandatory. Correct/void only work after FILED.
+  inputs:
+    type: object
+    properties:
+      idempotencyKey:
+        type: string
+        description: Client-generated key echoed on every write to make retries safe.
+      form1099:
+        type: object
+        description: Form1099NecRequestSchema body (filingYear, payer, payee, formFields.nonemployeeCompensation in cents, optional stateTaxInfo[] and userId).
+      mailing:
+        type: object
+        description: Mailing body with to/from addresses for the physical payee copy.
+  steps:
+  - stepId: create1099
+    description: Create the 1099-NEC document. Response comes back with status CREATED plus payerUrl and payeeUrl PDFs.
+    operationId: form1099NecCreate
+    parameters:
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    requestBody:
+      contentType: application/json
+      payload: $inputs.form1099
+    outputs:
+      documentId: $response.body#/id
+      status: $response.body#/status
+  - stepId: file1099
+    description: File the document with federal and state authorities. No body. Moves the document to FILED; watch for TEN99_NEC_ACCEPTED / TEN99_NEC_REJECTED webhooks.
+    operationId: form1099NecFile
+    parameters:
+    - name: documentId
+      in: path
+      value: $steps.create1099.outputs.documentId
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    outputs:
+      status: $response.body#/status
+  - stepId: retrieve1099
+    description: Read the filed document back to confirm state and pull the final PDFs.
+    operationId: form1099NecRetrieve
+    parameters:
+    - name: documentId
+      in: path
+      value: $steps.create1099.outputs.documentId
+    outputs:
+      status: $response.body#/status
+  - stepId: mail1099
+    description: Mail the payee copy. Returns a Mailing (mailingId_...) with status CREATED and a PDF url; track with mailingsRetrieve or the MAILING_* webhooks.
+    operationId: form1099NecMail
+    parameters:
+    - name: documentId
+      in: path
+      value: $steps.create1099.outputs.documentId
+    - name: Idempotency-Key
+      in: header
+      value: $inputs.idempotencyKey
+    requestBody:
+      contentType: application/json
+      payload: $inputs.mailing
+    outputs:
+      mailingId: $response.body#/id
+  outputs:
+    documentId: $steps.create1099.outputs.documentId
+    filedStatus: $steps.retrieve1099.outputs.status
+    mailingId: $steps.mail1099.outputs.mailingId

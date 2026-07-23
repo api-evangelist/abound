@@ -1,0 +1,222 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml
+entities:
+- name: User
+  id_prefix: userId_
+  schema: UserSchema
+  description: A single end-user of your application; carries your own foreignId.
+  operations:
+  - usersList
+  - usersCreate
+  - usersRetrieve
+  - usersUpdate
+- name: Form1099Nec
+  id_prefix: documentId_
+  schema: Form1099NecSchema
+  description: Form 1099-NEC information return (nonemployee compensation).
+  operations:
+  - form1099NecList
+  - form1099NecCreate
+  - form1099NecRetrieve
+  - form1099NecFile
+  - form1099NecCorrect
+  - form1099NecVoid
+  - form1099NecMail
+  - form1099NecDelete
+- name: Form1099Misc
+  id_prefix: documentId_
+  schema: Form1099MiscSchema
+  description: Form 1099-MISC information return.
+  operations:
+  - form1099MiscList
+  - form1099MiscCreate
+  - form1099MiscRetrieve
+  - form1099MiscFile
+  - form1099MiscCorrect
+  - form1099MiscVoid
+  - form1099MiscMail
+  - form1099MiscDelete
+- name: Form1099K
+  id_prefix: documentId_
+  schema: Form1099KSchema
+  description: Form 1099-K information return (payment card / third-party network).
+  operations:
+  - form1099KList
+  - form1099KCreate
+  - form1099KRetrieve
+  - form1099KFile
+  - form1099KCorrect
+  - form1099KVoid
+  - form1099KMail
+  - form1099KDelete
+- name: Form1099Int
+  id_prefix: documentId_
+  schema: Form1099IntSchema
+  description: Form 1099-INT information return (interest income).
+  operations:
+  - form1099IntList
+  - form1099IntCreate
+  - form1099IntRetrieve
+  - form1099IntFile
+  - form1099IntCorrect
+  - form1099IntVoid
+  - form1099IntMail
+  - form1099IntDelete
+- name: FormW9
+  id_prefix: documentId_
+  schema: W9Schema
+  description: Form W-9 collected from a US payee, with electronic signature.
+  operations:
+  - formW9List
+  - formW9Create
+  - formW9Retrieve
+- name: FormW8Ben
+  id_prefix: documentId_
+  description: Form W-8BEN collected from a foreign individual payee.
+  operations:
+  - formW8benList
+  - formW8benCreate
+  - formW8benRetrieve
+- name: FormW8BenE
+  id_prefix: documentId_
+  description: Form W-8BEN-E collected from a foreign entity payee.
+  operations:
+  - formW8benEList
+  - formW8benECreate
+  - formW8benERetrieve
+- name: TinVerification
+  id_prefix: tinVerificationId_
+  description: 'IRS TIN match result: MATCH, MISMATCH or PENDING.'
+  operations:
+  - tinVerificationsList
+  - tinVerificationsCreate
+  - tinVerificationsRetrieve
+- name: Mailing
+  id_prefix: mailingId_
+  schema: MailingSchema
+  description: A physical mailing of a document copy, with delivery status tracking.
+  operations:
+  - mailingsList
+  - mailingsRetrieve
+  - mailingsUpdate
+  - mailingsDelete
+- name: TaxTreaty
+  description: 'Reference data: US income-tax treaty rates by foreign country.'
+  operations:
+  - taxTreatiesList
+- name: EDeliveryConsent
+  description: Payee consent to electronic delivery of tax documents.
+  operations:
+  - electronicDeliveryConsentsList
+- name: AccessToken
+  description: Short-lived token authenticating Abound Drop-In UI Components.
+  operations:
+  - accessTokensCreate
+- name: Payer
+  schema: PayerSchema
+  embedded: true
+  description: The paying business on an information return (embedded, not addressable).
+- name: Payee
+  schema: PayeeSchema
+  embedded: true
+  description: The recipient on an information return (embedded, not addressable).
+- name: TinFingerprint
+  id_prefix: tinFingerprint_
+  embedded: true
+  description: Tokenized reference to a TIN, reusable in place of the raw TIN.
+relationships:
+- from: Form1099Nec
+  to: User
+  kind: belongs_to
+  via: userId
+- from: Form1099Misc
+  to: User
+  kind: belongs_to
+  via: userId
+- from: Form1099K
+  to: User
+  kind: belongs_to
+  via: userId
+- from: Form1099Int
+  to: User
+  kind: belongs_to
+  via: userId
+- from: FormW9
+  to: User
+  kind: belongs_to
+  via: userId
+- from: Form1099Nec
+  to: Payer
+  kind: has_one
+  via: payer
+- from: Form1099Nec
+  to: Payee
+  kind: has_one
+  via: payee
+- from: Payee
+  to: TinVerification
+  kind: has_one
+  via: tinVerificationId
+- from: Payer
+  to: TinVerification
+  kind: has_one
+  via: tinVerificationId
+- from: Payee
+  to: TinFingerprint
+  kind: has_one
+  via: tinFingerprint
+- from: Payer
+  to: TinFingerprint
+  kind: has_one
+  via: tinFingerprint
+- from: Mailing
+  to: Form1099Nec
+  kind: belongs_to
+  via: mailedFromId
+- from: Form1099Nec
+  to: Form1099Nec
+  kind: has_one
+  via: correctedById
+  note: points forward to the correcting document
+- from: Form1099Nec
+  to: Form1099Nec
+  kind: belongs_to
+  via: correctedFromId
+  note: points back to the original document
+- from: Form1099Nec
+  to: Form1099Nec
+  kind: has_one
+  via: voidedById
+  note: points forward to the voiding document
+- from: Form1099Nec
+  to: Form1099Nec
+  kind: belongs_to
+  via: voidedFromId
+  note: points back to the original document
+state_machines:
+- entity: Form1099*
+  field: status
+  states:
+  - CREATED
+  - FILED
+  - ACCEPTED
+  - REJECTED
+  notes: 'CREATED: validated and PDFs generated. FILED: payee TIN verified and filed with tax authorities.
+    ACCEPTED: acknowledged by the authorities. REJECTED: TIN MISMATCH or rejected by one or more authorities.
+    Correct and void are only permitted after FILED; delete is only permitted before any of file/correct/void
+    has run.'
+- entity: TinVerification
+  field: status
+  states:
+  - PENDING
+  - MATCH
+  - MISMATCH
+- entity: Mailing
+  field: status
+  states:
+  - CREATED
+  - PROCESSING_FOR_DELIVERY
+  - IN_TRANSIT
+  - DELIVERED
+  - RETURNED_TO_SENDER

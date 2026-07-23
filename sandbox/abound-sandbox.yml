@@ -1,0 +1,49 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml + @withabound/node-sdk environments
+available: false
+availability_note: Abound published a first-class sandbox environment. Both environment hosts have been
+  de-delegated (NXDOMAIN, probed 2026-07-19), so the sandbox is no longer reachable. Recorded as a historical
+  record.
+environments:
+- name: Sandbox
+  base_url: https://sandbox-api.withabound.com
+  default: true
+  reachable: false
+  note: The official SDK defaulted to Sandbox unless the caller opted into Production.
+- name: Production
+  base_url: https://production-api.withabound.com
+  default: false
+  reachable: false
+separation_model:
+  style: separate-base-url
+  key_prefixes: false
+  note: Test and live are separated by base URL, not by a key prefix. The credential is appId.appSecret
+    and each environment issues its own pair.
+test_values:
+  published_magic_values: false
+  note: No magic/simulator TINs, cards or trigger values were declared in the recovered API definition.
+    The values below are the documentation examples shipped in the first-party definition - they are illustrative
+    examples, NOT sanctioned test fixtures, and are recorded verbatim only.
+  documentation_examples:
+  - field: payer.tin
+    value: '111111111'
+    context: Hooli (example payer)
+  - field: payee.tin
+    value: '000000000'
+    context: Ada Lovelace (example payee)
+  - field: documentId
+    value: documentId_samplegU0eR8oc8a
+  - field: userId
+    value: userId_sampleXGMFnhOpeR
+  - field: mailingId
+    value: mailingId_sampleFV9b73IvAD
+  - field: apiKey
+    value: appId_sampleqNhVcdYQYU.appSecret_sampleMz2Zbj3Hq
+sandbox_artifacts:
+  document_bucket: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/
+  note: Sandbox-generated 1099 PDFs were served from a dedicated S3 bucket.
+test_clocks:
+  supported: false
+fixture_tooling:
+  supported: false

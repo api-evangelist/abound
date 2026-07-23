@@ -1,0 +1,21 @@
+# Arazzo workflow catalog for Abound - derived from the arazzo/*.arazzo.yml files.
+# method: derived  source: arazzo/*.arazzo.yml
+generated: '2026-07-20'
+method: derived
+workflows:
+- file: abound-collect-w9-and-verify-tin.arazzo.yml
+  workflowId: collectW9AndVerifyTin
+  title: Collect a W-9 and verify the payee TIN
+  summary: Create a user, collect their Form W-9, then run and read back a real-time TIN verification against the IRS.
+- file: abound-file-1099-nec.arazzo.yml
+  workflowId: file1099Nec
+  title: Create, file and mail a Form 1099-NEC
+  summary: Create a 1099-NEC, file it with federal and state authorities, then mail the payee copy.
+- file: abound-correct-or-void-1099.arazzo.yml
+  workflowId: correct1099Nec
+  title: Correct a filed 1099-NEC
+  summary: File a correction against an already-filed 1099-NEC and confirm the corrected document.
+- file: abound-correct-or-void-1099.arazzo.yml
+  workflowId: void1099Nec
+  title: Void a filed 1099-NEC
+  summary: Void a filed 1099-NEC and confirm it was voided.

@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: searched
+source: https://registry.npmjs.org/-/v1/search?text=scope:withabound
+note: Abound has been retired. The npm package remains published and is the only surviving first-party
+  distribution of the API surface; the GitHub repository it points at (github.com/withabound/abound-node)
+  returns 404. Probed 2026-07-19.
+packages:
+- language: typescript
+  registry: npm
+  name: '@withabound/node-sdk'
+  url: https://www.npmjs.com/package/@withabound/node-sdk
+  install: npm install @withabound/node-sdk
+  official: true
+  latest_version: 6.0.68
+  first_published: '2021-09-21'
+  last_published: '2025-06-23'
+  versions_published: 120
+  license: MIT
+  generator: Fern
+  repository: https://github.com/withabound/abound-node
+  repository_status: 404
+  ships_api_definition: true
+  api_definition_path: .mock/definition/
+registries_probed:
+- registry: npm
+  found: 1
+- registry: pypi
+  found: 0
+  probed:
+  - abound
+  - withabound
+- registry: rubygems
+  found: 0
+  probed:
+  - abound
+- registry: packagist
+  found: 0
+  probed:
+  - withabound/abound

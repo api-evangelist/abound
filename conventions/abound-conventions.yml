@@ -1,0 +1,114 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/abound-v4-openapi.yml
+authentication:
+  style: http-bearer
+  header: 'Authorization: Bearer <appId>.<appSecret>'
+  artifact: authentication/abound-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  required: false
+  scope: per write operation
+  description: The unique key used to identify a request that has already been processed.
+  operations_supporting: 25
+  operations:
+  - accessTokensCreate
+  - form1099IntCorrect
+  - form1099IntCreate
+  - form1099IntFile
+  - form1099IntMail
+  - form1099IntVoid
+  - form1099KCorrect
+  - form1099KCreate
+  - form1099KFile
+  - form1099KMail
+  - form1099KVoid
+  - form1099MiscCorrect
+  - form1099MiscCreate
+  - form1099MiscFile
+  - form1099MiscMail
+  - form1099MiscVoid
+  - form1099NecCorrect
+  - form1099NecCreate
+  - form1099NecFile
+  - form1099NecMail
+  - form1099NecVoid
+  - formW9Create
+  - mailingsUpdate
+  - tinVerificationsCreate
+  - usersCreate
+  note: Every POST in the API accepts an optional Idempotency-Key header. The read, update (PUT) and delete
+    operations do not declare it.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    in: query
+    type: integer
+    description: The specific page of results you're requesting.
+  max_page_size: 100
+  page_size_configurable: false
+  response_shape: bare JSON array (no envelope, no total/next fields)
+  operations_supporting: 11
+field_expansion:
+  supported: false
+sparse_fields:
+  supported: false
+metadata:
+  supported: true
+  field: foreignId
+  description: The customer-specific unique identifier associated to an Abound record. Allows developers
+    to forego making their own tables every time they integrate and/or add an application.
+  resources:
+  - Users
+request_tracing:
+  request_id_header: null
+  documented: false
+versioning:
+  scheme: uri-path
+  current: v4
+  base_path: /v4
+  artifact: lifecycle/abound-lifecycle.yml
+error_envelope:
+  format: custom-json
+  rfc9457: false
+  content_type: application/json
+  shapes:
+  - status: 400
+    schema: '{ "errors": [ { "field": string?, "message": string } ] }'
+  - status: 401|404|409|500
+    schema: '{ "message": string }'
+  discrimination: status-code
+  artifact: errors/abound-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  headers: []
+  note: No rate-limit headers or policy are declared in the recovered API definition.
+retries:
+  client_default_max_retries: 2
+  source: '@withabound/node-sdk RequestOptions.maxRetries'
+  note: Client-side default in the official SDK; combine with Idempotency-Key on writes.
+identifiers:
+  style: prefixed-opaque-string
+  prefixes:
+  - prefix: userId_
+    resource: User
+  - prefix: documentId_
+    resource: Document (1099-*, W-9, W-8BEN, W-8BEN-E)
+  - prefix: mailingId_
+    resource: Mailing
+  - prefix: tinVerificationId_
+    resource: TIN Verification
+  - prefix: tinFingerprint_
+    resource: TIN fingerprint (tokenized TIN)
+  - prefix: appId_
+    resource: Application id (credential)
+  - prefix: appSecret_
+    resource: Application secret (credential)
+  source: example values in openapi/abound-v4-openapi.yml
+webhooks:
+  signature_header: Abound-Signature
+  algorithm: HMAC
+  event_count: 44
+  artifact: asyncapi/abound-webhooks-asyncapi.yml

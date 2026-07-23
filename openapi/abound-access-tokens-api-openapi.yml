@@ -1,0 +1,270 @@
+openapi: 3.1.0
+info:
+  title: Abound API - v4 1099-INT Access Tokens API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: Access Tokens
+paths:
+  /v4/access-tokens:
+    post:
+      operationId: accessTokensCreate
+      tags:
+      - Access Tokens
+      summary: Create an access token
+      description: Creates an access token for authenticating Drop-In UI Components.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        schema:
+          $ref: '#/components/schemas/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenSchema'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBadRequestSchema'
+              example:
+                errors:
+                - field: metadata.key
+                  message: Expected metadata.key to be of type string, but received number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Unauthorized
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Not Found
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultErrorSchema'
+              example:
+                message: Internal Server Error
+components:
+  schemas:
+    CustomizationsSchema:
+      type: object
+      properties:
+        payeeTaxProfile:
+          allOf:
+          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
+          description: The Payee Tax Profile component customizations.
+      description: The component customizations for this access token.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    AccessTokenSchema:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token to authenticate your Drop-In UI Components.
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date and time of the access token in `ISO 8601` format.
+        expiresAt:
+          type: string
+          format: date-time
+          description: The expiration date and time of the access token in `ISO 8601` format.
+        customizations:
+          $ref: '#/components/schemas/CustomizationsSchema'
+        userId:
+          type: string
+          description: The unique identifier of the user associated with this access token.
+      required:
+      - accessToken
+      - createdAt
+      - expiresAt
+      examples:
+      - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
+        createdAt: '2024-01-01T00:00:00.000Z'
+        expiresAt: '2024-01-01T00:15:00.000Z'
+    SupportedTaxFormsEnum:
+      type: string
+      enum:
+      - FORM_W_9
+      - FORM_W_8BEN
+      - FORM_W_8BEN_E
+    PayeeTaxProfileSchema:
+      type: object
+      properties:
+        shouldPreloadFromUserId:
+          type: boolean
+          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
+        shouldCollectElectronicDeliveryConsent:
+          type: boolean
+          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
+        supportedTaxForms:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedTaxFormsEnum'
+          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
+        defaults:
+          allOf:
+          - $ref: '#/components/schemas/DefaultsSchema'
+          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
+        requestingPayer:
+          allOf:
+          - $ref: '#/components/schemas/PayerRequestSchema'
+          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
+    DefaultsSchema:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The payee's legal first name.
+        lastName:
+          type: string
+          description: The payee's legal last name.
+        businessName:
+          type: string
+          description: The payee's business name.
+        dateOfBirth:
+          type: string
+          format: date
+          description: The date, in `YYYY-MM-DD` format, the payee was born on.
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state (`CA` for California, `ME` for Maine). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+        email:
+          type: string
+          description: The payee's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

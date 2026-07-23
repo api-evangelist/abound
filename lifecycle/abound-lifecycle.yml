@@ -1,0 +1,73 @@
+generated: '2026-07-19'
+method: probed
+source: DNS/HTTP probes 2026-07-19 + openapi/abound-v4-openapi.yml
+status: retired
+versioning:
+  scheme: uri-path
+  current: v4
+  base_path: /v4
+  known_major_versions:
+  - v4
+deprecation:
+  policy_url: null
+  sunset_header: null
+  service_sunset: true
+  description: The entire service has been retired following the acquisition of Abound (announced November
+    2024). No sunset/deprecation headers or policy page were recovered; the shutdown is evidenced by DNS
+    de-delegation rather than a published deprecation policy.
+deprecated_fields:
+- field: Form1099StateTaxInfoSchema.payeeStateId
+  note: The payee's state identification number.
+- field: Form1099StateTaxInfoSchema.payerStateId
+  note: The payer's state identification number.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: https://status.withabound.com/
+  reachable: false
+  note: Historically published; the host no longer resolves (NXDOMAIN, probed 2026-07-19).
+acquisition:
+  acquired: true
+  announced: 2024-11
+  announcement: https://www.linkedin.com/posts/alexcram_exciting-news-abound-has-been-acquired-activity-7264820353804185600-7HRS
+  reported_acquirer: BILL (bill.com)
+  acquirer_confidence: secondary-source
+  acquirer_sources:
+  - https://pitchbook.com/profiles/company/133098-85
+  - https://www.crunchbase.com/organization/withabound
+  note: The acquisition itself is confirmed by the founder announcement; the acquirer is reported by secondary
+    company-data sources and was not verified against a primary press release.
+shutdown_evidence:
+- check: DNS NS
+  target: withabound.com
+  result: no delegated nameservers
+- check: DNS A
+  target: www.withabound.com
+  result: NXDOMAIN
+- check: DNS A
+  target: docs.withabound.com
+  result: NXDOMAIN
+- check: DNS A
+  target: production-api.withabound.com
+  result: NXDOMAIN
+- check: DNS A
+  target: sandbox-api.withabound.com
+  result: NXDOMAIN
+- check: DNS A
+  target: status.withabound.com
+  result: NXDOMAIN
+- check: HTTP
+  target: https://api.github.com/orgs/withabound
+  result: 404
+- check: HTTP
+  target: https://api.github.com/repos/withabound/abound-node
+  result: 404
+- check: WHOIS
+  target: withabound.com
+  result: registered, ACTIVE, GoDaddy Corporate Domains, expires 2026-10-30, serverUpdateProhibited
+last_known_release:
+  artifact: '@withabound/node-sdk'
+  version: 6.0.68
+  published: '2025-06-23'
