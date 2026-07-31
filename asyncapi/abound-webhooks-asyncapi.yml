@@ -5160,3 +5160,13 @@ components:
       - resourceUrl
       - timestamp
       - webhookId
+
+# --- API Evangelist provenance -------------------------------------------
+x-superseded-by:
+  reason: >-
+    Provider publishes this event surface themselves in as-published OpenAPI; this document was authored by API Evangelist before that source was harvested.
+  published_spec: all/abound/openapi/_original/abound-v4-openapi.yml
+  published_event_object: webhooks
+  published_events: 44
+  status: superseded
+  reviewed: '2026-07-31'
