@@ -211,6 +211,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/abound-v4-overlay.yaml
 - type: Website
   url: https://withabound.com
 - type: Packages
