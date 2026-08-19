@@ -1,0 +1,2980 @@
+{
+  "item": [
+    {
+      "id": "397b9614-bd2c-49c3-996c-8763332cbdc7",
+      "name": "1099-NEC",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "320b402a-ab89-4c13-b9e4-c21d55aa3b91",
+          "name": "List all 1099-NEC documents",
+          "request": {
+            "name": "List all 1099-NEC documents",
+            "description": {
+              "content": "Returns a list of 1099-NEC documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filingYear",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payeeTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payerTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "033a5760-9937-4bfc-bc6b-b2c1efbb4d4a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8913"
+                    },
+                    {
+                      "key": "filingYear",
+                      "value": "6652"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CREATED"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"createdAt\": \"1966-11-25T21:29:41.502Z\",\n    \"filingYear\": 5335,\n    \"formFields\": {\n      \"isCorrected\": false,\n      \"isVoid\": false,\n      \"stateTaxInfo\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"accountNumber\": \"string\",\n      \"nonemployeeCompensation\": 1400,\n      \"hasDirectSalesOver5000\": false,\n      \"federalIncomeTaxWithheld\": 0\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tin\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MATCH\",\n      \"name2\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinType\": \"INDIVIDUAL\"\n    },\n    \"payeeUrl\": \"string\",\n    \"payer\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"phoneNumber\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tin\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MISMATCH\",\n      \"name2\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinType\": \"BUSINESS\"\n    },\n    \"payerUrl\": \"string\",\n    \"status\": \"CREATED\",\n    \"correctedById\": \"string\",\n    \"correctedFromId\": \"string\",\n    \"voidedById\": \"string\",\n    \"voidedFromId\": \"string\",\n    \"userId\": \"string\"\n  },\n  {\n    \"createdAt\": \"1955-11-12T22:57:23.502Z\",\n    \"filingYear\": 1796,\n    \"formFields\": {\n      \"isCorrected\": false,\n      \"isVoid\": false,\n      \"stateTaxInfo\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"accountNumber\": \"string\",\n      \"nonemployeeCompensation\": 532,\n      \"hasDirectSalesOver5000\": false,\n      \"federalIncomeTaxWithheld\": 0\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tin\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"PENDING\",\n      \"name2\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinType\": \"INDIVIDUAL\"\n    },\n    \"payeeUrl\": \"string\",\n    \"payer\": {\n      \"name\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"phoneNumber\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tin\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MATCH\",\n      \"name2\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"tinType\": \"INDIVIDUAL\"\n    },\n    \"payerUrl\": \"string\",\n    \"status\": \"FILED\",\n    \"correctedById\": \"string\",\n    \"correctedFromId\": \"string\",\n    \"voidedById\": \"string\",\n    \"voidedFromId\": \"string\",\n    \"userId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1aecd14-91ff-4a8b-90ab-846d918c0db7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8913"
+                    },
+                    {
+                      "key": "filingYear",
+                      "value": "6652"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CREATED"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfb3201a-ac7c-43b6-bb85-5e91a11aa684",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8913"
+                    },
+                    {
+                      "key": "filingYear",
+                      "value": "6652"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CREATED"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cde09c0-0900-4980-b7b0-a7772b3fc627",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8913"
+                    },
+                    {
+                      "key": "filingYear",
+                      "value": "6652"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CREATED"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc8b4663-ba9a-405d-8b3f-509c67acdf9b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8913"
+                    },
+                    {
+                      "key": "filingYear",
+                      "value": "6652"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CREATED"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "886afb2b-3fa9-4d83-9aa7-cd1cf1bb68ee",
+          "name": "Create a 1099-NEC",
+          "request": {
+            "name": "Create a 1099-NEC",
+            "description": {
+              "content": "Creates a 1099-NEC document and subsequently kicks off a TIN Verification, if the name and TIN combo has not been used before.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filingYear\": \"<integer>\",\n  \"formFields\": {\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"stateIncome\": \"<integer>\",\n        \"payeeStateId\": \"<string>\",\n        \"payerStateId\": \"<string>\",\n        \"stateTaxWithheld\": \"<integer>\"\n      },\n      {\n        \"filingState\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"stateIncome\": \"<integer>\",\n        \"payeeStateId\": \"<string>\",\n        \"payerStateId\": \"<string>\",\n        \"stateTaxWithheld\": \"<integer>\"\n      }\n    ],\n    \"accountNumber\": \"<string>\",\n    \"nonemployeeCompensation\": \"<integer>\",\n    \"hasDirectSalesOver5000\": \"<boolean>\",\n    \"federalIncomeTaxWithheld\": \"<integer>\"\n  },\n  \"payee\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"tin\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"name2\": \"<string>\"\n  },\n  \"payer\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"tin\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"name2\": \"<string>\"\n  },\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "526d4fe8-ada7-4ca3-8b2a-689c254d772b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filingYear\": 2024,\n  \"payer\": {\n    \"name\": \"Hooli\",\n    \"tin\": \"111111111\",\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"phoneNumber\": \"+16501014096\"\n  },\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 23423,\n    \"hasDirectSalesOver5000\": false,\n    \"federalIncomeTaxWithheld\": 0,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 23423,\n        \"stateTaxWithheld\": 0\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1952-03-01T02:10:50.051Z\",\n  \"filingYear\": 7228,\n  \"formFields\": {\n    \"isCorrected\": false,\n    \"isVoid\": false,\n    \"stateTaxInfo\": [\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"accountNumber\": \"string\",\n    \"nonemployeeCompensation\": 7667,\n    \"hasDirectSalesOver5000\": true,\n    \"federalIncomeTaxWithheld\": 0\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payeeUrl\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"+0263880475440\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payerUrl\": \"string\",\n  \"status\": \"REJECTED\",\n  \"correctedById\": \"string\",\n  \"correctedFromId\": \"string\",\n  \"voidedById\": \"string\",\n  \"voidedFromId\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8686d30a-3714-4573-9d03-10a5f3619f65",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filingYear\": 2024,\n  \"payer\": {\n    \"name\": \"Hooli\",\n    \"tin\": \"111111111\",\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"phoneNumber\": \"+16501014096\"\n  },\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 23423,\n    \"hasDirectSalesOver5000\": false,\n    \"federalIncomeTaxWithheld\": 0,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 23423,\n        \"stateTaxWithheld\": 0\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db2fc7d0-a49e-4343-904a-28bd69545ea0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filingYear\": 2024,\n  \"payer\": {\n    \"name\": \"Hooli\",\n    \"tin\": \"111111111\",\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"phoneNumber\": \"+16501014096\"\n  },\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 23423,\n    \"hasDirectSalesOver5000\": false,\n    \"federalIncomeTaxWithheld\": 0,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 23423,\n        \"stateTaxWithheld\": 0\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b023a1ce-dd70-4f82-b971-2506696f20f1",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filingYear\": 2024,\n  \"payer\": {\n    \"name\": \"Hooli\",\n    \"tin\": \"111111111\",\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"phoneNumber\": \"+16501014096\"\n  },\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 23423,\n    \"hasDirectSalesOver5000\": false,\n    \"federalIncomeTaxWithheld\": 0,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 23423,\n        \"stateTaxWithheld\": 0\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "409f7cf2-96d8-4e05-9904-fdec20b1ce10",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filingYear\": 2024,\n  \"payer\": {\n    \"name\": \"Hooli\",\n    \"tin\": \"111111111\",\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"phoneNumber\": \"+16501014096\"\n  },\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 23423,\n    \"hasDirectSalesOver5000\": false,\n    \"federalIncomeTaxWithheld\": 0,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 23423,\n        \"stateTaxWithheld\": 0\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d096d65a-631b-44c7-9e08-e1b349bdfc4e",
+          "name": "Retrieve a 1099-NEC",
+          "request": {
+            "name": "Retrieve a 1099-NEC",
+            "description": {
+              "content": "Retrieves the details of an existing 1099-NEC document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ccfc79e-58ab-4e4e-9262-d9cda7832b6a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1952-03-01T02:10:50.051Z\",\n  \"filingYear\": 7228,\n  \"formFields\": {\n    \"isCorrected\": false,\n    \"isVoid\": false,\n    \"stateTaxInfo\": [\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"accountNumber\": \"string\",\n    \"nonemployeeCompensation\": 7667,\n    \"hasDirectSalesOver5000\": true,\n    \"federalIncomeTaxWithheld\": 0\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payeeUrl\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"+0263880475440\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payerUrl\": \"string\",\n  \"status\": \"REJECTED\",\n  \"correctedById\": \"string\",\n  \"correctedFromId\": \"string\",\n  \"voidedById\": \"string\",\n  \"voidedFromId\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fb4c69e-4f76-42f2-b9e2-4309532d9ec3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c2da729-0e19-4ace-b106-d0f135316d07",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a96bf86c-6a10-4078-8d1c-22ce33fce167",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3abdbd11-183a-45df-968d-61a285de1f3f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b152426f-0aca-4f65-a193-ec72a476183f",
+          "name": "Delete a 1099-NEC",
+          "request": {
+            "name": "Delete a 1099-NEC",
+            "description": {
+              "content": "Deletes a 1099-NEC document. Once an action (`/file`, `/correct`, `/void`) has been executed on a 1099-NEC, it cannot be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b01797f-015e-4bed-9bcc-356045c856d9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {},\n  \"key_1\": {},\n  \"key_2\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4916eaed-2568-44fc-bb8e-73ccdf67a83e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8a08bf7-9be0-4d6e-b254-514c5fef2c4a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edbe44b4-ee9d-4b04-aa60-d41de41beb49",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bcbc8ce-ea50-449b-9671-053d863ff03c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb03789c-9c5a-45fb-b8da-7569112dd0fe",
+          "name": "Correct a 1099-NEC",
+          "request": {
+            "name": "Correct a 1099-NEC",
+            "description": {
+              "content": "Files a new corrected 1099-NEC and relates it to the original document. A 1099-NEC can be corrected only after it has reached the `FILED` status. Automatically handles both one-transaction and two-transaction corrections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId",
+                "correct"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formFields\": {\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"stateIncome\": \"<integer>\",\n        \"payeeStateId\": \"<string>\",\n        \"payerStateId\": \"<string>\",\n        \"stateTaxWithheld\": \"<integer>\"\n      },\n      {\n        \"filingState\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"stateIncome\": \"<integer>\",\n        \"payeeStateId\": \"<string>\",\n        \"payerStateId\": \"<string>\",\n        \"stateTaxWithheld\": \"<integer>\"\n      }\n    ],\n    \"accountNumber\": \"<string>\",\n    \"nonemployeeCompensation\": \"<integer>\",\n    \"hasDirectSalesOver5000\": \"<boolean>\",\n    \"federalIncomeTaxWithheld\": \"<integer>\"\n  },\n  \"payee\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"tin\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"name2\": \"<string>\"\n  },\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "661cfd87-3be9-4918-9fd7-f89adf3c6eba",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "correct"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 10000,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 10000\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1952-03-01T02:10:50.051Z\",\n  \"filingYear\": 7228,\n  \"formFields\": {\n    \"isCorrected\": false,\n    \"isVoid\": false,\n    \"stateTaxInfo\": [\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"accountNumber\": \"string\",\n    \"nonemployeeCompensation\": 7667,\n    \"hasDirectSalesOver5000\": true,\n    \"federalIncomeTaxWithheld\": 0\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payeeUrl\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"+0263880475440\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payerUrl\": \"string\",\n  \"status\": \"REJECTED\",\n  \"correctedById\": \"string\",\n  \"correctedFromId\": \"string\",\n  \"voidedById\": \"string\",\n  \"voidedFromId\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b726cd21-8000-4b76-812f-6bbf6045af52",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "correct"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 10000,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 10000\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15af741a-be15-4379-8bff-bbabfa865dce",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "correct"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 10000,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 10000\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3158c04a-3fda-4a69-80af-730ace3e3d6c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "correct"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 10000,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 10000\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1664d09e-2b6d-45d8-b8d0-7feec3898f00",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "correct"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"tin\": \"000000000\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\"\n  },\n  \"formFields\": {\n    \"nonemployeeCompensation\": 10000,\n    \"accountNumber\": \"A0NEqtav7n0sBGoq88w0\",\n    \"stateTaxInfo\": [\n      {\n        \"filingState\": \"CA\",\n        \"stateIncome\": 10000\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e564f7b-dfed-4293-92cc-803e3ce6fbd2",
+          "name": "File a 1099-NEC",
+          "request": {
+            "name": "File a 1099-NEC",
+            "description": {
+              "content": "Files a 1099-NEC document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId",
+                "file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ab82632b-42ac-4611-a25d-986ceafd36f6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1952-03-01T02:10:50.051Z\",\n  \"filingYear\": 7228,\n  \"formFields\": {\n    \"isCorrected\": false,\n    \"isVoid\": false,\n    \"stateTaxInfo\": [\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"accountNumber\": \"string\",\n    \"nonemployeeCompensation\": 7667,\n    \"hasDirectSalesOver5000\": true,\n    \"federalIncomeTaxWithheld\": 0\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payeeUrl\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"+0263880475440\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payerUrl\": \"string\",\n  \"status\": \"REJECTED\",\n  \"correctedById\": \"string\",\n  \"correctedFromId\": \"string\",\n  \"voidedById\": \"string\",\n  \"voidedFromId\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7cbfe92-edf9-451e-ac4d-8c89914b4c1f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd5feb29-7370-40bf-afb1-d36534dc20c4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e671d36-79be-4893-8d03-f5eec9b92e13",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c11ced35-48b8-499c-bd30-a8ca6f87464c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db869aa7-d0db-4e15-8f30-b38c2476f68c",
+          "name": "Mail a 1099-NEC",
+          "request": {
+            "name": "Mail a 1099-NEC",
+            "description": {
+              "content": "Mails a 1099-NEC document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId",
+                "mail"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"name2\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  },\n  \"to\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"name2\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eed2e99c-80cb-4eaf-ab16-bfe332c54a3a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "mail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\",\n    \"name\": \"Ada Lovelace\"\n  },\n  \"from\": {\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"name\": \"Hooli\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1990-11-10T06:31:43.777Z\",\n  \"from\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"name2\": \"string\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"id\": \"string\",\n  \"mailedFromId\": \"string\",\n  \"status\": \"RETURNED_TO_SENDER\",\n  \"to\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"name2\": \"string\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\"\n  },\n  \"url\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dae5cfb5-a81b-4792-b456-aafa7f092e99",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "mail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\",\n    \"name\": \"Ada Lovelace\"\n  },\n  \"from\": {\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"name\": \"Hooli\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f697de1-6b97-4144-bc09-55104a9a7880",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "mail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\",\n    \"name\": \"Ada Lovelace\"\n  },\n  \"from\": {\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"name\": \"Hooli\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb7f3ae9-7619-4364-9283-54c5f32f429e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "mail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\",\n    \"name\": \"Ada Lovelace\"\n  },\n  \"from\": {\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"name\": \"Hooli\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3905abcd-63aa-4b03-930c-8858db7a506a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "mail"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": {\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94043\",\n    \"country\": \"US\",\n    \"name\": \"Ada Lovelace\"\n  },\n  \"from\": {\n    \"address\": \"256 Byron Street\",\n    \"address2\": \"Suite 32\",\n    \"city\": \"Palo Alto\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94306\",\n    \"country\": \"US\",\n    \"name\": \"Hooli\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03cb8b76-eda4-4143-9089-5dc05498c3bf",
+          "name": "Void a 1099-NEC",
+          "request": {
+            "name": "Void a 1099-NEC",
+            "description": {
+              "content": "Files a new voided 1099-NEC and relates it to the original document. A 1099-NEC can be voided only after it has reached the `FILED` status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "1099-nec",
+                ":documentId",
+                "void"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8780ed1c-4a8a-4169-958c-b77805af554c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1952-03-01T02:10:50.051Z\",\n  \"filingYear\": 7228,\n  \"formFields\": {\n    \"isCorrected\": false,\n    \"isVoid\": false,\n    \"stateTaxInfo\": [\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"stateIncome\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"accountNumber\": \"string\",\n    \"nonemployeeCompensation\": 7667,\n    \"hasDirectSalesOver5000\": true,\n    \"federalIncomeTaxWithheld\": 0\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payeeUrl\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"+0263880475440\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"payerUrl\": \"string\",\n  \"status\": \"REJECTED\",\n  \"correctedById\": \"string\",\n  \"correctedFromId\": \"string\",\n  \"voidedById\": \"string\",\n  \"voidedFromId\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdd541f7-c3f3-4fff-8c30-d8697b5c45f2",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66f391ab-1785-4eb1-a0df-c96153235779",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a82cc274-d425-4dda-9590-b5a5ce99cb71",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad20f97b-f802-4a2f-9efe-4a0862b2130e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "1099-nec",
+                    ":documentId",
+                    "void"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production-api.withabound.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8eb20187-a415-4236-8778-cda733501f49",
+    "name": "Abound API - v4 1099-INT 1099-NEC API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.\n\nNOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.",
+      "type": "text/plain"
+    }
+  }
+}

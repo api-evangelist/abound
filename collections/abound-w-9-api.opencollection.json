@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT W-9 API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "W-9",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all W-9 documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/w-9",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payeeTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payerTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of W-9 documents."
+        },
+        {
+          "info": {
+            "name": "Create a W-9",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/w-9",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a W-9 document and subsequently kicks off a TIN verification, if the name and TIN combo has not been used before."
+        },
+        {
+          "info": {
+            "name": "Retrieve a W-9",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/w-9/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing W-9 document."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

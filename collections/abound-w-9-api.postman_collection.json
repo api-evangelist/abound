@@ -1,0 +1,1076 @@
+{
+  "item": [
+    {
+      "id": "f6736994-8085-4857-8e0f-fa9bd68f61a7",
+      "name": "W-9",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25c37ea2-2520-452d-90eb-e8acbb2ef865",
+          "name": "List all W-9 documents",
+          "request": {
+            "name": "List all W-9 documents",
+            "description": {
+              "content": "Returns a list of W-9 documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-9"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payeeTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payerTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbef4b12-a677-4a74-9ea7-73b7a6f6311c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8025"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"createdAt\": \"1968-02-14T15:27:44.237Z\",\n    \"formFields\": {\n      \"taxClassification\": \"LLC_S_CORPORATION\",\n      \"otherTaxClassification\": \"string\",\n      \"hasIndirectForeignOwnership\": false,\n      \"exemptPayeeCode\": \"2\",\n      \"exemptFatcaCode\": \"L\",\n      \"accountNumbers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isSubjectToBackupWithholding\": true,\n      \"certifiedAt\": \"1950-10-22T16:54:42.843Z\",\n      \"electronicSignature\": {\n        \"ipAddress\": \"string\",\n        \"printedName\": \"string\",\n        \"signature\": \"string\",\n        \"signedAt\": \"1953-11-25T06:46:54.412Z\"\n      }\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"name\": \"string\",\n      \"tin\": \"stringstr\",\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MISMATCH\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\",\n      \"name2\": \"string\",\n      \"tinType\": \"BUSINESS\"\n    },\n    \"url\": \"string\",\n    \"payer\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"+06339672368158\",\n      \"tin\": \"stringstr\",\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MISMATCH\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\",\n      \"name2\": \"string\",\n      \"tinType\": \"BUSINESS\"\n    },\n    \"userId\": \"string\"\n  },\n  {\n    \"createdAt\": \"2017-02-25T21:41:48.387Z\",\n    \"formFields\": {\n      \"taxClassification\": \"OTHER\",\n      \"otherTaxClassification\": \"string\",\n      \"hasIndirectForeignOwnership\": false,\n      \"exemptPayeeCode\": \"8\",\n      \"exemptFatcaCode\": \"H\",\n      \"accountNumbers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isSubjectToBackupWithholding\": true,\n      \"certifiedAt\": \"1970-06-19T08:02:09.119Z\",\n      \"electronicSignature\": {\n        \"ipAddress\": \"string\",\n        \"printedName\": \"string\",\n        \"signature\": \"string\",\n        \"signedAt\": \"2014-10-15T11:24:14.445Z\"\n      }\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"name\": \"string\",\n      \"tin\": \"stringstr\",\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MATCH\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\",\n      \"name2\": \"string\",\n      \"tinType\": \"BUSINESS\"\n    },\n    \"url\": \"string\",\n    \"payer\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"name\": \"string\",\n      \"phoneNumber\": \"+20497293364440\",\n      \"tin\": \"stringstr\",\n      \"tinFingerprint\": \"string\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MISMATCH\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\",\n      \"name2\": \"string\",\n      \"tinType\": \"INDIVIDUAL\"\n    },\n    \"userId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "888e57e4-d225-4fc1-8c7f-aa1f2c8cc3f7",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8025"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00218f9b-bd72-4134-bd2b-9f62d0872541",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8025"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14ad05a5-01de-4907-8712-84b2641b6af4",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8025"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a23fc09a-0917-4383-b7a7-bb715577f4b1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "8025"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payerTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49da3eb9-3104-4d18-9693-bc28debae927",
+          "name": "Create a W-9",
+          "request": {
+            "name": "Create a W-9",
+            "description": {
+              "content": "Creates a W-9 document and subsequently kicks off a TIN verification, if the name and TIN combo has not been used before.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-9"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "Idempotency-Key",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formFields\": {\n    \"taxClassification\": \"<string>\",\n    \"otherTaxClassification\": \"<string>\",\n    \"hasIndirectForeignOwnership\": \"<boolean>\",\n    \"exemptPayeeCode\": \"<string>\",\n    \"exemptFatcaCode\": \"<string>\",\n    \"accountNumbers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isSubjectToBackupWithholding\": \"<boolean>\",\n    \"certifiedAt\": \"<dateTime>\",\n    \"electronicSignature\": {\n      \"ipAddress\": \"<string>\",\n      \"printedName\": \"<string>\",\n      \"signature\": \"<string>\",\n      \"signedAt\": \"<dateTime>\"\n    }\n  },\n  \"payee\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"tin\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"name2\": \"<string>\",\n    \"tinType\": \"<string>\"\n  },\n  \"payer\": {\n    \"address\": \"<string>\",\n    \"country\": \"<string>\",\n    \"name\": \"<string>\",\n    \"phoneNumber\": \"<string>\",\n    \"tin\": \"<string>\",\n    \"address2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"name2\": \"<string>\"\n  },\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "716da360-b03f-4d41-b582-fb2cbdcc2f31",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"country\": \"US\",\n    \"postalCode\": \"94043\",\n    \"state\": \"CA\",\n    \"tin\": \"000000000\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"formFields\": {\n    \"taxClassification\": \"INDIVIDUAL\",\n    \"isSubjectToBackupWithholding\": false,\n    \"electronicSignature\": {\n      \"signature\": \"Ada Lovelace\",\n      \"printedName\": \"Ada Lovelace\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1974-02-05T12:37:44.246Z\",\n  \"formFields\": {\n    \"taxClassification\": \"TRUST\",\n    \"otherTaxClassification\": \"string\",\n    \"hasIndirectForeignOwnership\": false,\n    \"exemptPayeeCode\": \"4\",\n    \"exemptFatcaCode\": \"F\",\n    \"accountNumbers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isSubjectToBackupWithholding\": false,\n    \"certifiedAt\": \"2014-05-16T15:19:56.860Z\",\n    \"electronicSignature\": {\n      \"ipAddress\": \"string\",\n      \"printedName\": \"string\",\n      \"signature\": \"string\",\n      \"signedAt\": \"1982-12-29T18:43:37.452Z\"\n    }\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"BUSINESS\"\n  },\n  \"url\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"550752891722\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"BUSINESS\"\n  },\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d6074e0-2dd0-4ed2-b6da-4825d55e698e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"country\": \"US\",\n    \"postalCode\": \"94043\",\n    \"state\": \"CA\",\n    \"tin\": \"000000000\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"formFields\": {\n    \"taxClassification\": \"INDIVIDUAL\",\n    \"isSubjectToBackupWithholding\": false,\n    \"electronicSignature\": {\n      \"signature\": \"Ada Lovelace\",\n      \"printedName\": \"Ada Lovelace\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a8b45df-ffdc-4884-8050-9d15a8533748",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"country\": \"US\",\n    \"postalCode\": \"94043\",\n    \"state\": \"CA\",\n    \"tin\": \"000000000\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"formFields\": {\n    \"taxClassification\": \"INDIVIDUAL\",\n    \"isSubjectToBackupWithholding\": false,\n    \"electronicSignature\": {\n      \"signature\": \"Ada Lovelace\",\n      \"printedName\": \"Ada Lovelace\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b6c2be8-8264-4827-b7fa-3008e4a9617f",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"country\": \"US\",\n    \"postalCode\": \"94043\",\n    \"state\": \"CA\",\n    \"tin\": \"000000000\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"formFields\": {\n    \"taxClassification\": \"INDIVIDUAL\",\n    \"isSubjectToBackupWithholding\": false,\n    \"electronicSignature\": {\n      \"signature\": \"Ada Lovelace\",\n      \"printedName\": \"Ada Lovelace\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3c81a07-244a-493c-90b5-4ba964a2e5d6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Idempotency-Key",
+                    "value": "string",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Ada Lovelace\",\n    \"address\": \"1401 N Shoreline Blvd\",\n    \"address2\": \"Suite 1\",\n    \"city\": \"Mountain View\",\n    \"country\": \"US\",\n    \"postalCode\": \"94043\",\n    \"state\": \"CA\",\n    \"tin\": \"000000000\",\n    \"tinType\": \"INDIVIDUAL\"\n  },\n  \"formFields\": {\n    \"taxClassification\": \"INDIVIDUAL\",\n    \"isSubjectToBackupWithholding\": false,\n    \"electronicSignature\": {\n      \"signature\": \"Ada Lovelace\",\n      \"printedName\": \"Ada Lovelace\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8d00ec9-f871-4c42-8c2c-badc93c8f06f",
+          "name": "Retrieve a W-9",
+          "request": {
+            "name": "Retrieve a W-9",
+            "description": {
+              "content": "Retrieves the details of an existing W-9 document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-9",
+                ":documentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c0f6a38-41e9-4cca-8daa-f4176ddbb460",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1974-02-05T12:37:44.246Z\",\n  \"formFields\": {\n    \"taxClassification\": \"TRUST\",\n    \"otherTaxClassification\": \"string\",\n    \"hasIndirectForeignOwnership\": false,\n    \"exemptPayeeCode\": \"4\",\n    \"exemptFatcaCode\": \"F\",\n    \"accountNumbers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isSubjectToBackupWithholding\": false,\n    \"certifiedAt\": \"2014-05-16T15:19:56.860Z\",\n    \"electronicSignature\": {\n      \"ipAddress\": \"string\",\n      \"printedName\": \"string\",\n      \"signature\": \"string\",\n      \"signedAt\": \"1982-12-29T18:43:37.452Z\"\n    }\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"BUSINESS\"\n  },\n  \"url\": \"string\",\n  \"payer\": {\n    \"address\": \"string\",\n    \"country\": \"st\",\n    \"name\": \"string\",\n    \"phoneNumber\": \"550752891722\",\n    \"tin\": \"stringstr\",\n    \"tinFingerprint\": \"string\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"MISMATCH\",\n    \"address2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postalCode\": \"string\",\n    \"name2\": \"string\",\n    \"tinType\": \"BUSINESS\"\n  },\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "252eab9b-3ede-4641-8449-643c21fb69d1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62bf1f26-5cd3-4d4d-b5c8-7f604f64f125",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7b389d1-6854-4478-ad20-a7a71b7056f6",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c23e2d46-7204-47eb-a7f1-a05ccb6317c4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-9",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production-api.withabound.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cda97f01-b90f-4532-9036-b2dc728dd688",
+    "name": "Abound API - v4 1099-INT W-9 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.\n\nNOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.",
+      "type": "text/plain"
+    }
+  }
+}

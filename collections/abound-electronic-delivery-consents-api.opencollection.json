@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT Electronic Delivery Consents API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Electronic Delivery Consents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all Electronic Delivery Consents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/electronic-delivery-consents",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list of Electronic Delivery Consents based on the `email` field."
+              },
+              {
+                "name": "tinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of Electronic Delivery Consents."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

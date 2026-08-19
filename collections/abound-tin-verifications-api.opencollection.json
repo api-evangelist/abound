@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT TIN Verifications API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TIN Verifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all TIN Verifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/tin-verifications",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of TIN Verifications. Up to 100 TIN Verifications are returned per request."
+        },
+        {
+          "info": {
+            "name": "Create a TIN Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/tin-verifications",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an asynchronous TIN Verification."
+        },
+        {
+          "info": {
+            "name": "Retrieve a TIN Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/tin-verifications/:tinVerificationId",
+            "params": [
+              {
+                "name": "tinVerificationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing TIN Verification."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

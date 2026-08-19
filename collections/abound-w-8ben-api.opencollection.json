@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT W-8BEN API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "W-8BEN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all W-8BEN documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/w-8ben",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payeeTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payeeForeignTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of W-8BEN documents."
+        },
+        {
+          "info": {
+            "name": "Create a W-8BEN",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/w-8ben",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a W-8BEN document and, if present, subsequently kicks off a TIN Verification. A TIN Verification will only kickoff if the name and TIN combo has not been seen before."
+        },
+        {
+          "info": {
+            "name": "Retrieve a W-8BEN",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/w-8ben/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing W-8BEN document."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

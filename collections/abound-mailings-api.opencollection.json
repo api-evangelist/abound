@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT Mailings API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mailings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all mailings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/mailings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filters the list of mailings based on the `status` field."
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of mailings. Up to 100 mailings are returned per request."
+        },
+        {
+          "info": {
+            "name": "Retrieve a mailing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/mailings/:mailingId",
+            "params": [
+              {
+                "name": "mailingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing mailing."
+        },
+        {
+          "info": {
+            "name": "Update a mailing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://production-api.withabound.com/v4/mailings/:mailingId",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mailingId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing mailing. Once a mailing has reached the `PROCESSING_FOR_DELIVERY` status, it cannot be updated. Any body parameters not provided will be removed."
+        },
+        {
+          "info": {
+            "name": "Delete a mailing",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production-api.withabound.com/v4/mailings/:mailingId",
+            "params": [
+              {
+                "name": "mailingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a mailing. Once a mailing has reached the `PROCESSING_FOR_DELIVERY` status, it cannot be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

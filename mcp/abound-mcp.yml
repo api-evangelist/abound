@@ -231,3 +231,9 @@ tools:
   description: Update a user
   source_operation: openapi/abound-v4-openapi.yml#usersUpdate
   http: PUT /v4/users/{userId}
+deployment:
+  mode: none
+  verified: derived
+  tools: 55
+  checked: '2026-08-12'
+  source: catalog MCP census

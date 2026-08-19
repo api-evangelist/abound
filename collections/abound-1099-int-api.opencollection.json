@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abound API - v4 1099-INT API",
+    "version": "4"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "1099-INT",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all 1099-INT documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filingYear",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payeeTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payerTinFingerprint",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of 1099-INT documents."
+        },
+        {
+          "info": {
+            "name": "Create a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a 1099-INT document and subsequently kicks off a TIN Verification, if the name and TIN combo has not been used before."
+        },
+        {
+          "info": {
+            "name": "Retrieve a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing 1099-INT document."
+        },
+        {
+          "info": {
+            "name": "Delete a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a 1099-INT document. Once an action (`/file`, `/correct`, `/void`) has been executed on a 1099-INT, it cannot be deleted."
+        },
+        {
+          "info": {
+            "name": "Correct a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId/correct",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Files a new corrected 1099-INT and relates it to the original document. A 1099-INT can be corrected only after it has reached the `FILED` status. Automatically handles both one-transaction and two-transaction corrections."
+        },
+        {
+          "info": {
+            "name": "File a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId/file",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Files a 1099-INT document."
+        },
+        {
+          "info": {
+            "name": "Mail a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId/mail",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mails a 1099-INT document."
+        },
+        {
+          "info": {
+            "name": "Void a 1099-INT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://production-api.withabound.com/v4/documents/1099-int/:documentId/void",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Files a new voided 1099-INT and relates it to the original document. A 1099-INT can be voided only after it has reached the `FILED` status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

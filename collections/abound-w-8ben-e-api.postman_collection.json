@@ -1,0 +1,1040 @@
+{
+  "item": [
+    {
+      "id": "577f09f3-b279-4c37-8856-a7be44dae83b",
+      "name": "W-8BEN-E",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0c5939a8-25b2-44be-a195-fb682992d809",
+          "name": "List all W-8BEN-E documents",
+          "request": {
+            "name": "List all W-8BEN-E documents",
+            "description": {
+              "content": "Returns a list of W-8BEN-E documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-8ben-e"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payeeTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payeeForeignTinFingerprint",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52b9048c-f874-404b-9753-a2b901ba4d93",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "7003"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payeeForeignTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"createdAt\": \"1956-09-21T21:36:43.312Z\",\n    \"expiresAt\": \"1979-12-05T10:01:16.535Z\",\n    \"formFields\": {\n      \"isCertified\": true,\n      \"taxClassification\": \"DISREGARDED_ENTITY\",\n      \"isForeignTinNotRequired\": false,\n      \"taxTreatyBenefits\": {\n        \"claimedProvision\": \"string\",\n        \"incomeCode\": {\n          \"description\": \"The code of the income associated with the claimed rate of withholding.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"incomeType\": \"string\",\n        \"rateOfWithholding\": 8646.990260961753,\n        \"residentCountry\": \"st\",\n        \"additionalConditions\": \"string\"\n      },\n      \"referenceNumbers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"electronicSignature\": {\n        \"ipAddress\": \"string\",\n        \"printedName\": \"string\",\n        \"signature\": \"string\",\n        \"signedAt\": \"1982-08-14T05:06:14.024Z\"\n      }\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"incorporationCountry\": \"st\",\n      \"name\": \"string\",\n      \"permanentResidenceAddress\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address2\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"city\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postalCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"tin\": \"stringstr\",\n      \"foreignTin\": \"string\",\n      \"mailingAddress\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address2\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"city\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postalCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinType\": \"BUSINESS\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MISMATCH\",\n      \"foreignTinFingerprint\": \"string\"\n    },\n    \"url\": \"string\",\n    \"userId\": \"string\"\n  },\n  {\n    \"createdAt\": \"1993-06-17T18:41:57.900Z\",\n    \"expiresAt\": \"1975-07-28T19:59:32.748Z\",\n    \"formFields\": {\n      \"isCertified\": false,\n      \"taxClassification\": \"CENTRAL_BANK_OF_ISSUE\",\n      \"isForeignTinNotRequired\": true,\n      \"taxTreatyBenefits\": {\n        \"claimedProvision\": \"string\",\n        \"incomeCode\": {\n          \"description\": \"The code of the income associated with the claimed rate of withholding.\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"incomeType\": \"string\",\n        \"rateOfWithholding\": 8528.403618515413,\n        \"residentCountry\": \"st\",\n        \"additionalConditions\": \"string\"\n      },\n      \"referenceNumbers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"electronicSignature\": {\n        \"ipAddress\": \"string\",\n        \"printedName\": \"string\",\n        \"signature\": \"string\",\n        \"signedAt\": \"1948-11-18T07:51:49.386Z\"\n      }\n    },\n    \"id\": \"string\",\n    \"payee\": {\n      \"incorporationCountry\": \"st\",\n      \"name\": \"string\",\n      \"permanentResidenceAddress\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address2\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"city\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postalCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"tin\": \"stringstr\",\n      \"foreignTin\": \"string\",\n      \"mailingAddress\": {\n        \"address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"country\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"address2\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"city\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"postalCode\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"tinFingerprint\": \"string\",\n      \"tinType\": \"INDIVIDUAL\",\n      \"tinVerificationId\": \"string\",\n      \"tinVerificationStatus\": \"MATCH\",\n      \"foreignTinFingerprint\": \"string\"\n    },\n    \"url\": \"string\",\n    \"userId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40d0fe7c-2280-4d7b-9b26-732f12ab36be",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "7003"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payeeForeignTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dab7530-7963-4b83-b805-c43759f6e529",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "7003"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payeeForeignTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c5da41d-1eb8-4363-92e3-c9cb895faebf",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "7003"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payeeForeignTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f936d8c-34a4-4282-90cd-25e53a3e22e6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "7003"
+                    },
+                    {
+                      "key": "payeeTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "payeeForeignTinFingerprint",
+                      "value": "string"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76b8547d-23d2-4595-a19b-a34850279361",
+          "name": "Create a W-8BEN-E",
+          "request": {
+            "name": "Create a W-8BEN-E",
+            "description": {
+              "content": "Creates a W-8BEN-E document and, if present, subsequently kicks off a TIN Verification. A TIN Verification will only kickoff if the name and TIN combo has not been seen before.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-8ben-e"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"formFields\": {\n    \"isCertified\": \"<boolean>\",\n    \"taxClassification\": \"<string>\",\n    \"isForeignTinNotRequired\": \"<boolean>\",\n    \"taxTreatyCode\": \"<string>\",\n    \"referenceNumbers\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"electronicSignature\": {\n      \"ipAddress\": \"<string>\",\n      \"printedName\": \"<string>\",\n      \"signature\": \"<string>\",\n      \"signedAt\": \"<dateTime>\"\n    }\n  },\n  \"payee\": {\n    \"incorporationCountry\": \"<string>\",\n    \"name\": \"<string>\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"<string>\",\n      \"country\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    },\n    \"tin\": \"<string>\",\n    \"foreignTin\": \"<string>\",\n    \"mailingAddress\": {\n      \"address\": \"<string>\",\n      \"country\": \"<string>\",\n      \"address2\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    }\n  },\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5b346478-0521-4ccb-878f-ebb9dca123e2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Hooli\",\n    \"incorporationCountry\": \"GB\",\n    \"tin\": \"111111111\",\n    \"foreignTin\": \"DQ123456C\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"43 Hilly Fields\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Lewisham\",\n      \"state\": \"London\",\n      \"postalCode\": \"SE13 7JN\",\n      \"country\": \"GB\"\n    },\n    \"mailingAddress\": {\n      \"address\": \"256 Byron Street\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Palo Alto\",\n      \"postalCode\": \"94306\",\n      \"state\": \"CA\",\n      \"country\": \"US\"\n    }\n  },\n  \"formFields\": {\n    \"taxClassification\": \"CORPORATION\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyCode\": \"GB_17_INDEPENDENT_PERSONAL_SERVICES\",\n    \"referenceNumbers\": [\n      \"123456789\"\n    ],\n    \"isCertified\": true,\n    \"electronicSignature\": {\n      \"signature\": \"Hooli Representative\",\n      \"printedName\": \"Hooli Representative\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2014-01-01T16:14:09.031Z\",\n  \"expiresAt\": \"1953-03-17T23:31:24.439Z\",\n  \"formFields\": {\n    \"isCertified\": false,\n    \"taxClassification\": \"FOREIGN_GOVERNMENT_CONTROLLED_ENTITY\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyBenefits\": {\n      \"claimedProvision\": \"string\",\n      \"incomeCode\": \"16\",\n      \"incomeType\": \"string\",\n      \"rateOfWithholding\": 9619.208105427866,\n      \"residentCountry\": \"st\",\n      \"additionalConditions\": \"string\"\n    },\n    \"referenceNumbers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"electronicSignature\": {\n      \"ipAddress\": \"string\",\n      \"printedName\": \"string\",\n      \"signature\": \"string\",\n      \"signedAt\": \"1991-06-20T16:06:13.823Z\"\n    }\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"incorporationCountry\": \"st\",\n    \"name\": \"string\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\"\n    },\n    \"tin\": \"stringstr\",\n    \"foreignTin\": \"string\",\n    \"mailingAddress\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\"\n    },\n    \"tinFingerprint\": \"string\",\n    \"tinType\": \"BUSINESS\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"foreignTinFingerprint\": \"string\"\n  },\n  \"url\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "361a002c-6ac2-47e1-8a03-13bb7ffff746",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Hooli\",\n    \"incorporationCountry\": \"GB\",\n    \"tin\": \"111111111\",\n    \"foreignTin\": \"DQ123456C\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"43 Hilly Fields\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Lewisham\",\n      \"state\": \"London\",\n      \"postalCode\": \"SE13 7JN\",\n      \"country\": \"GB\"\n    },\n    \"mailingAddress\": {\n      \"address\": \"256 Byron Street\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Palo Alto\",\n      \"postalCode\": \"94306\",\n      \"state\": \"CA\",\n      \"country\": \"US\"\n    }\n  },\n  \"formFields\": {\n    \"taxClassification\": \"CORPORATION\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyCode\": \"GB_17_INDEPENDENT_PERSONAL_SERVICES\",\n    \"referenceNumbers\": [\n      \"123456789\"\n    ],\n    \"isCertified\": true,\n    \"electronicSignature\": {\n      \"signature\": \"Hooli Representative\",\n      \"printedName\": \"Hooli Representative\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68dd2bee-763f-47dc-a9df-5736a15fd520",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Hooli\",\n    \"incorporationCountry\": \"GB\",\n    \"tin\": \"111111111\",\n    \"foreignTin\": \"DQ123456C\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"43 Hilly Fields\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Lewisham\",\n      \"state\": \"London\",\n      \"postalCode\": \"SE13 7JN\",\n      \"country\": \"GB\"\n    },\n    \"mailingAddress\": {\n      \"address\": \"256 Byron Street\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Palo Alto\",\n      \"postalCode\": \"94306\",\n      \"state\": \"CA\",\n      \"country\": \"US\"\n    }\n  },\n  \"formFields\": {\n    \"taxClassification\": \"CORPORATION\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyCode\": \"GB_17_INDEPENDENT_PERSONAL_SERVICES\",\n    \"referenceNumbers\": [\n      \"123456789\"\n    ],\n    \"isCertified\": true,\n    \"electronicSignature\": {\n      \"signature\": \"Hooli Representative\",\n      \"printedName\": \"Hooli Representative\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88ca7446-3e89-4ea6-9fbd-42d2a334334c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Hooli\",\n    \"incorporationCountry\": \"GB\",\n    \"tin\": \"111111111\",\n    \"foreignTin\": \"DQ123456C\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"43 Hilly Fields\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Lewisham\",\n      \"state\": \"London\",\n      \"postalCode\": \"SE13 7JN\",\n      \"country\": \"GB\"\n    },\n    \"mailingAddress\": {\n      \"address\": \"256 Byron Street\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Palo Alto\",\n      \"postalCode\": \"94306\",\n      \"state\": \"CA\",\n      \"country\": \"US\"\n    }\n  },\n  \"formFields\": {\n    \"taxClassification\": \"CORPORATION\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyCode\": \"GB_17_INDEPENDENT_PERSONAL_SERVICES\",\n    \"referenceNumbers\": [\n      \"123456789\"\n    ],\n    \"isCertified\": true,\n    \"electronicSignature\": {\n      \"signature\": \"Hooli Representative\",\n      \"printedName\": \"Hooli Representative\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6f49e3b-f588-4af0-8549-d436f415697d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payee\": {\n    \"name\": \"Hooli\",\n    \"incorporationCountry\": \"GB\",\n    \"tin\": \"111111111\",\n    \"foreignTin\": \"DQ123456C\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"43 Hilly Fields\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Lewisham\",\n      \"state\": \"London\",\n      \"postalCode\": \"SE13 7JN\",\n      \"country\": \"GB\"\n    },\n    \"mailingAddress\": {\n      \"address\": \"256 Byron Street\",\n      \"address2\": \"Suite 32\",\n      \"city\": \"Palo Alto\",\n      \"postalCode\": \"94306\",\n      \"state\": \"CA\",\n      \"country\": \"US\"\n    }\n  },\n  \"formFields\": {\n    \"taxClassification\": \"CORPORATION\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyCode\": \"GB_17_INDEPENDENT_PERSONAL_SERVICES\",\n    \"referenceNumbers\": [\n      \"123456789\"\n    ],\n    \"isCertified\": true,\n    \"electronicSignature\": {\n      \"signature\": \"Hooli Representative\",\n      \"printedName\": \"Hooli Representative\",\n      \"signedAt\": \"2024-01-01T00:00:00.000Z\",\n      \"ipAddress\": \"127.0.0.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c898ff69-bc99-4b98-97eb-abfc1dd29ae1",
+          "name": "Retrieve a W-8BEN-E",
+          "request": {
+            "name": "Retrieve a W-8BEN-E",
+            "description": {
+              "content": "Retrieves the details of an existing W-8BEN-E document.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "documents",
+                "w-8ben-e",
+                ":documentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "documentId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ee75ed4-03de-4582-902a-1d85f3e4f63a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2014-01-01T16:14:09.031Z\",\n  \"expiresAt\": \"1953-03-17T23:31:24.439Z\",\n  \"formFields\": {\n    \"isCertified\": false,\n    \"taxClassification\": \"FOREIGN_GOVERNMENT_CONTROLLED_ENTITY\",\n    \"isForeignTinNotRequired\": false,\n    \"taxTreatyBenefits\": {\n      \"claimedProvision\": \"string\",\n      \"incomeCode\": \"16\",\n      \"incomeType\": \"string\",\n      \"rateOfWithholding\": 9619.208105427866,\n      \"residentCountry\": \"st\",\n      \"additionalConditions\": \"string\"\n    },\n    \"referenceNumbers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"electronicSignature\": {\n      \"ipAddress\": \"string\",\n      \"printedName\": \"string\",\n      \"signature\": \"string\",\n      \"signedAt\": \"1991-06-20T16:06:13.823Z\"\n    }\n  },\n  \"id\": \"string\",\n  \"payee\": {\n    \"incorporationCountry\": \"st\",\n    \"name\": \"string\",\n    \"permanentResidenceAddress\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\"\n    },\n    \"tin\": \"stringstr\",\n    \"foreignTin\": \"string\",\n    \"mailingAddress\": {\n      \"address\": \"string\",\n      \"country\": \"st\",\n      \"address2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postalCode\": \"string\"\n    },\n    \"tinFingerprint\": \"string\",\n    \"tinType\": \"BUSINESS\",\n    \"tinVerificationId\": \"string\",\n    \"tinVerificationStatus\": \"PENDING\",\n    \"foreignTinFingerprint\": \"string\"\n  },\n  \"url\": \"string\",\n  \"userId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "309cbff6-f576-4ca0-872e-12bab0bce869",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"field\": \"metadata.key\",\n      \"message\": \"Expected metadata.key to be of type string, but received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1958a6b-0e49-4fb5-8e57-79d2695cc0e9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7af0428-cc52-43cf-8952-398a7d8a0285",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not Found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b11d6fc9-539e-4e7a-8070-3a6475df3e71",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "documents",
+                    "w-8ben-e",
+                    ":documentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "documentId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://production-api.withabound.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "49d8e4ec-22fc-403a-ba1b-e6e6fef1536b",
+    "name": "Abound API - v4 1099-INT W-8BEN-E API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.\n\nNOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.",
+      "type": "text/plain"
+    }
+  }
+}
