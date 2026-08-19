@@ -33,7 +33,7 @@ x-tier-reason: portfolio-lead
 x-status: retired
 x-status-evidence: withabound.com has no delegated nameservers (NXDOMAIN on apex, www, docs,
   status, production-api and sandbox-api); github.com/withabound returns 404. Probed 2026-07-19.
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-19'
 tags:
