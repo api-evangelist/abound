@@ -41,6 +41,17 @@ tags:
 - Taxes
 - Tax Compliance
 - Regulatory Compliance
+- Financial-Services
+- Identity Verification
+- Government
+- Documents
+- Webhook
+- Retired
+tags_raw:
+- Company
+- Taxes
+- Tax Compliance
+- Regulatory Compliance
 - Financial Services
 - Identity Verification
 - Government
@@ -163,6 +174,8 @@ apis:
   humanURL: https://www.npmjs.com/package/@withabound/node-sdk
   baseURL: https://production-api.withabound.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
