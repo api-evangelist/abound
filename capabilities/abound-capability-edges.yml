@@ -1,0 +1,88 @@
+slug: abound
+provider: Abound
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: 1099-INT
+  spec_file: abound-1099-int-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.9
+  evidence: POST /v4/documents/1099-int/{documentId}/file form1099IntFile — 'File a 1099-INT'; Form1099StateTaxInfoSchema
+  reason: Creation, correction, voiding, mailing and filing of IRS information returns with federal and
+    state tax authorities is squarely tax return filing and compliance reporting.
+- tag: 1099-K
+  spec_file: abound-1099-k-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.9
+  evidence: POST /v4/documents/1099-k/{documentId}/file form1099KFile — 'File a 1099-K'; Form1099FilingStateEnum
+  reason: 'Same information-return lifecycle for Form 1099-K: generate, correct, void, mail and file with
+    tax authorities — tax reporting and compliance.'
+- tag: 1099-MISC
+  spec_file: abound-1099-misc-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.88
+  evidence: POST /v4/documents/1099-misc/{documentId}/file  form1099MiscFile  File a 1099-MISC; POST .../correct;
+    POST .../void
+  reason: Operations generate, correct, void and file IRS Form 1099-MISC information returns with federal
+    and state tax authorities — squarely tax return filing and compliance reporting.
+- tag: 1099-NEC
+  spec_file: abound-1099-nec-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.88
+  evidence: POST /v4/documents/1099-nec/{documentId}/file  form1099NecFile  File a 1099-NEC
+  reason: Creation, correction, voiding and filing of Form 1099-NEC information returns is tax reporting
+    and compliance, not payments or AP.
+- tag: TIN Verifications
+  spec_file: abound-tin-verifications-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.78
+  evidence: POST /v4/tin-verifications  tinVerificationsCreate  Create a TIN Verification; TinVerificationStatusEnum
+  reason: Real-time Taxpayer Identification Number verification against the IRS is a tax compliance control
+    on information returns, not general identity verification.
+- tag: W-8BEN
+  spec_file: abound-w-8ben-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.78
+  evidence: POST /v4/documents/w-8ben  formW8benCreate  Create a W-8BEN; TaxTreatyBenefitsSchema, W8BenBeneficialOwnerSchema
+  reason: Collection of the IRS withholding certificate for foreign beneficial owners including treaty
+    benefit claims — tax compliance documentation.
+- tag: W-8BEN-E
+  spec_file: abound-w-8ben-e-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.78
+  evidence: POST /v4/documents/w-8ben-e  formW8benECreate  Create a W-8BEN-E; W8BenETaxClassificationEnum
+  reason: Collection of the entity-level IRS withholding certificate with tax classification and treaty
+    benefits — tax compliance documentation.
+- tag: W-9
+  spec_file: abound-w-9-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.78
+  evidence: POST /v4/documents/w-9  formW9Create  Create a W-9; W9ExemptPayeeCodeSchema, W9ExemptFatcaCodeSchema
+  reason: Collection of Form W-9 taxpayer certification from payees, including exemption and FATCA codes
+    — tax compliance documentation feeding information returns.

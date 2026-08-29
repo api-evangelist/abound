@@ -245,6 +245,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/abound-capability-edges.yml
+  name: Abound Business Capability Map
 - type: Overlay
   url: overlays/abound-v4-overlay.yaml
 - type: Website
