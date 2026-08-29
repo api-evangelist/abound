@@ -7,6 +7,17 @@ info:
   title: Collect a W-9 and verify the payee TIN
   version: '1.0.0'
   summary: Create a user, collect their Form W-9, then run and read back a real-time TIN verification against the IRS.
+  x-realizes-capability-ids:
+  - BC-220.40
+  x-capability-derivation:
+    method: 'deterministic join: sourceDescriptions -> per-tag OpenAPI -> tag/capability edge. No classification at this step.'
+    min_confidence: 0.7
+    sources:
+    - capability_id: BC-220.40
+      capability_name: Tax Reporting & Compliance
+      spec: abound-w-9-api-openapi.yml
+      confidence: 0.78
+    model: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities, CC BY 4.0
 sourceDescriptions:
 - name: tinVerificationsApi
   url: ../openapi/abound-tin-verifications-api-openapi.yml
