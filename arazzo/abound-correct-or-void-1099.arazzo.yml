@@ -8,8 +8,8 @@ info:
   version: '1.0.0'
   summary: Fix a filed return - either file a correction or void it entirely. Both only work after the document is FILED.
 sourceDescriptions:
-- name: abound
-  url: ../openapi/abound-v4-openapi.yml
+- name: src1099NecApi
+  url: ../openapi/abound-1099-nec-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: correct1099Nec

@@ -8,8 +8,8 @@ info:
   version: '1.0.0'
   summary: Run the full 1099-NEC lifecycle - create the document, file it with federal and state authorities, then mail the payee copy.
 sourceDescriptions:
-- name: abound
-  url: ../openapi/abound-v4-openapi.yml
+- name: src1099NecApi
+  url: ../openapi/abound-1099-nec-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: file1099Nec

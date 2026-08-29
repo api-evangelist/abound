@@ -8,8 +8,14 @@ info:
   version: '1.0.0'
   summary: Create a user, collect their Form W-9, then run and read back a real-time TIN verification against the IRS.
 sourceDescriptions:
-- name: abound
-  url: ../openapi/abound-v4-openapi.yml
+- name: tinVerificationsApi
+  url: ../openapi/abound-tin-verifications-api-openapi.yml
+  type: openapi
+- name: usersApi
+  url: ../openapi/abound-users-api-openapi.yml
+  type: openapi
+- name: w9Api
+  url: ../openapi/abound-w-9-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: collectW9AndVerifyTin

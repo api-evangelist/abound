@@ -1,7 +1,7 @@
 # Arazzo workflow catalog for Abound - derived from the arazzo/*.arazzo.yml files.
 # method: derived  source: arazzo/*.arazzo.yml
-generated: '2026-07-20'
-method: derived
+x-generated: '2026-07-20'
+x-method: derived
 workflows:
 - file: abound-collect-w9-and-verify-tin.arazzo.yml
   workflowId: collectW9AndVerifyTin
