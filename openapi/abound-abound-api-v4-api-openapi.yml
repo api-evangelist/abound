@@ -1,0 +1,1463 @@
+openapi: 3.2.0
+info:
+  title: Abound API - v4 Abound API V4 API
+  version: '4'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
+
+
+    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  x-status: retired
+servers:
+- url: https://production-api.withabound.com
+  description: Production (retired - host no longer resolves)
+- url: https://sandbox-api.withabound.com
+  description: Sandbox (retired - host no longer resolves)
+security:
+- bearerAuth: []
+tags:
+- name: Abound API V4
+paths: {}
+webhooks:
+  MAILING_CREATED:
+    post:
+      operationId: webhookMailingCreated
+      summary: MAILING_CREATED
+      description: Receive a notification when a Mailing is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_DELETED:
+    post:
+      operationId: webhookMailingDeleted
+      summary: MAILING_DELETED
+      description: Receive a notification when a Mailing is deleted
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingDeletedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_DELIVERED:
+    post:
+      operationId: webhookMailingDelivered
+      summary: MAILING_DELIVERED
+      description: Receive a notification when a Mailing status changes to `DELIVERED`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingDeliveredWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_IN_TRANSIT:
+    post:
+      operationId: webhookMailingInTransit
+      summary: MAILING_IN_TRANSIT
+      description: Receive a notification when a Mailing status changes to `IN_TRANSIT`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingInTransitWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_PROCESSING_FOR_DELIVERY:
+    post:
+      operationId: webhookMailingProcessingForDelivery
+      summary: MAILING_PROCESSING_FOR_DELIVERY
+      description: Receive a notification when a Mailing status changes to `PROCESSING_FOR_DELIVERY`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingProcessingForDeliveryWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_RETURNED_TO_SENDER:
+    post:
+      operationId: webhookMailingReturnedToSender
+      summary: MAILING_RETURNED_TO_SENDER
+      description: Receive a notification when a Mailing status changes to `RETURNED_TO_SENDER`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingReturnedToSenderWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  MAILING_UPDATED:
+    post:
+      operationId: webhookMailingUpdated
+      summary: MAILING_UPDATED
+      description: Receive a notification when a Mailing is updated
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MailingUpdatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_ACCEPTED:
+    post:
+      operationId: webhookTen99IntAccepted
+      summary: TEN99_INT_ACCEPTED
+      description: Receive a notification when a Form 1099-INT status changes to `ACCEPTED`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntAcceptedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_CORRECTED:
+    post:
+      operationId: webhookTen99IntCorrected
+      summary: TEN99_INT_CORRECTED
+      description: Receive a notification when a Form 1099-INT is corrected.
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntCorrectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_CREATED:
+    post:
+      operationId: webhookTen99IntCreated
+      summary: TEN99_INT_CREATED
+      description: Receive a notification when a Form 1099-INT is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_DELETED:
+    post:
+      operationId: webhookTen99IntDeleted
+      summary: TEN99_INT_DELETED
+      description: Receive a notification when a Form 1099-INT is deleted
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntDeletedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_FILED:
+    post:
+      operationId: webhookTen99IntFiled
+      summary: TEN99_INT_FILED
+      description: Receive a notification when a Form 1099-INT is filed
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntFiledWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_REJECTED:
+    post:
+      operationId: webhookTen99IntRejected
+      summary: TEN99_INT_REJECTED
+      description: Receive a notification when a Form 1099-INT is rejected
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntRejectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_INT_VOIDED:
+    post:
+      operationId: webhookTen99IntVoided
+      summary: TEN99_INT_VOIDED
+      description: Receive a notification when a Form 1099-INT is voided
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099IntVoidedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_ACCEPTED:
+    post:
+      operationId: webhookTen99KAccepted
+      summary: TEN99_K_ACCEPTED
+      description: Receive a notification when a Form 1099-K status changes to `ACCEPTED`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KAcceptedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_CORRECTED:
+    post:
+      operationId: webhookTen99KCorrected
+      summary: TEN99_K_CORRECTED
+      description: Receive a notification when a Form 1099-K is corrected.
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KCorrectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_CREATED:
+    post:
+      operationId: webhookTen99KCreated
+      summary: TEN99_K_CREATED
+      description: Receive a notification when a Form 1099-K is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_DELETED:
+    post:
+      operationId: webhookTen99KDeleted
+      summary: TEN99_K_DELETED
+      description: Receive a notification when a Form 1099-K is deleted
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KDeletedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_FILED:
+    post:
+      operationId: webhookTen99KFiled
+      summary: TEN99_K_FILED
+      description: Receive a notification when a Form 1099-K is filed
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KFiledWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_REJECTED:
+    post:
+      operationId: webhookTen99KRejected
+      summary: TEN99_K_REJECTED
+      description: Receive a notification when a Form 1099-K is rejected
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KRejectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_K_VOIDED:
+    post:
+      operationId: webhookTen99KVoided
+      summary: TEN99_K_VOIDED
+      description: Receive a notification when a Form 1099-K is voided
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099KVoidedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_ACCEPTED:
+    post:
+      operationId: webhookTen99MiscAccepted
+      summary: TEN99_MISC_ACCEPTED
+      description: Receive a notification when a Form 1099-MISC status changes to `ACCEPTED`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscAcceptedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_CORRECTED:
+    post:
+      operationId: webhookTen99MiscCorrected
+      summary: TEN99_MISC_CORRECTED
+      description: Receive a notification when a Form 1099-MISC is corrected.
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscCorrectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_CREATED:
+    post:
+      operationId: webhookTen99MiscCreated
+      summary: TEN99_MISC_CREATED
+      description: Receive a notification when a Form 1099-MISC is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_DELETED:
+    post:
+      operationId: webhookTen99MiscDeleted
+      summary: TEN99_MISC_DELETED
+      description: Receive a notification when a Form 1099-MISC is deleted
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscDeletedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_FILED:
+    post:
+      operationId: webhookTen99MiscFiled
+      summary: TEN99_MISC_FILED
+      description: Receive a notification when a Form 1099-MISC is filed
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscFiledWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_REJECTED:
+    post:
+      operationId: webhookTen99MiscRejected
+      summary: TEN99_MISC_REJECTED
+      description: Receive a notification when a Form 1099-MISC is rejected
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscRejectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_MISC_VOIDED:
+    post:
+      operationId: webhookTen99MiscVoided
+      summary: TEN99_MISC_VOIDED
+      description: Receive a notification when a Form 1099-MISC is voided
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099MiscVoidedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_ACCEPTED:
+    post:
+      operationId: webhookTen99NecAccepted
+      summary: TEN99_NEC_ACCEPTED
+      description: Receive a notification when a Form 1099-NEC status changes to `ACCEPTED`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecAcceptedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_CORRECTED:
+    post:
+      operationId: webhookTen99NecCorrected
+      summary: TEN99_NEC_CORRECTED
+      description: Receive a notification when a Form 1099-NEC is corrected.
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecCorrectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_CREATED:
+    post:
+      operationId: webhookTen99NecCreated
+      summary: TEN99_NEC_CREATED
+      description: Receive a notification when a Form 1099-NEC is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_DELETED:
+    post:
+      operationId: webhookTen99NecDeleted
+      summary: TEN99_NEC_DELETED
+      description: Receive a notification when a Form 1099-NEC is deleted
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecDeletedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_FILED:
+    post:
+      operationId: webhookTen99NecFiled
+      summary: TEN99_NEC_FILED
+      description: Receive a notification when a Form 1099-NEC is filed
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecFiledWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_REJECTED:
+    post:
+      operationId: webhookTen99NecRejected
+      summary: TEN99_NEC_REJECTED
+      description: Receive a notification when a Form 1099-NEC is rejected
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecRejectedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TEN99_NEC_VOIDED:
+    post:
+      operationId: webhookTen99NecVoided
+      summary: TEN99_NEC_VOIDED
+      description: Receive a notification when a Form 1099-NEC is voided
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Form1099NecVoidedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TIN_VERIFICATION_CREATED:
+    post:
+      operationId: webhookTinVerificationCreated
+      summary: TIN_VERIFICATION_CREATED
+      description: Receive a notification when a TIN Verification is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TINVerificationCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TIN_VERIFICATION_MATCH:
+    post:
+      operationId: webhookTinVerificationMatch
+      summary: TIN_VERIFICATION_MATCH
+      description: Receive a notification when a TIN Verification status changes to `MATCH`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TINVerificationMatchWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TIN_VERIFICATION_MISMATCH:
+    post:
+      operationId: webhookTinVerificationMismatch
+      summary: TIN_VERIFICATION_MISMATCH
+      description: Receive a notification when a TIN Verification status changes to `MISMATCH`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TINVerificationMismatchWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  TIN_VERIFICATION_PENDING:
+    post:
+      operationId: webhookTinVerificationPending
+      summary: TIN_VERIFICATION_PENDING
+      description: Receive a notification when a TIN Verification status changes to `PENDING`
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TINVerificationPendingWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  USER_CREATED:
+    post:
+      operationId: webhookUserCreated
+      summary: USER_CREATED
+      description: Receive a notification when a User is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  USER_UPDATED:
+    post:
+      operationId: webhookUserUpdated
+      summary: USER_UPDATED
+      description: Receive a notification when a User is updated
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  W_8BEN_CREATED:
+    post:
+      operationId: webhookW8benCreated
+      summary: W_8BEN_CREATED
+      description: Receive a notification when a Form W-8BEN is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormW8BenCreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  W_8BEN_E_CREATED:
+    post:
+      operationId: webhookW8benECreated
+      summary: W_8BEN_E_CREATED
+      description: Receive a notification when a Form W-8BEN-E is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormW8BenECreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+  W_9_CREATED:
+    post:
+      operationId: webhookW9Created
+      summary: W_9_CREATED
+      description: Receive a notification when a Form W-9 is created
+      parameters:
+      - name: Abound-Signature
+        in: header
+        schema:
+          $ref: '#/components/schemas/AboundSignatureHeader'
+        description: An HMAC signature of the payload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormW9CreatedWebhookPayload'
+      responses:
+        '200':
+          description: Return a 2xx to acknowledge receipt of the event.
+      tags:
+      - Abound API V4
+components:
+  schemas:
+    Form1099IntCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_CORRECTED
+        required:
+        - event
+    Form1099NecFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_FILED
+        required:
+        - event
+    FormW8BenCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: W_8BEN_CREATED
+        required:
+        - event
+    Form1099KCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_CORRECTED
+        required:
+        - event
+    Form1099MiscCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_CORRECTED
+        required:
+        - event
+    UserUpdatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: USER_UPDATED
+        required:
+        - event
+    Form1099IntAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_ACCEPTED
+        required:
+        - event
+    Form1099NecCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_CORRECTED
+        required:
+        - event
+    Form1099KFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_FILED
+        required:
+        - event
+    TINVerificationCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_CREATED
+        required:
+        - event
+    Form1099MiscFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_FILED
+        required:
+        - event
+    WebhookPayloadBaseSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the webhook attempt
+        webhookId:
+          type: string
+          description: The id of the webhook event
+        timestamp:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format when the webhook attempt was triggered
+        resourceId:
+          type: string
+          description: The id of the resource that triggered the webhook
+        resourceUrl:
+          type: string
+          description: The URL of the resource that triggered the webhook
+      required:
+      - id
+      - resourceId
+      - resourceUrl
+      - timestamp
+      - webhookId
+    Form1099IntFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_FILED
+        required:
+        - event
+    MailingDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_DELETED
+        required:
+        - event
+    Form1099KVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_VOIDED
+        required:
+        - event
+    TINVerificationPendingWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_PENDING
+        required:
+        - event
+    TINVerificationMismatchWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_MISMATCH
+        required:
+        - event
+    MailingInTransitWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_IN_TRANSIT
+        required:
+        - event
+    Form1099KAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_ACCEPTED
+        required:
+        - event
+    Form1099NecVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_VOIDED
+        required:
+        - event
+    Form1099NecDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_DELETED
+        required:
+        - event
+    Form1099IntCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_CREATED
+        required:
+        - event
+    Form1099IntVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_VOIDED
+        required:
+        - event
+    Form1099NecAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_ACCEPTED
+        required:
+        - event
+    MailingDeliveredWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_DELIVERED
+        required:
+        - event
+    Form1099NecRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_REJECTED
+        required:
+        - event
+    AboundSignatureHeader:
+      type: string
+      description: An HMAC signature of the payload
+    Form1099MiscDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_DELETED
+        required:
+        - event
+    MailingUpdatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_UPDATED
+        required:
+        - event
+    Form1099MiscVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_VOIDED
+        required:
+        - event
+    Form1099IntRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_REJECTED
+        required:
+        - event
+    MailingReturnedToSenderWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_RETURNED_TO_SENDER
+        required:
+        - event
+    MailingCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_CREATED
+        required:
+        - event
+    Form1099MiscAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_ACCEPTED
+        required:
+        - event
+    UserCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: USER_CREATED
+        required:
+        - event
+    TINVerificationMatchWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_MATCH
+        required:
+        - event
+    Form1099MiscCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_CREATED
+        required:
+        - event
+    FormW9CreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: W_9_CREATED
+        required:
+        - event
+    Form1099KDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_DELETED
+        required:
+        - event
+    Form1099NecCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_CREATED
+        required:
+        - event
+    Form1099KCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_CREATED
+        required:
+        - event
+    Form1099MiscRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_REJECTED
+        required:
+        - event
+    Form1099KRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_REJECTED
+        required:
+        - event
+    MailingProcessingForDeliveryWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_PROCESSING_FOR_DELIVERY
+        required:
+        - event
+    Form1099IntDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_DELETED
+        required:
+        - event
+    FormW8BenECreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: W_8BEN_E_CREATED
+        required:
+        - event
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token. The token is the concatenation of your Abound appId and appSecret separated by a period, e.g. `appId_xxx.appSecret_yyy`.

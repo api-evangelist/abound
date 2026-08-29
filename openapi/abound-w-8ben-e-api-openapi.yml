@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Abound API - v4 1099-INT W-8BEN-E API
+  title: Abound API - v4 W 8 BEN E API
   version: '4'
   description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
 
@@ -197,109 +197,29 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    W8BenEBeneficialOwnerRequestSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The payee's legal name (first + last).
-        incorporationCountry:
-          type: string
-          description: The payee's country of incorporation adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-        tin:
-          type: string
-          description: The payee's US tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-          minLength: 9
-          maxLength: 9
-        foreignTin:
-          type: string
-          description: The payee's foreign tax identifying number, commonly referred to as a FTIN. No hyphens. Alphanumeric digits only. Alternatively, you may pass the corresponding `foreignTinFingerprint`.
-        permanentResidenceAddress:
-          allOf:
-          - $ref: '#/components/schemas/ForeignAddressSchema'
-          description: Permanent residence address (street, apt. or suite no., or rural route). Do not use a P.O. box or in-care-of address.
-        mailingAddress:
-          allOf:
-          - $ref: '#/components/schemas/AddressSchema'
-          description: The mailing address. Only include if different from the permanent residence address.
-      required:
-      - incorporationCountry
-      - name
-      - permanentResidenceAddress
-      description: The payee (beneficial owner) completing the document.
-    TaxTreatyBenefitsSchema:
-      type: object
-      properties:
-        residentCountry:
-          type: string
-          description: The foreign country, adhering to `ISO 3166-2` standards, the payee is claiming treaty benefits as a resident with which the United States has an income tax treaty for payments subject to withholding under chapter 3 or under section 1446(a) or (f).
-          minLength: 2
-          maxLength: 2
-        claimedProvision:
-          type: string
-          description: The article and paragraph of the tax treaty that cite the provisions the payee is claiming. Max 20 characters.
-          maxLength: 20
-        rateOfWithholding:
-          type: number
-          description: The decimal percentage rate of withholding the tax treaty allows by default. Rates are subject to validation and approval by the Payer.
-        incomeCode:
-          allOf:
-          - $ref: '#/components/schemas/TaxTreatyIncomeCodeEnum'
-          description: The code of the income associated with the claimed rate of withholding.
-        incomeType:
-          type: string
-          const: SERVICES
-          description: The type of income associated with the claimed rate of withholding.
-        additionalConditions:
-          type: string
-          description: The additional conditions the payee is claiming under the cited tax treaty.
-      required:
-      - claimedProvision
-      - incomeCode
-      - incomeType
-      - rateOfWithholding
-      - residentCountry
-      description: The tax treaty benefits the payee is claiming.
-    TaxTreatyAboundCodeEnum:
-      type: string
-      enum:
-      - AU_17_INDEPENDENT_PERSONAL_SERVICES
-      - AU_18_DEPENDENT_PERSONAL_SERVICES
-      - AU_42_PUBLIC_ENTERTAINMENT
-      - CA_17_INDEPENDENT_PERSONAL_SERVICES
-      - CA_18_DEPENDENT_PERSONAL_SERVICES
-      - CA_42_PUBLIC_ENTERTAINMENT
-      - CN_17_INDEPENDENT_PERSONAL_SERVICES
-      - CN_18_DEPENDENT_PERSONAL_SERVICES
-      - CN_42_PUBLIC_ENTERTAINMENT
-      - GB_17_INDEPENDENT_PERSONAL_SERVICES
-      - GB_18_DEPENDENT_PERSONAL_SERVICES
-      - GB_42_PUBLIC_ENTERTAINMENT
-      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
-      - IL_17_INDEPENDENT_PERSONAL_SERVICES
-      - IL_18_DEPENDENT_PERSONAL_SERVICES
-      - IL_42_PUBLIC_ENTERTAINMENT
-      - IN_17_INDEPENDENT_PERSONAL_SERVICES
-      - IN_18_DEPENDENT_PERSONAL_SERVICES
-      - IN_42_PUBLIC_ENTERTAINMENT
-      - MX_17_INDEPENDENT_PERSONAL_SERVICES
-      - MX_18_DEPENDENT_PERSONAL_SERVICES
-      - MX_42_PUBLIC_ENTERTAINMENT
-      description: The tax treaty code the payee is claiming.
-    TinTypeEnum:
-      type: string
-      enum:
-      - INDIVIDUAL
-      - BUSINESS
-      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
-    ForeignTinFingerprint:
-      type: string
-      description: The unique token that points to a foreign TIN.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    TaxTreatyIncomeCodeEnum:
+      type: string
+      enum:
+      - '16'
+      - '17'
+      - '18'
+      - '42'
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    ForeignTinFingerprint:
+      type: string
+      description: The unique token that points to a foreign TIN.
     W8BenESchema:
       type: object
       properties:
@@ -377,31 +297,6 @@ components:
             printedName: Hooli Representative
             signedAt: '2024-01-01T00:00:00.000Z'
             ipAddress: 127.0.0.1
-    ElectronicSignatureOfPayeeSchema:
-      type: object
-      properties:
-        signature:
-          type: string
-          description: The signature of the payee.
-        printedName:
-          type: string
-          description: The printed name of the payee.
-        signedAt:
-          type: string
-          format: date-time
-          description: The date and time in `ISO 8601` format of the signature.
-        ipAddress:
-          type: string
-          description: The IP address of the payee when signing this document.
-      required:
-      - ipAddress
-      - printedName
-      - signature
-      - signedAt
-      description: The electronic signature of the payee.
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
     W8BenEBeneficialOwnerSchema:
       allOf:
       - $ref: '#/components/schemas/W8BenEBeneficialOwnerRequestSchema'
@@ -417,82 +312,6 @@ components:
             $ref: '#/components/schemas/TinVerificationStatusEnum'
           foreignTinFingerprint:
             $ref: '#/components/schemas/ForeignTinFingerprint'
-    TaxTreatyIncomeCodeEnum:
-      type: string
-      enum:
-      - '16'
-      - '17'
-      - '18'
-      - '42'
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    W8BenEFormFieldsSchema:
-      type: object
-      properties:
-        taxClassification:
-          $ref: '#/components/schemas/W8BenETaxClassificationEnum'
-        isForeignTinNotRequired:
-          type: boolean
-          description: Pass true if a foreign TIN is not legally required. Otherwise false.
-        taxTreatyBenefits:
-          allOf:
-          - $ref: '#/components/schemas/TaxTreatyBenefitsSchema'
-          description: The tax treaty benefits the payee is claiming.
-        referenceNumbers:
-          type: array
-          items:
-            type: string
-          description: The reference numbers to list on this W-8BEN-E. Two reference numbers are allowed. Max 20 characters each.
-        isCertified:
-          type: boolean
-          description: Pass true if the payee has certified the W-8BEN-E. Otherwise false.
-        electronicSignature:
-          allOf:
-          - $ref: '#/components/schemas/ElectronicSignatureOfPayeeSchema'
-          description: The electronic signature of the payee.
-      required:
-      - isCertified
-      - taxClassification
-    PayeeForeignTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payee.foreignTinFingerprint` field.
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    ForeignAddressSchema:
-      type: object
-      properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address.
-        state:
-          type: string
-          description: The province associated with the street address.
-        postalCode:
-          type: string
-          description: The foreign postal code associated with the street address.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-      required:
-      - address
-      - country
     W8BenEFormFieldsRequestSchema:
       type: object
       properties:
@@ -520,13 +339,217 @@ components:
       required:
       - isCertified
       - taxClassification
-    TinVerificationStatusEnum:
+    PayeeForeignTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.foreignTinFingerprint` field.
+    W8BenETaxClassificationEnum:
       type: string
       enum:
-      - MATCH
-      - MISMATCH
-      - PENDING
-      description: The status of the TIN Verification.
+      - CENTRAL_BANK_OF_ISSUE
+      - COMPLEX_TRUST
+      - CORPORATION
+      - DISREGARDED_ENTITY
+      - ESTATE
+      - FOREIGN_GOVERNMENT_CONTROLLED_ENTITY
+      - FOREIGN_GOVERNMENT_INTEGRAL_PART
+      - GRANTOR_TRUST
+      - INTERNATIONAL_ORGANIZATION
+      - PARTNERSHIP
+      - PRIVATE_FOUNDATION
+      - SIMPLE_TRUST
+      - TAX_EXEMPT_ORGANIZATION
+      description: The tax classification of the payee.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    W8BenEFormFieldsSchema:
+      type: object
+      properties:
+        taxClassification:
+          $ref: '#/components/schemas/W8BenETaxClassificationEnum'
+        isForeignTinNotRequired:
+          type: boolean
+          description: Pass true if a foreign TIN is not legally required. Otherwise false.
+        taxTreatyBenefits:
+          allOf:
+          - $ref: '#/components/schemas/TaxTreatyBenefitsSchema'
+          description: The tax treaty benefits the payee is claiming.
+        referenceNumbers:
+          type: array
+          items:
+            type: string
+          description: The reference numbers to list on this W-8BEN-E. Two reference numbers are allowed. Max 20 characters each.
+        isCertified:
+          type: boolean
+          description: Pass true if the payee has certified the W-8BEN-E. Otherwise false.
+        electronicSignature:
+          allOf:
+          - $ref: '#/components/schemas/ElectronicSignatureOfPayeeSchema'
+          description: The electronic signature of the payee.
+      required:
+      - isCertified
+      - taxClassification
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    W8BenEBeneficialOwnerRequestSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The payee's legal name (first + last).
+        incorporationCountry:
+          type: string
+          description: The payee's country of incorporation adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+        tin:
+          type: string
+          description: The payee's US tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+          minLength: 9
+          maxLength: 9
+        foreignTin:
+          type: string
+          description: The payee's foreign tax identifying number, commonly referred to as a FTIN. No hyphens. Alphanumeric digits only. Alternatively, you may pass the corresponding `foreignTinFingerprint`.
+        permanentResidenceAddress:
+          allOf:
+          - $ref: '#/components/schemas/ForeignAddressSchema'
+          description: Permanent residence address (street, apt. or suite no., or rural route). Do not use a P.O. box or in-care-of address.
+        mailingAddress:
+          allOf:
+          - $ref: '#/components/schemas/AddressSchema'
+          description: The mailing address. Only include if different from the permanent residence address.
+      required:
+      - incorporationCountry
+      - name
+      - permanentResidenceAddress
+      description: The payee (beneficial owner) completing the document.
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    ForeignAddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address.
+        state:
+          type: string
+          description: The province associated with the street address.
+        postalCode:
+          type: string
+          description: The foreign postal code associated with the street address.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    TaxTreatyBenefitsSchema:
+      type: object
+      properties:
+        residentCountry:
+          type: string
+          description: The foreign country, adhering to `ISO 3166-2` standards, the payee is claiming treaty benefits as a resident with which the United States has an income tax treaty for payments subject to withholding under chapter 3 or under section 1446(a) or (f).
+          minLength: 2
+          maxLength: 2
+        claimedProvision:
+          type: string
+          description: The article and paragraph of the tax treaty that cite the provisions the payee is claiming. Max 20 characters.
+          maxLength: 20
+        rateOfWithholding:
+          type: number
+          description: The decimal percentage rate of withholding the tax treaty allows by default. Rates are subject to validation and approval by the Payer.
+        incomeCode:
+          allOf:
+          - $ref: '#/components/schemas/TaxTreatyIncomeCodeEnum'
+          description: The code of the income associated with the claimed rate of withholding.
+        incomeType:
+          type: string
+          const: SERVICES
+          description: The type of income associated with the claimed rate of withholding.
+        additionalConditions:
+          type: string
+          description: The additional conditions the payee is claiming under the cited tax treaty.
+      required:
+      - claimedProvision
+      - incomeCode
+      - incomeType
+      - rateOfWithholding
+      - residentCountry
+      description: The tax treaty benefits the payee is claiming.
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    TaxTreatyAboundCodeEnum:
+      type: string
+      enum:
+      - AU_17_INDEPENDENT_PERSONAL_SERVICES
+      - AU_18_DEPENDENT_PERSONAL_SERVICES
+      - AU_42_PUBLIC_ENTERTAINMENT
+      - CA_17_INDEPENDENT_PERSONAL_SERVICES
+      - CA_18_DEPENDENT_PERSONAL_SERVICES
+      - CA_42_PUBLIC_ENTERTAINMENT
+      - CN_17_INDEPENDENT_PERSONAL_SERVICES
+      - CN_18_DEPENDENT_PERSONAL_SERVICES
+      - CN_42_PUBLIC_ENTERTAINMENT
+      - GB_17_INDEPENDENT_PERSONAL_SERVICES
+      - GB_18_DEPENDENT_PERSONAL_SERVICES
+      - GB_42_PUBLIC_ENTERTAINMENT
+      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
+      - IL_17_INDEPENDENT_PERSONAL_SERVICES
+      - IL_18_DEPENDENT_PERSONAL_SERVICES
+      - IL_42_PUBLIC_ENTERTAINMENT
+      - IN_17_INDEPENDENT_PERSONAL_SERVICES
+      - IN_18_DEPENDENT_PERSONAL_SERVICES
+      - IN_42_PUBLIC_ENTERTAINMENT
+      - MX_17_INDEPENDENT_PERSONAL_SERVICES
+      - MX_18_DEPENDENT_PERSONAL_SERVICES
+      - MX_42_PUBLIC_ENTERTAINMENT
+      description: The tax treaty code the payee is claiming.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
     AddressSchema:
       type: object
       properties:
@@ -553,29 +576,28 @@ components:
       required:
       - address
       - country
-    DocumentId:
-      type: string
-      description: The unique identifier for an existing document.
-    W8BenETaxClassificationEnum:
-      type: string
-      enum:
-      - CENTRAL_BANK_OF_ISSUE
-      - COMPLEX_TRUST
-      - CORPORATION
-      - DISREGARDED_ENTITY
-      - ESTATE
-      - FOREIGN_GOVERNMENT_CONTROLLED_ENTITY
-      - FOREIGN_GOVERNMENT_INTEGRAL_PART
-      - GRANTOR_TRUST
-      - INTERNATIONAL_ORGANIZATION
-      - PARTNERSHIP
-      - PRIVATE_FOUNDATION
-      - SIMPLE_TRUST
-      - TAX_EXEMPT_ORGANIZATION
-      description: The tax classification of the payee.
-    PayeeTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    ElectronicSignatureOfPayeeSchema:
+      type: object
+      properties:
+        signature:
+          type: string
+          description: The signature of the payee.
+        printedName:
+          type: string
+          description: The printed name of the payee.
+        signedAt:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format of the signature.
+        ipAddress:
+          type: string
+          description: The IP address of the payee when signing this document.
+      required:
+      - ipAddress
+      - printedName
+      - signature
+      - signedAt
+      description: The electronic signature of the payee.
     W8BenERequestSchema:
       type: object
       properties:
@@ -620,28 +642,6 @@ components:
             printedName: Hooli Representative
             signedAt: '2024-01-01T00:00:00.000Z'
             ipAddress: 127.0.0.1
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
   securitySchemes:
     bearerAuth:
       type: http

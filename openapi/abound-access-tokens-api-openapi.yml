@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Abound API - v4 1099-INT Access Tokens API
+  title: Abound API - v4 Access Tokens API
   version: '4'
   description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
 
@@ -78,22 +78,36 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    CustomizationsSchema:
+    ErrorBadRequestSchema:
       type: object
       properties:
-        payeeTaxProfile:
-          allOf:
-          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
-          description: The Payee Tax Profile component customizations.
-      description: The component customizations for this access token.
-    DefaultErrorSchema:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
+        field:
+          type: string
+          description: The field that caused the error.
         message:
           type: string
-          description: The error message associated with the response status code.
+          description: The error message associated with the field.
       required:
       - message
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    SupportedTaxFormsEnum:
+      type: string
+      enum:
+      - FORM_W_9
+      - FORM_W_8BEN
+      - FORM_W_8BEN_E
     AccessTokenSchema:
       type: object
       properties:
@@ -121,34 +135,48 @@ components:
       - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
         createdAt: '2024-01-01T00:00:00.000Z'
         expiresAt: '2024-01-01T00:15:00.000Z'
-    SupportedTaxFormsEnum:
-      type: string
-      enum:
-      - FORM_W_9
-      - FORM_W_8BEN
-      - FORM_W_8BEN_E
-    PayeeTaxProfileSchema:
+    AddressSchema:
       type: object
       properties:
-        shouldPreloadFromUserId:
-          type: boolean
-          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
-        shouldCollectElectronicDeliveryConsent:
-          type: boolean
-          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
-        supportedTaxForms:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedTaxFormsEnum'
-          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
-        defaults:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    CustomizationsSchema:
+      type: object
+      properties:
+        payeeTaxProfile:
           allOf:
-          - $ref: '#/components/schemas/DefaultsSchema'
-          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
-        requestingPayer:
-          allOf:
-          - $ref: '#/components/schemas/PayerRequestSchema'
-          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
+          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
+          description: The Payee Tax Profile component customizations.
+      description: The component customizations for this access token.
     DefaultsSchema:
       type: object
       properties:
@@ -188,45 +216,28 @@ components:
         email:
           type: string
           description: The payee's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    AddressSchema:
+    PayeeTaxProfileSchema:
       type: object
       properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-      required:
-      - address
-      - country
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
+        shouldPreloadFromUserId:
+          type: boolean
+          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
+        shouldCollectElectronicDeliveryConsent:
+          type: boolean
+          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
+        supportedTaxForms:
           type: array
           items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
+            $ref: '#/components/schemas/SupportedTaxFormsEnum'
+          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
+        defaults:
+          allOf:
+          - $ref: '#/components/schemas/DefaultsSchema'
+          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
+        requestingPayer:
+          allOf:
+          - $ref: '#/components/schemas/PayerRequestSchema'
+          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
     PayerRequestSchema:
       allOf:
       - $ref: '#/components/schemas/AddressSchema'
@@ -252,17 +263,6 @@ components:
         - phoneNumber
         - tin
       description: The payer of the document.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
   securitySchemes:
     bearerAuth:
       type: http

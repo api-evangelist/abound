@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Abound API - v4 1099-INT API
+  title: Abound API - v4 1099 INT API
   version: '4'
   description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
 
@@ -570,6 +570,9 @@ components:
       - WV
       - WY
       description: The filing state code. The abbreviation of the state (`CA` for California). If a state filing is not desired, use `N/A`.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
     Form1099IntCorrectRequestSchema:
       allOf:
       - $ref: '#/components/schemas/Form1099BaseCorrectRequestSchema'
@@ -608,9 +611,204 @@ components:
           accountNumber: A006SVmcrieFAbm3gsaV
           stateTaxInfo:
           - filingState: CA
-    OkSchema:
+    Form1099IntFormFieldsRequestSchema:
       type: object
-      additionalProperties: {}
+      properties:
+        hasFatcaFilingRequirement:
+          type: boolean
+          description: Satisfying a requirement to report with respect to a U.S. account for chapter 4 purposes.
+        accountNumber:
+          type: string
+          description: The IRS “encourages” a payer to designate an account number for all Form 1099-INT filed. This field is required if payer has multiple accounts for a recipient for whom it is filing more than one Form 1099-INT. This field is also required if `fatca` is `true`. Abound will auto-generated this field if not provided.
+          maxLength: 20
+        payersRoutingNumber:
+          type: string
+          description: A routing and transit number (RTN) is a unique nine-digit number used to identify a bank for purposes of directing financial flows. This is essentially bank's bank account - their account with the Federal Reserve.
+          maxLength: 20
+        interestIncome:
+          type: integer
+          description: The taxable interest paid to you during the calendar year by the payer. This does not include interest for `usSavingsBondsInterest`. May also show the total amount of the credits from clean renewable energy bonds, new clean renewable energy bonds, qualified energy conservation bonds, qualified zone academy bonds, qualified school construction bonds, and build America bonds that must be included in your interest income. Value must be in cents.
+          minimum: 0
+        earlyWithdrawalPenalty:
+          type: integer
+          description: The interest or principal forfeited because of early withdrawal of time savings. You may deduct this amount to figure your adjusted gross income on your income tax return. Value must be in cents.
+          minimum: 0
+        usSavingsBondsInterest:
+          type: integer
+          description: Shows interest on U.S. Savings Bonds, Treasury bills, Treasury bonds, and Treasury notes. This may or may not all be taxable. This interest is exempt from state and local income taxes. This interest is not included in `interestIncome`. Value must be in cents.
+          minimum: 0
+        federalIncomeTaxWithheld:
+          type: integer
+          description: The federal income tax withheld. A payer must backup withhold on certain payments if recipient did not provide a TIN to the payer. Value must be in cents. Abound does not currently support `federalIncomeTaxWithheld` reporting on the 1099-INT, please contact us for more information.
+          minimum: 0
+          maximum: 0
+        investmentExpenses:
+          type: integer
+          description: 'Any amount is your share of investment expenses of a singleclass REMIC. This amount is included in `interestIncome`. *Note: This amount is not deductible.* Value must be in cents.'
+          minimum: 0
+        foreignTaxPaid:
+          type: integer
+          description: The foreign tax paid. Value must be in cents.
+          minimum: 0
+        foreignTaxPaidCountry:
+          type: string
+          description: The country or U.S. possession to which the foreign tax was paid.
+          minLength: 2
+          maxLength: 2
+        taxExemptInterest:
+          type: integer
+          description: The tax-exempt interest paid to you during the calendar year by the payer. This amount may be subject to backup withholding. See `federalIncomeTaxWithheld` above. Value must be in cents.
+          minimum: 0
+        specifiedPrivateActivityBondInterest:
+          type: integer
+          description: The tax-exempt interest subject to the alternative minimum tax. This amount is included in `taxExemptInterest`. Value must be in cents.
+          minimum: 0
+        marketDiscount:
+          type: integer
+          description: For a taxable or tax-exempt covered security, if you made an election under section 1278(b) to include market discount in income as it accrues and you notified your payer of the election in writing in accordance with Regulations section 1.6045-1(n)(5), shows the market discount that accrued on the debt instrument during the year while held by you, unless it was reported on Form 1099-OID. Value must be in cents.
+          minimum: 0
+        bondPremium:
+          type: integer
+          description: For a taxable covered security (other than a U.S. Treasury obligation), shows the amount of premium amortization allocable to the interest payment(s), unless you notified the payer in writing in accordance with Regulations section 1.6045-1(n)(5) that you did not want to amortize bond premium under section 171. Value must be in cents.
+          minimum: 0
+        bondPremiumTreasury:
+          type: integer
+          description: For a U.S. Treasury obligation that is a covered security, shows the amount of premium amortization allocable to the interest payment(s), unless you notified the payer in writing in accordance with Regulations section 1.6045-1(n)(5) that you did not want to amortize bond premium under section 171. Value must be in cents.
+          minimum: 0
+        bondPremiumTaxExemptBond:
+          type: integer
+          description: For a tax-exempt covered security, shows the amount of premium amortization allocable to the interest payment(s). Value must be in cents.
+          minimum: 0
+        stateTaxInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form1099StateTaxInfoSchema'
+          description: An array that contains up to two state tax information objects. Abound currently only supports one state tax information object in this array. Abound does not currently support state-level tax withholding reporting on the 1099-INT, please contact us for more information.
+      required:
+      - stateTaxInfo
+      description: The 1099-INT form fields.
+    Form1099StatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    Form1099StateTaxInfoSchema:
+      type: object
+      properties:
+        filingState:
+          $ref: '#/components/schemas/Form1099FilingStateEnum'
+        payeeStateId:
+          type: string
+          description: The payee's state identification number.
+          deprecated: true
+        payerStateId:
+          type: string
+          description: The payer's state identification number.
+          deprecated: true
+        stateTaxWithheld:
+          type: integer
+          description: The state tax withheld. Value must be in cents. Abound does not currently support `stateTaxWithheld` reporting, please contact us for more information.
+          minimum: 0
+          maximum: 0
+      required:
+      - filingState
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    MailingSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingRequestSchema'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier for this mailing.
+          createdAt:
+            type: string
+            format: date-time
+            description: The creation date and time of the mailing in `ISO 8601` format.
+          url:
+            type: string
+            description: The URL to the mailed document.
+          status:
+            allOf:
+            - $ref: '#/components/schemas/MailingStatusEnum'
+            description: The status of the mailing.
+          userId:
+            $ref: '#/components/schemas/UserId'
+          mailedFromId:
+            type: string
+            description: The `documentId` of the mailed document.
+        required:
+        - createdAt
+        - id
+        - mailedFromId
+        - status
+        - url
+      examples:
+      - id: mailingId_sampleFV9b73IvAD
+        createdAt: '2024-01-01T00:00:00.000Z'
+        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+        status: CREATED
+        to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+        mailedFromId: documentId_sampletTtqNfulW8
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    Form1099IntFormFieldsSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099FormFieldsBaseSchema'
+      - $ref: '#/components/schemas/Form1099IntFormFieldsRequestSchema'
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
     Form1099IntSchema:
       allOf:
       - $ref: '#/components/schemas/Form1099BaseSchema'
@@ -843,154 +1041,9 @@ components:
           tinVerificationStatus: MATCH
         payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-INT-VOID-COPY-C.pdf
         payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-INT-VOID-COPY-B.pdf
-    IdempotencyKey:
+    PayerTinFingerprint:
       type: string
-      description: The unique key used to identify a request that has already been processed.
-    PayerRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payer's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-          phoneNumber:
-            type: string
-            description: The payer's phone number.
-            pattern: ^\+?\d{10,15}$
-        required:
-        - name
-        - phoneNumber
-        - tin
-      description: The payer of the document.
-    MailingRequestToSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the recipient.
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    FilingYear:
-      type: integer
-      description: The filing year associated with this document.
-    TinTypeEnum:
-      type: string
-      enum:
-      - INDIVIDUAL
-      - BUSINESS
-      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
-    MailingStatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
-    Form1099BaseCorrectRequestSchema:
-      type: object
-      properties:
-        userId:
-          $ref: '#/components/schemas/UserId'
-        payee:
-          $ref: '#/components/schemas/PayeeRequestSchema'
-      required:
-      - payee
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
-    PayerSchema:
-      allOf:
-      - $ref: '#/components/schemas/PayerRequestSchema'
-      - type: object
-        properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
-        required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
-      description: The payer of the document.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    MailingNameSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The individual's name (first + last) or business name.
-        name2:
-          type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
-    Form1099BaseRequestSchema:
-      type: object
-      properties:
-        filingYear:
-          $ref: '#/components/schemas/FilingYear'
-        userId:
-          $ref: '#/components/schemas/UserId'
-        payer:
-          $ref: '#/components/schemas/PayerRequestSchema'
-        payee:
-          $ref: '#/components/schemas/PayeeRequestSchema'
-      required:
-      - filingYear
-      - payee
-      - payer
-    Form1099FormFieldsBaseSchema:
-      type: object
-      properties:
-        isVoid:
-          type: boolean
-          description: If `true`, the void checkbox will be marked on the 1099 document.
-        isCorrected:
-          type: boolean
-          description: If `true`, the corrected checkbox will be marked on the 1099 document.
-      required:
-      - isCorrected
-      - isVoid
-    TinVerificationStatusEnum:
-      type: string
-      enum:
-      - MATCH
-      - MISMATCH
-      - PENDING
-      description: The status of the TIN Verification.
-    MailingRequestFromSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the sender.
-    Form1099IntFormFieldsSchema:
-      allOf:
-      - $ref: '#/components/schemas/Form1099FormFieldsBaseSchema'
-      - $ref: '#/components/schemas/Form1099IntFormFieldsRequestSchema'
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
     PayeeSchema:
       allOf:
       - $ref: '#/components/schemas/PayeeRequestSchema'
@@ -1009,13 +1062,115 @@ components:
         - tinVerificationId
         - tinVerificationStatus
       description: The payee of the document.
-    Form1099StatusEnum:
+    Form1099BaseRequestSchema:
+      type: object
+      properties:
+        filingYear:
+          $ref: '#/components/schemas/FilingYear'
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payer:
+          $ref: '#/components/schemas/PayerRequestSchema'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - filingYear
+      - payee
+      - payer
+    MailingStatusEnum:
       type: string
       enum:
       - CREATED
-      - FILED
-      - ACCEPTED
-      - REJECTED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    Form1099FormFieldsBaseSchema:
+      type: object
+      properties:
+        isVoid:
+          type: boolean
+          description: If `true`, the void checkbox will be marked on the 1099 document.
+        isCorrected:
+          type: boolean
+          description: If `true`, the corrected checkbox will be marked on the 1099 document.
+      required:
+      - isCorrected
+      - isVoid
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    Form1099BaseCorrectRequestSchema:
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - payee
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    OkSchema:
+      type: object
+      additionalProperties: {}
     Form1099BaseSchema:
       type: object
       properties:
@@ -1064,6 +1219,49 @@ components:
       - payer
       - payerUrl
       - status
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
     AddressSchema:
       type: object
       properties:
@@ -1090,9 +1288,34 @@ components:
       required:
       - address
       - country
-    DocumentId:
-      type: string
-      description: The unique identifier for an existing document.
+    FilingYear:
+      type: integer
+      description: The filing year associated with this document.
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    PayeeRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payee's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+        required:
+        - name
+        - tin
+      description: The payee of the document.
     Form1099IntRequestSchema:
       allOf:
       - $ref: '#/components/schemas/Form1099BaseRequestSchema'
@@ -1143,229 +1366,6 @@ components:
           stateTaxInfo:
           - filingState: CA
             stateTaxWithheld: 0
-    PayeeTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payee.tinFingerprint` field.
-    PayerTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payer.tinFingerprint` field.
-    PayeeRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payee's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-        required:
-        - name
-        - tin
-      description: The payee of the document.
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
-    MailingSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingRequestSchema'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: The unique identifier for this mailing.
-          createdAt:
-            type: string
-            format: date-time
-            description: The creation date and time of the mailing in `ISO 8601` format.
-          url:
-            type: string
-            description: The URL to the mailed document.
-          status:
-            allOf:
-            - $ref: '#/components/schemas/MailingStatusEnum'
-            description: The status of the mailing.
-          userId:
-            $ref: '#/components/schemas/UserId'
-          mailedFromId:
-            type: string
-            description: The `documentId` of the mailed document.
-        required:
-        - createdAt
-        - id
-        - mailedFromId
-        - status
-        - url
-      examples:
-      - id: mailingId_sampleFV9b73IvAD
-        createdAt: '2024-01-01T00:00:00.000Z'
-        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
-        status: CREATED
-        to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
-        mailedFromId: documentId_sampletTtqNfulW8
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    Form1099StateTaxInfoSchema:
-      type: object
-      properties:
-        filingState:
-          $ref: '#/components/schemas/Form1099FilingStateEnum'
-        payeeStateId:
-          type: string
-          description: The payee's state identification number.
-          deprecated: true
-        payerStateId:
-          type: string
-          description: The payer's state identification number.
-          deprecated: true
-        stateTaxWithheld:
-          type: integer
-          description: The state tax withheld. Value must be in cents. Abound does not currently support `stateTaxWithheld` reporting, please contact us for more information.
-          minimum: 0
-          maximum: 0
-      required:
-      - filingState
-    Form1099IntFormFieldsRequestSchema:
-      type: object
-      properties:
-        hasFatcaFilingRequirement:
-          type: boolean
-          description: Satisfying a requirement to report with respect to a U.S. account for chapter 4 purposes.
-        accountNumber:
-          type: string
-          description: The IRS “encourages” a payer to designate an account number for all Form 1099-INT filed. This field is required if payer has multiple accounts for a recipient for whom it is filing more than one Form 1099-INT. This field is also required if `fatca` is `true`. Abound will auto-generated this field if not provided.
-          maxLength: 20
-        payersRoutingNumber:
-          type: string
-          description: A routing and transit number (RTN) is a unique nine-digit number used to identify a bank for purposes of directing financial flows. This is essentially bank's bank account - their account with the Federal Reserve.
-          maxLength: 20
-        interestIncome:
-          type: integer
-          description: The taxable interest paid to you during the calendar year by the payer. This does not include interest for `usSavingsBondsInterest`. May also show the total amount of the credits from clean renewable energy bonds, new clean renewable energy bonds, qualified energy conservation bonds, qualified zone academy bonds, qualified school construction bonds, and build America bonds that must be included in your interest income. Value must be in cents.
-          minimum: 0
-        earlyWithdrawalPenalty:
-          type: integer
-          description: The interest or principal forfeited because of early withdrawal of time savings. You may deduct this amount to figure your adjusted gross income on your income tax return. Value must be in cents.
-          minimum: 0
-        usSavingsBondsInterest:
-          type: integer
-          description: Shows interest on U.S. Savings Bonds, Treasury bills, Treasury bonds, and Treasury notes. This may or may not all be taxable. This interest is exempt from state and local income taxes. This interest is not included in `interestIncome`. Value must be in cents.
-          minimum: 0
-        federalIncomeTaxWithheld:
-          type: integer
-          description: The federal income tax withheld. A payer must backup withhold on certain payments if recipient did not provide a TIN to the payer. Value must be in cents. Abound does not currently support `federalIncomeTaxWithheld` reporting on the 1099-INT, please contact us for more information.
-          minimum: 0
-          maximum: 0
-        investmentExpenses:
-          type: integer
-          description: 'Any amount is your share of investment expenses of a singleclass REMIC. This amount is included in `interestIncome`. *Note: This amount is not deductible.* Value must be in cents.'
-          minimum: 0
-        foreignTaxPaid:
-          type: integer
-          description: The foreign tax paid. Value must be in cents.
-          minimum: 0
-        foreignTaxPaidCountry:
-          type: string
-          description: The country or U.S. possession to which the foreign tax was paid.
-          minLength: 2
-          maxLength: 2
-        taxExemptInterest:
-          type: integer
-          description: The tax-exempt interest paid to you during the calendar year by the payer. This amount may be subject to backup withholding. See `federalIncomeTaxWithheld` above. Value must be in cents.
-          minimum: 0
-        specifiedPrivateActivityBondInterest:
-          type: integer
-          description: The tax-exempt interest subject to the alternative minimum tax. This amount is included in `taxExemptInterest`. Value must be in cents.
-          minimum: 0
-        marketDiscount:
-          type: integer
-          description: For a taxable or tax-exempt covered security, if you made an election under section 1278(b) to include market discount in income as it accrues and you notified your payer of the election in writing in accordance with Regulations section 1.6045-1(n)(5), shows the market discount that accrued on the debt instrument during the year while held by you, unless it was reported on Form 1099-OID. Value must be in cents.
-          minimum: 0
-        bondPremium:
-          type: integer
-          description: For a taxable covered security (other than a U.S. Treasury obligation), shows the amount of premium amortization allocable to the interest payment(s), unless you notified the payer in writing in accordance with Regulations section 1.6045-1(n)(5) that you did not want to amortize bond premium under section 171. Value must be in cents.
-          minimum: 0
-        bondPremiumTreasury:
-          type: integer
-          description: For a U.S. Treasury obligation that is a covered security, shows the amount of premium amortization allocable to the interest payment(s), unless you notified the payer in writing in accordance with Regulations section 1.6045-1(n)(5) that you did not want to amortize bond premium under section 171. Value must be in cents.
-          minimum: 0
-        bondPremiumTaxExemptBond:
-          type: integer
-          description: For a tax-exempt covered security, shows the amount of premium amortization allocable to the interest payment(s). Value must be in cents.
-          minimum: 0
-        stateTaxInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/Form1099StateTaxInfoSchema'
-          description: An array that contains up to two state tax information objects. Abound currently only supports one state tax information object in this array. Abound does not currently support state-level tax withholding reporting on the 1099-INT, please contact us for more information.
-      required:
-      - stateTaxInfo
-      description: The 1099-INT form fields.
-    MailingRequestSchema:
-      type: object
-      properties:
-        to:
-          $ref: '#/components/schemas/MailingRequestToSchema'
-        from:
-          $ref: '#/components/schemas/MailingRequestFromSchema'
-      required:
-      - from
-      - to
-      examples:
-      - to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
   securitySchemes:
     bearerAuth:
       type: http

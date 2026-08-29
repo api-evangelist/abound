@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Abound API - v4 1099-INT Mailings API
+  title: Abound API - v4 Mailings API
   version: '4'
   description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
 
@@ -257,29 +257,72 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    MailingNameSchema:
+    ErrorBadRequestSchema:
       type: object
       properties:
-        name:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
           type: string
-          description: The individual's name (first + last) or business name.
-        name2:
+          description: The field that caused the error.
+        message:
           type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
-    UserId:
+          description: The error message associated with the field.
+      required:
+      - message
+    IdempotencyKey:
       type: string
-      description: The unique identifier for a single end-user of your application.
+      description: The unique key used to identify a request that has already been processed.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    MailingStatusEnum:
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    MailingId:
       type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
+      description: The unique identifier for an existing mailing.
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
     DefaultErrorSchema:
       type: object
       properties:
@@ -288,6 +331,47 @@ components:
           description: The error message associated with the response status code.
       required:
       - message
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     MailingSchema:
       allOf:
       - $ref: '#/components/schemas/MailingRequestSchema'
@@ -340,99 +424,15 @@ components:
           country: US
           name: Hooli
         mailedFromId: documentId_sampletTtqNfulW8
-    MailingRequestFromSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the sender.
-    OkSchema:
-      type: object
-      additionalProperties: {}
-    MailingId:
-      type: string
-      description: The unique identifier for an existing mailing.
-    MailingRequestSchema:
+    MailingNameSchema:
       type: object
       properties:
-        to:
-          $ref: '#/components/schemas/MailingRequestToSchema'
-        from:
-          $ref: '#/components/schemas/MailingRequestFromSchema'
-      required:
-      - from
-      - to
-      examples:
-      - to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
+        name:
           type: string
-          description: The field that caused the error.
-        message:
+          description: The individual's name (first + last) or business name.
+        name2:
           type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    AddressSchema:
-      type: object
-      properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-      required:
-      - address
-      - country
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    MailingRequestToSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the recipient.
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
   securitySchemes:
     bearerAuth:
       type: http

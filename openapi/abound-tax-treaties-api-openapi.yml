@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Abound API - v4 1099-INT Tax Treaties API
+  title: Abound API - v4 Tax Treaties API
   version: '4'
   description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
 
@@ -75,6 +75,16 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
     TaxTreatyAboundCodeEnum:
       type: string
       enum:
@@ -101,6 +111,17 @@ components:
       - MX_18_DEPENDENT_PERSONAL_SERVICES
       - MX_42_PUBLIC_ENTERTAINMENT
       description: The tax treaty code the payee is claiming.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
     TaxTreatySchema:
       type: object
       properties:
@@ -138,27 +159,6 @@ components:
     TaxTreatyCountry:
       type: string
       description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
   securitySchemes:
     bearerAuth:
       type: http
