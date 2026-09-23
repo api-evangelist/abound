@@ -2,10 +2,7 @@ openapi: 3.2.0
 info:
   title: Abound API - v4 Access Tokens API
   version: '4'
-  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
-
-
-    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.'
   x-status: retired
 servers:
 - url: https://production-api.withabound.com
@@ -78,16 +75,34 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    ErrorBadRequestSchema:
+    PayeeTaxProfileSchema:
       type: object
       properties:
-        errors:
+        shouldPreloadFromUserId:
+          type: boolean
+          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
+        shouldCollectElectronicDeliveryConsent:
+          type: boolean
+          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
+        supportedTaxForms:
           type: array
           items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
+            $ref: '#/components/schemas/SupportedTaxFormsEnum'
+          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
+        defaults:
+          allOf:
+          - $ref: '#/components/schemas/DefaultsSchema'
+          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
+        requestingPayer:
+          allOf:
+          - $ref: '#/components/schemas/PayerRequestSchema'
+          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
+    SupportedTaxFormsEnum:
+      type: string
+      enum:
+      - FORM_W_9
+      - FORM_W_8BEN
+      - FORM_W_8BEN_E
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
@@ -99,15 +114,6 @@ components:
           description: The error message associated with the field.
       required:
       - message
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    SupportedTaxFormsEnum:
-      type: string
-      enum:
-      - FORM_W_9
-      - FORM_W_8BEN
-      - FORM_W_8BEN_E
     AccessTokenSchema:
       type: object
       properties:
@@ -161,14 +167,31 @@ components:
       required:
       - address
       - country
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
     CustomizationsSchema:
       type: object
       properties:
@@ -177,6 +200,27 @@ components:
           - $ref: '#/components/schemas/PayeeTaxProfileSchema'
           description: The Payee Tax Profile component customizations.
       description: The component customizations for this access token.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
     DefaultsSchema:
       type: object
       properties:
@@ -216,53 +260,6 @@ components:
         email:
           type: string
           description: The payee's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
-    PayeeTaxProfileSchema:
-      type: object
-      properties:
-        shouldPreloadFromUserId:
-          type: boolean
-          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
-        shouldCollectElectronicDeliveryConsent:
-          type: boolean
-          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
-        supportedTaxForms:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedTaxFormsEnum'
-          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
-        defaults:
-          allOf:
-          - $ref: '#/components/schemas/DefaultsSchema'
-          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
-        requestingPayer:
-          allOf:
-          - $ref: '#/components/schemas/PayerRequestSchema'
-          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
-    PayerRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payer's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-          phoneNumber:
-            type: string
-            description: The payer's phone number.
-            pattern: ^\+?\d{10,15}$
-        required:
-        - name
-        - phoneNumber
-        - tin
-      description: The payer of the document.
   securitySchemes:
     bearerAuth:
       type: http

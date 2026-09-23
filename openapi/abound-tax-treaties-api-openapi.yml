@@ -2,10 +2,7 @@ openapi: 3.2.0
 info:
   title: Abound API - v4 Tax Treaties API
   version: '4'
-  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
-
-
-    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.'
   x-status: retired
 servers:
 - url: https://production-api.withabound.com
@@ -75,16 +72,17 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    ErrorBadRequestSchema:
+    ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
       required:
-      - errors
+      - message
     TaxTreatyAboundCodeEnum:
       type: string
       enum:
@@ -111,15 +109,22 @@ components:
       - MX_18_DEPENDENT_PERSONAL_SERVICES
       - MX_42_PUBLIC_ENTERTAINMENT
       description: The tax treaty code the payee is claiming.
-    ErrorBadRequestSchemaErrorsItem:
+    ErrorBadRequestSchema:
       type: object
       properties:
-        field:
-          type: string
-          description: The field that caused the error.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    DefaultErrorSchema:
+      type: object
+      properties:
         message:
           type: string
-          description: The error message associated with the field.
+          description: The error message associated with the response status code.
       required:
       - message
     TaxTreatySchema:
@@ -148,14 +153,6 @@ components:
         residentCountry: GB
         rateOfWithholding: 0
         description: Independent personal services performed in the US
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
     TaxTreatyCountry:
       type: string
       description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.

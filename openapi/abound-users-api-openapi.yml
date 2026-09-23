@@ -2,10 +2,7 @@ openapi: 3.2.0
 info:
   title: Abound API - v4 Users API
   version: '4'
-  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
-
-
-    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.'
   x-status: retired
 servers:
 - url: https://production-api.withabound.com
@@ -265,41 +262,15 @@ paths:
                 message: Conflict
 components:
   schemas:
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
     UserSchema:
       allOf:
       - $ref: '#/components/schemas/UserRequestSchema'
@@ -336,15 +307,41 @@ components:
           description: Use metadata for storing additional user data. For filtering, please use `foreignId`.
       examples:
       - foreignId: my-foreign-id
-    ForeignId:
-      type: string
-      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
     Email:
       type: string
       description: Filters the list of users based on the `email` field.
-    UserId:
+    ForeignId:
       type: string
-      description: The unique identifier for a single end-user of your application.
+      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

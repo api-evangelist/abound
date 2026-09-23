@@ -69,13 +69,15 @@
     "abound-v4-openapi.yml: tagged webhooks POST W_8BEN_CREATED -> Abound API V4",
     "abound-v4-openapi.yml: tagged webhooks POST W_8BEN_E_CREATED -> Abound API V4",
     "abound-v4-openapi.yml: tagged webhooks POST W_9_CREATED -> Abound API V4",
-    "abound-v4-openapi.yml: declared missing tag: Abound API V4"
+    "abound-v4-openapi.yml: declared missing tag: Abound API V4",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "abound-1099-int-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-1099-k-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-1099-misc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-1099-nec-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "abound-abound-api-v4-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-access-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-electronic-delivery-consents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "abound-mailings-api-openapi.yml: previously refined output, superseded by openapi/_original/",

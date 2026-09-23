@@ -2,10 +2,7 @@ openapi: 3.2.0
 info:
   title: Abound API - v4 Electronic Delivery Consents API
   version: '4'
-  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
-
-
-    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.'
   x-status: retired
 servers:
 - url: https://production-api.withabound.com
@@ -96,33 +93,15 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
     TinFingerprint:
       type: string
       description: Your unique token that points to a TIN.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     DefaultErrorSchema:
       type: object
       properties:
@@ -131,11 +110,6 @@ components:
           description: The error message associated with the response status code.
       required:
       - message
-    EDeliveryConsentStatusEnum:
-      type: string
-      enum:
-      - ASSENTED
-      - WITHDRAWN
     EDeliveryConsentSchema:
       type: object
       properties:
@@ -163,9 +137,32 @@ components:
       - id
       - status
       - tinFingerprint
-    UserId:
+    EDeliveryConsentStatusEnum:
       type: string
-      description: The unique identifier for a single end-user of your application.
+      enum:
+      - ASSENTED
+      - WITHDRAWN
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

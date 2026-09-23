@@ -2,10 +2,7 @@ openapi: 3.2.0
 info:
   title: Abound API - v4 Abound API V4 API
   version: '4'
-  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.
-
-
-    NOTE: This document is a mechanical conversion of the first-party Fern API Definition that Abound shipped inside its official npm package @withabound/node-sdk (v6.0.68). Abound was acquired and the service has been retired: the withabound.com DNS zone is fully de-delegated and the API hosts no longer resolve. This spec is preserved as a historical record of the API surface.'
+  description: 'Abound was a US tax-compliance API for platforms and marketplaces: W-9 / W-8BEN / W-8BEN-E collection, real-time TIN verification against the IRS, and generation, filing, correction, voiding and physical mailing of Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT with federal and state tax authorities.'
   x-status: retired
 servers:
 - url: https://production-api.withabound.com
@@ -988,6 +985,86 @@ webhooks:
       - Abound API V4
 components:
   schemas:
+    Form1099MiscCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_CORRECTED
+        required:
+        - event
+    Form1099IntRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_REJECTED
+        required:
+        - event
+    TINVerificationPendingWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_PENDING
+        required:
+        - event
+    TINVerificationMismatchWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_MISMATCH
+        required:
+        - event
+    Form1099MiscFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_FILED
+        required:
+        - event
+    Form1099KAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_ACCEPTED
+        required:
+        - event
+    MailingUpdatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_UPDATED
+        required:
+        - event
+    Form1099IntFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_FILED
+        required:
+        - event
     Form1099IntCorrectedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
@@ -998,14 +1075,34 @@ components:
             const: TEN99_INT_CORRECTED
         required:
         - event
-    Form1099NecFiledWebhookPayload:
+    MailingReturnedToSenderWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_NEC_FILED
+            const: MAILING_RETURNED_TO_SENDER
+        required:
+        - event
+    Form1099IntDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_DELETED
+        required:
+        - event
+    Form1099NecCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_CREATED
         required:
         - event
     FormW8BenCreatedWebhookPayload:
@@ -1018,44 +1115,24 @@ components:
             const: W_8BEN_CREATED
         required:
         - event
-    Form1099KCorrectedWebhookPayload:
+    MailingCreatedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_K_CORRECTED
+            const: MAILING_CREATED
         required:
         - event
-    Form1099MiscCorrectedWebhookPayload:
+    Form1099NecAcceptedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_MISC_CORRECTED
-        required:
-        - event
-    UserUpdatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: USER_UPDATED
-        required:
-        - event
-    Form1099IntAcceptedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_INT_ACCEPTED
+            const: TEN99_NEC_ACCEPTED
         required:
         - event
     Form1099NecCorrectedWebhookPayload:
@@ -1068,6 +1145,36 @@ components:
             const: TEN99_NEC_CORRECTED
         required:
         - event
+    MailingDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_DELETED
+        required:
+        - event
+    FormW9CreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: W_9_CREATED
+        required:
+        - event
+    Form1099KRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_REJECTED
+        required:
+        - event
     Form1099KFiledWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
@@ -1076,6 +1183,56 @@ components:
           event:
             type: string
             const: TEN99_K_FILED
+        required:
+        - event
+    Form1099IntCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_INT_CREATED
+        required:
+        - event
+    Form1099MiscAcceptedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_ACCEPTED
+        required:
+        - event
+    MailingProcessingForDeliveryWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_PROCESSING_FOR_DELIVERY
+        required:
+        - event
+    FormW8BenECreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: W_8BEN_E_CREATED
+        required:
+        - event
+    Form1099NecVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_VOIDED
         required:
         - event
     TINVerificationCreatedWebhookPayload:
@@ -1088,14 +1245,54 @@ components:
             const: TIN_VERIFICATION_CREATED
         required:
         - event
-    Form1099MiscFiledWebhookPayload:
+    Form1099IntVoidedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_MISC_FILED
+            const: TEN99_INT_VOIDED
+        required:
+        - event
+    Form1099NecFiledWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_FILED
+        required:
+        - event
+    Form1099KVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_VOIDED
+        required:
+        - event
+    Form1099MiscVoidedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_VOIDED
+        required:
+        - event
+    MailingInTransitWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_IN_TRANSIT
         required:
         - event
     WebhookPayloadBaseSchema:
@@ -1123,277 +1320,14 @@ components:
       - resourceUrl
       - timestamp
       - webhookId
-    Form1099IntFiledWebhookPayload:
+    Form1099IntAcceptedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_INT_FILED
-        required:
-        - event
-    MailingDeletedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_DELETED
-        required:
-        - event
-    Form1099KVoidedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_K_VOIDED
-        required:
-        - event
-    TINVerificationPendingWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TIN_VERIFICATION_PENDING
-        required:
-        - event
-    TINVerificationMismatchWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TIN_VERIFICATION_MISMATCH
-        required:
-        - event
-    MailingInTransitWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_IN_TRANSIT
-        required:
-        - event
-    Form1099KAcceptedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_K_ACCEPTED
-        required:
-        - event
-    Form1099NecVoidedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_NEC_VOIDED
-        required:
-        - event
-    Form1099NecDeletedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_NEC_DELETED
-        required:
-        - event
-    Form1099IntCreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_INT_CREATED
-        required:
-        - event
-    Form1099IntVoidedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_INT_VOIDED
-        required:
-        - event
-    Form1099NecAcceptedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_NEC_ACCEPTED
-        required:
-        - event
-    MailingDeliveredWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_DELIVERED
-        required:
-        - event
-    Form1099NecRejectedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_NEC_REJECTED
-        required:
-        - event
-    AboundSignatureHeader:
-      type: string
-      description: An HMAC signature of the payload
-    Form1099MiscDeletedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_MISC_DELETED
-        required:
-        - event
-    MailingUpdatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_UPDATED
-        required:
-        - event
-    Form1099MiscVoidedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_MISC_VOIDED
-        required:
-        - event
-    Form1099IntRejectedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_INT_REJECTED
-        required:
-        - event
-    MailingReturnedToSenderWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_RETURNED_TO_SENDER
-        required:
-        - event
-    MailingCreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_CREATED
-        required:
-        - event
-    Form1099MiscAcceptedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_MISC_ACCEPTED
-        required:
-        - event
-    UserCreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: USER_CREATED
-        required:
-        - event
-    TINVerificationMatchWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TIN_VERIFICATION_MATCH
-        required:
-        - event
-    Form1099MiscCreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_MISC_CREATED
-        required:
-        - event
-    FormW9CreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: W_9_CREATED
-        required:
-        - event
-    Form1099KDeletedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_K_DELETED
-        required:
-        - event
-    Form1099NecCreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_NEC_CREATED
+            const: TEN99_INT_ACCEPTED
         required:
         - event
     Form1099KCreatedWebhookPayload:
@@ -1406,6 +1340,96 @@ components:
             const: TEN99_K_CREATED
         required:
         - event
+    Form1099MiscDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_DELETED
+        required:
+        - event
+    Form1099NecRejectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_REJECTED
+        required:
+        - event
+    Form1099MiscCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_MISC_CREATED
+        required:
+        - event
+    TINVerificationMatchWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TIN_VERIFICATION_MATCH
+        required:
+        - event
+    Form1099KDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_DELETED
+        required:
+        - event
+    Form1099NecDeletedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_NEC_DELETED
+        required:
+        - event
+    MailingDeliveredWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: MAILING_DELIVERED
+        required:
+        - event
+    UserCreatedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: USER_CREATED
+        required:
+        - event
+    Form1099KCorrectedWebhookPayload:
+      allOf:
+      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
+      - type: object
+        properties:
+          event:
+            type: string
+            const: TEN99_K_CORRECTED
+        required:
+        - event
     Form1099MiscRejectedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
@@ -1416,44 +1440,17 @@ components:
             const: TEN99_MISC_REJECTED
         required:
         - event
-    Form1099KRejectedWebhookPayload:
+    AboundSignatureHeader:
+      type: string
+      description: An HMAC signature of the payload
+    UserUpdatedWebhookPayload:
       allOf:
       - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
       - type: object
         properties:
           event:
             type: string
-            const: TEN99_K_REJECTED
-        required:
-        - event
-    MailingProcessingForDeliveryWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: MAILING_PROCESSING_FOR_DELIVERY
-        required:
-        - event
-    Form1099IntDeletedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: TEN99_INT_DELETED
-        required:
-        - event
-    FormW8BenECreatedWebhookPayload:
-      allOf:
-      - $ref: '#/components/schemas/WebhookPayloadBaseSchema'
-      - type: object
-        properties:
-          event:
-            type: string
-            const: W_8BEN_E_CREATED
+            const: USER_UPDATED
         required:
         - event
   securitySchemes:
