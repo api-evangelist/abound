@@ -72,43 +72,9 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    TaxTreatyAboundCodeEnum:
+    TaxTreatyCountry:
       type: string
-      enum:
-      - AU_17_INDEPENDENT_PERSONAL_SERVICES
-      - AU_18_DEPENDENT_PERSONAL_SERVICES
-      - AU_42_PUBLIC_ENTERTAINMENT
-      - CA_17_INDEPENDENT_PERSONAL_SERVICES
-      - CA_18_DEPENDENT_PERSONAL_SERVICES
-      - CA_42_PUBLIC_ENTERTAINMENT
-      - CN_17_INDEPENDENT_PERSONAL_SERVICES
-      - CN_18_DEPENDENT_PERSONAL_SERVICES
-      - CN_42_PUBLIC_ENTERTAINMENT
-      - GB_17_INDEPENDENT_PERSONAL_SERVICES
-      - GB_18_DEPENDENT_PERSONAL_SERVICES
-      - GB_42_PUBLIC_ENTERTAINMENT
-      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
-      - IL_17_INDEPENDENT_PERSONAL_SERVICES
-      - IL_18_DEPENDENT_PERSONAL_SERVICES
-      - IL_42_PUBLIC_ENTERTAINMENT
-      - IN_17_INDEPENDENT_PERSONAL_SERVICES
-      - IN_18_DEPENDENT_PERSONAL_SERVICES
-      - IN_42_PUBLIC_ENTERTAINMENT
-      - MX_17_INDEPENDENT_PERSONAL_SERVICES
-      - MX_18_DEPENDENT_PERSONAL_SERVICES
-      - MX_42_PUBLIC_ENTERTAINMENT
-      description: The tax treaty code the payee is claiming.
+      description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.
     ErrorBadRequestSchema:
       type: object
       properties:
@@ -153,9 +119,43 @@ components:
         residentCountry: GB
         rateOfWithholding: 0
         description: Independent personal services performed in the US
-    TaxTreatyCountry:
+    TaxTreatyAboundCodeEnum:
       type: string
-      description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.
+      enum:
+      - AU_17_INDEPENDENT_PERSONAL_SERVICES
+      - AU_18_DEPENDENT_PERSONAL_SERVICES
+      - AU_42_PUBLIC_ENTERTAINMENT
+      - CA_17_INDEPENDENT_PERSONAL_SERVICES
+      - CA_18_DEPENDENT_PERSONAL_SERVICES
+      - CA_42_PUBLIC_ENTERTAINMENT
+      - CN_17_INDEPENDENT_PERSONAL_SERVICES
+      - CN_18_DEPENDENT_PERSONAL_SERVICES
+      - CN_42_PUBLIC_ENTERTAINMENT
+      - GB_17_INDEPENDENT_PERSONAL_SERVICES
+      - GB_18_DEPENDENT_PERSONAL_SERVICES
+      - GB_42_PUBLIC_ENTERTAINMENT
+      - IL_16_SCHOLARSHIP_AND_FELLOWSHIP_GRANT
+      - IL_17_INDEPENDENT_PERSONAL_SERVICES
+      - IL_18_DEPENDENT_PERSONAL_SERVICES
+      - IL_42_PUBLIC_ENTERTAINMENT
+      - IN_17_INDEPENDENT_PERSONAL_SERVICES
+      - IN_18_DEPENDENT_PERSONAL_SERVICES
+      - IN_42_PUBLIC_ENTERTAINMENT
+      - MX_17_INDEPENDENT_PERSONAL_SERVICES
+      - MX_18_DEPENDENT_PERSONAL_SERVICES
+      - MX_42_PUBLIC_ENTERTAINMENT
+      description: The tax treaty code the payee is claiming.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

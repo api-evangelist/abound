@@ -52,7 +52,7 @@ tags:
 - Tax
 - Tax Compliance
 - Regulatory Compliance
-- Financial-Services
+- Financial Services
 - Identity Verification
 - Government
 - Documents
@@ -69,6 +69,7 @@ tags_raw:
 - Documents
 - Webhooks
 - Retired
+- Financial-Services
 apis:
 - aid: abound:abound-1099-int-api
   name: Abound 1099-INT API

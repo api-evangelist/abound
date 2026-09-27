@@ -254,101 +254,18 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    MailingStatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
-    MailingId:
-      type: string
-      description: The unique identifier for an existing mailing.
-    MailingNameSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The individual's name (first + last) or business name.
-        name2:
-          type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    MailingRequestFromSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the sender.
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    MailingRequestSchema:
-      type: object
-      properties:
-        to:
-          $ref: '#/components/schemas/MailingRequestToSchema'
-        from:
-          $ref: '#/components/schemas/MailingRequestFromSchema'
-      required:
-      - from
-      - to
-      examples:
-      - to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
     OkSchema:
       type: object
       additionalProperties: {}
-    AddressSchema:
-      type: object
-      properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-      required:
-      - address
-      - country
-    MailingRequestToSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the recipient.
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    MailingId:
+      type: string
+      description: The unique identifier for an existing mailing.
     MailingSchema:
       allOf:
       - $ref: '#/components/schemas/MailingRequestSchema'
@@ -401,6 +318,33 @@ components:
           country: US
           name: Hooli
         mailedFromId: documentId_sampletTtqNfulW8
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
     DefaultErrorSchema:
       type: object
       properties:
@@ -419,6 +363,62 @@ components:
           description: The error message(s) associated with the response status code.
       required:
       - errors
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:

@@ -265,12 +265,6 @@ components:
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
     UserSchema:
       allOf:
       - $ref: '#/components/schemas/UserRequestSchema'
@@ -290,6 +284,33 @@ components:
       - id: userId_sampleXGMFnhOpeR
         createdAt: '2024-01-01T00:00:00.000Z'
         foreignId: my-foreign-id
+    ForeignId:
+      type: string
+      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     UserRequestSchema:
       type: object
       properties:
@@ -310,27 +331,6 @@ components:
     Email:
       type: string
       description: Filters the list of users based on the `email` field.
-    ForeignId:
-      type: string
-      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:

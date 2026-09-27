@@ -93,23 +93,17 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    UserId:
+    EDeliveryConsentStatusEnum:
       type: string
-      description: The unique identifier for a single end-user of your application.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
+      enum:
+      - ASSENTED
+      - WITHDRAWN
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
     EDeliveryConsentSchema:
       type: object
       properties:
@@ -137,11 +131,14 @@ components:
       - id
       - status
       - tinFingerprint
-    EDeliveryConsentStatusEnum:
-      type: string
-      enum:
-      - ASSENTED
-      - WITHDRAWN
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
     ErrorBadRequestSchema:
       type: object
       properties:
@@ -152,6 +149,9 @@ components:
           description: The error message(s) associated with the response status code.
       required:
       - errors
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:

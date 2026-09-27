@@ -511,263 +511,6 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    Form1099BaseCorrectRequestSchema:
-      type: object
-      properties:
-        userId:
-          $ref: '#/components/schemas/UserId'
-        payee:
-          $ref: '#/components/schemas/PayeeRequestSchema'
-      required:
-      - payee
-    MailingNameSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The individual's name (first + last) or business name.
-        name2:
-          type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
-    PayerSchema:
-      allOf:
-      - $ref: '#/components/schemas/PayerRequestSchema'
-      - type: object
-        properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
-        required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
-      description: The payer of the document.
-    DocumentId:
-      type: string
-      description: The unique identifier for an existing document.
-    FilingYear:
-      type: integer
-      description: The filing year associated with this document.
-    MailingRequestToSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the recipient.
-    PayeeTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payee.tinFingerprint` field.
-    Form1099BaseSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/DocumentId'
-        createdAt:
-          type: string
-          format: date-time
-          description: The `ISO 8601` timestamp when the document was created.
-        filingYear:
-          $ref: '#/components/schemas/FilingYear'
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Form1099StatusEnum'
-          description: 'The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The document has passed data validation and the PDFs have been generated.<br/>&nbsp;&nbsp;• `FILED`: The payee''s TIN has been verified and the 1099 has been filed with the appropriate tax authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been acknowledged and accepted by the appropriate tax authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN verification `MISMATCH` or has been rejected by one or more tax authories.'
-        payerUrl:
-          type: string
-          description: The URL to the payer's 1099 document. Both the Payer's and Payee's TINs are not masked in this document.
-        payeeUrl:
-          type: string
-          description: The URL to the payee's 1099 document. The Payee's TIN is masked in this document. The Payer's TIN is not masked.
-        payer:
-          $ref: '#/components/schemas/PayerSchema'
-        payee:
-          $ref: '#/components/schemas/PayeeSchema'
-        correctedById:
-          type: string
-          description: The `documentId` of the corrected 1099 document.
-        correctedFromId:
-          type: string
-          description: The `documentId` of the original 1099 document.
-        voidedById:
-          type: string
-          description: The `documentId` of the voided 1099 document.
-        voidedFromId:
-          type: string
-          description: The `documentId` of the original 1099 document.
-        userId:
-          $ref: '#/components/schemas/UserId'
-      required:
-      - createdAt
-      - filingYear
-      - id
-      - payee
-      - payeeUrl
-      - payer
-      - payerUrl
-      - status
-    Form1099StatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - FILED
-      - ACCEPTED
-      - REJECTED
-    MailingSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingRequestSchema'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: The unique identifier for this mailing.
-          createdAt:
-            type: string
-            format: date-time
-            description: The creation date and time of the mailing in `ISO 8601` format.
-          url:
-            type: string
-            description: The URL to the mailed document.
-          status:
-            allOf:
-            - $ref: '#/components/schemas/MailingStatusEnum'
-            description: The status of the mailing.
-          userId:
-            $ref: '#/components/schemas/UserId'
-          mailedFromId:
-            type: string
-            description: The `documentId` of the mailed document.
-        required:
-        - createdAt
-        - id
-        - mailedFromId
-        - status
-        - url
-      examples:
-      - id: mailingId_sampleFV9b73IvAD
-        createdAt: '2024-01-01T00:00:00.000Z'
-        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
-        status: CREATED
-        to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
-        mailedFromId: documentId_sampletTtqNfulW8
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    OkSchema:
-      type: object
-      additionalProperties: {}
-    MailingStatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    Form1099KCorrectRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/Form1099BaseCorrectRequestSchema'
-      - type: object
-        properties:
-          formFields:
-            $ref: '#/components/schemas/Form1099KFormFieldsRequestSchema'
-        required:
-        - formFields
-      examples:
-      - payee:
-          name: Ada Lovelace
-          tin: '000000000'
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-        formFields:
-          accountNumber: A0MCFOfvWWL7AVtwrhiU
-          aggregateGrossAmount: 25655553
-          aggregateGrossAmountCardNotPresent: 25655553
-          federalIncomeTaxWithheld: 0
-          merchantCategoryCode: '4582'
-          numberOfPaymentTransactions: 767
-          pseName: Payment Entity
-          payerClassification: PSE
-          transactionsReportedClassification: PAYMENT_CARD
-          psePhoneNumber: '+15555555555'
-          grossAmountsByMonth:
-            april: 2332323
-            august: 2332323
-            december: 2332323
-            february: 2332323
-            january: 0
-            july: 2332323
-            june: 2332323
-            march: 2332323
-            may: 2332323
-            november: 2332323
-            october: 2332323
-            september: 2332323
-          stateTaxInfo:
-          - filingState: CA
-    Form1099BaseRequestSchema:
-      type: object
-      properties:
-        filingYear:
-          $ref: '#/components/schemas/FilingYear'
-        userId:
-          $ref: '#/components/schemas/UserId'
-        payer:
-          $ref: '#/components/schemas/PayerRequestSchema'
-        payee:
-          $ref: '#/components/schemas/PayeeRequestSchema'
-      required:
-      - filingYear
-      - payee
-      - payer
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    TinVerificationStatusEnum:
-      type: string
-      enum:
-      - MATCH
-      - MISMATCH
-      - PENDING
-      description: The status of the TIN Verification.
     Form1099KGrossAmountsByMonthSchema:
       type: object
       properties:
@@ -820,36 +563,189 @@ components:
           description: The gross amount of payment card/third party network transactions made to you in December. Value must be in cents.
           minimum: 0
       description: An object that contains the gross amount of transactions for each month. At least one month must have a value above zero. Values must be in cents.
-    Form1099KFormFieldsSchema:
-      allOf:
-      - $ref: '#/components/schemas/Form1099FormFieldsBaseSchema'
-      - $ref: '#/components/schemas/Form1099KFormFieldsRequestSchema'
-    MailingRequestFromSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the sender.
-    UserId:
+    TinFingerprint:
       type: string
-      description: The unique identifier for a single end-user of your application.
-    PayeeSchema:
+      description: Your unique token that points to a TIN.
+    PayerTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
+    Form1099KTransactionsReportedClassificationSchema:
+      type: string
+      enum:
+      - PAYMENT_CARD
+      - THIRD_PARTY_NETWORK
+      description: The type of transactions reported.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    Form1099StatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - FILED
+      - ACCEPTED
+      - REJECTED
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    PayeeRequestSchema:
       allOf:
-      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - $ref: '#/components/schemas/AddressSchema'
       - type: object
         properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
+          name:
+            type: string
+            description: The payee's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
         required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
+        - name
+        - tin
       description: The payee of the document.
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    Form1099KPayerClassificationEnum:
+      type: string
+      enum:
+      - PSE
+      - EPF_OTHER
+      description: The type of payer. Payment settlement entity (PSE) or Electronic Payment Facilitator (EPF)/Other third party.
+    FilingYear:
+      type: integer
+      description: The filing year associated with this document.
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    Form1099FilingStateEnum:
+      type: string
+      enum:
+      - AK
+      - AL
+      - AR
+      - AZ
+      - CA
+      - CO
+      - CT
+      - DC
+      - DE
+      - FL
+      - GA
+      - HI
+      - IA
+      - ID
+      - IL
+      - IN
+      - KY
+      - KS
+      - LA
+      - MA
+      - MD
+      - ME
+      - MI
+      - MN
+      - MO
+      - MS
+      - MT
+      - N/A
+      - NC
+      - ND
+      - NE
+      - NH
+      - NJ
+      - NM
+      - NV
+      - NY
+      - OH
+      - OK
+      - OR
+      - PA
+      - RI
+      - SC
+      - SD
+      - TN
+      - TX
+      - UT
+      - VA
+      - VT
+      - WA
+      - WI
+      - WV
+      - WY
+      description: The filing state code. The abbreviation of the state (`CA` for California). If a state filing is not desired, use `N/A`.
     Form1099KSchema:
       allOf:
       - $ref: '#/components/schemas/Form1099BaseSchema'
@@ -1110,32 +1006,195 @@ components:
           tinVerificationStatus: MATCH
         payerUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-C.pdf
         payeeUrl: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-K-VOID-COPY-B.pdf
-    AddressSchema:
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    Form1099StateTaxInfoSchema:
       type: object
       properties:
-        address:
+        filingState:
+          $ref: '#/components/schemas/Form1099FilingStateEnum'
+        payeeStateId:
           type: string
-          description: The legal address.
-        address2:
+          description: The payee's state identification number.
+          deprecated: true
+        payerStateId:
           type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
+          description: The payer's state identification number.
+          deprecated: true
+        stateTaxWithheld:
+          type: integer
+          description: The state tax withheld. Value must be in cents. Abound does not currently support `stateTaxWithheld` reporting, please contact us for more information.
+          minimum: 0
+          maximum: 0
       required:
-      - address
-      - country
+      - filingState
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    Form1099BaseCorrectRequestSchema:
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - payee
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
+    MailingSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingRequestSchema'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The unique identifier for this mailing.
+          createdAt:
+            type: string
+            format: date-time
+            description: The creation date and time of the mailing in `ISO 8601` format.
+          url:
+            type: string
+            description: The URL to the mailed document.
+          status:
+            allOf:
+            - $ref: '#/components/schemas/MailingStatusEnum'
+            description: The status of the mailing.
+          userId:
+            $ref: '#/components/schemas/UserId'
+          mailedFromId:
+            type: string
+            description: The `documentId` of the mailed document.
+        required:
+        - createdAt
+        - id
+        - mailedFromId
+        - status
+        - url
+      examples:
+      - id: mailingId_sampleFV9b73IvAD
+        createdAt: '2024-01-01T00:00:00.000Z'
+        url: https://tax-documents-sandbox.s3.us-west-2.amazonaws.com/FORM-1099-COPY-B.pdf
+        status: CREATED
+        to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+        mailedFromId: documentId_sampletTtqNfulW8
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    PayeeSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payee of the document.
+    Form1099KFormFieldsSchema:
+      allOf:
+      - $ref: '#/components/schemas/Form1099FormFieldsBaseSchema'
+      - $ref: '#/components/schemas/Form1099KFormFieldsRequestSchema'
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    MailingRequestSchema:
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MailingRequestToSchema'
+        from:
+          $ref: '#/components/schemas/MailingRequestFromSchema'
+      required:
+      - from
+      - to
+      examples:
+      - to:
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+          name: Ada Lovelace
+        from:
+          address: 256 Byron Street
+          address2: Suite 32
+          city: Palo Alto
+          state: CA
+          postalCode: '94306'
+          country: US
+          name: Hooli
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     Form1099KRequestSchema:
       allOf:
       - $ref: '#/components/schemas/Form1099BaseRequestSchema'
@@ -1193,178 +1252,13 @@ components:
           stateTaxInfo:
           - filingState: CA
             stateTaxWithheld: 0
-    Form1099KPayerClassificationEnum:
-      type: string
-      enum:
-      - PSE
-      - EPF_OTHER
-      description: The type of payer. Payment settlement entity (PSE) or Electronic Payment Facilitator (EPF)/Other third party.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
     Form1099AccountNumber:
       type: string
       maxLength: 20
       description: The account number or other unique number assigned to distinguish an account. Abound will auto-generate this for you if left omitted.
-    MailingRequestSchema:
-      type: object
-      properties:
-        to:
-          $ref: '#/components/schemas/MailingRequestToSchema'
-        from:
-          $ref: '#/components/schemas/MailingRequestFromSchema'
-      required:
-      - from
-      - to
-      examples:
-      - to:
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          state: CA
-          postalCode: '94043'
-          country: US
-          name: Ada Lovelace
-        from:
-          address: 256 Byron Street
-          address2: Suite 32
-          city: Palo Alto
-          state: CA
-          postalCode: '94306'
-          country: US
-          name: Hooli
-    Form1099FilingStateEnum:
-      type: string
-      enum:
-      - AK
-      - AL
-      - AR
-      - AZ
-      - CA
-      - CO
-      - CT
-      - DC
-      - DE
-      - FL
-      - GA
-      - HI
-      - IA
-      - ID
-      - IL
-      - IN
-      - KY
-      - KS
-      - LA
-      - MA
-      - MD
-      - ME
-      - MI
-      - MN
-      - MO
-      - MS
-      - MT
-      - N/A
-      - NC
-      - ND
-      - NE
-      - NH
-      - NJ
-      - NM
-      - NV
-      - NY
-      - OH
-      - OK
-      - OR
-      - PA
-      - RI
-      - SC
-      - SD
-      - TN
-      - TX
-      - UT
-      - VA
-      - VT
-      - WA
-      - WI
-      - WV
-      - WY
-      description: The filing state code. The abbreviation of the state (`CA` for California). If a state filing is not desired, use `N/A`.
-    PayerTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payer.tinFingerprint` field.
-    Form1099StateTaxInfoSchema:
-      type: object
-      properties:
-        filingState:
-          $ref: '#/components/schemas/Form1099FilingStateEnum'
-        payeeStateId:
-          type: string
-          description: The payee's state identification number.
-          deprecated: true
-        payerStateId:
-          type: string
-          description: The payer's state identification number.
-          deprecated: true
-        stateTaxWithheld:
-          type: integer
-          description: The state tax withheld. Value must be in cents. Abound does not currently support `stateTaxWithheld` reporting, please contact us for more information.
-          minimum: 0
-          maximum: 0
-      required:
-      - filingState
-    Form1099KTransactionsReportedClassificationSchema:
-      type: string
-      enum:
-      - PAYMENT_CARD
-      - THIRD_PARTY_NETWORK
-      description: The type of transactions reported.
-    PayerRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payer's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-          phoneNumber:
-            type: string
-            description: The payer's phone number.
-            pattern: ^\+?\d{10,15}$
-        required:
-        - name
-        - phoneNumber
-        - tin
-      description: The payer of the document.
-    TinTypeEnum:
-      type: string
-      enum:
-      - INDIVIDUAL
-      - BUSINESS
-      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
     Form1099KFormFieldsRequestSchema:
       type: object
       properties:
@@ -1419,26 +1313,121 @@ components:
       - stateTaxInfo
       - transactionsReportedClassification
       description: The 1099-K form fields.
-    PayeeRequestSchema:
+    Form1099BaseSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/DocumentId'
+        createdAt:
+          type: string
+          format: date-time
+          description: The `ISO 8601` timestamp when the document was created.
+        filingYear:
+          $ref: '#/components/schemas/FilingYear'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Form1099StatusEnum'
+          description: 'The status of the 1099 document.<br/>&nbsp;&nbsp;• `CREATED`: The document has passed data validation and the PDFs have been generated.<br/>&nbsp;&nbsp;• `FILED`: The payee''s TIN has been verified and the 1099 has been filed with the appropriate tax authorities.<br/>&nbsp;&nbsp;• `ACCEPTED`: The document has been acknowledged and accepted by the appropriate tax authorities.<br/>&nbsp;&nbsp;• `REJECTED`: The document has a TIN verification `MISMATCH` or has been rejected by one or more tax authories.'
+        payerUrl:
+          type: string
+          description: The URL to the payer's 1099 document. Both the Payer's and Payee's TINs are not masked in this document.
+        payeeUrl:
+          type: string
+          description: The URL to the payee's 1099 document. The Payee's TIN is masked in this document. The Payer's TIN is not masked.
+        payer:
+          $ref: '#/components/schemas/PayerSchema'
+        payee:
+          $ref: '#/components/schemas/PayeeSchema'
+        correctedById:
+          type: string
+          description: The `documentId` of the corrected 1099 document.
+        correctedFromId:
+          type: string
+          description: The `documentId` of the original 1099 document.
+        voidedById:
+          type: string
+          description: The `documentId` of the voided 1099 document.
+        voidedFromId:
+          type: string
+          description: The `documentId` of the original 1099 document.
+        userId:
+          $ref: '#/components/schemas/UserId'
+      required:
+      - createdAt
+      - filingYear
+      - id
+      - payee
+      - payeeUrl
+      - payer
+      - payerUrl
+      - status
+    Form1099BaseRequestSchema:
+      type: object
+      properties:
+        filingYear:
+          $ref: '#/components/schemas/FilingYear'
+        userId:
+          $ref: '#/components/schemas/UserId'
+        payer:
+          $ref: '#/components/schemas/PayerRequestSchema'
+        payee:
+          $ref: '#/components/schemas/PayeeRequestSchema'
+      required:
+      - filingYear
+      - payee
+      - payer
+    Form1099KCorrectRequestSchema:
       allOf:
-      - $ref: '#/components/schemas/AddressSchema'
+      - $ref: '#/components/schemas/Form1099BaseCorrectRequestSchema'
       - type: object
         properties:
-          name:
-            type: string
-            description: The payee's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
+          formFields:
+            $ref: '#/components/schemas/Form1099KFormFieldsRequestSchema'
         required:
-        - name
-        - tin
-      description: The payee of the document.
+        - formFields
+      examples:
+      - payee:
+          name: Ada Lovelace
+          tin: '000000000'
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          state: CA
+          postalCode: '94043'
+          country: US
+        formFields:
+          accountNumber: A0MCFOfvWWL7AVtwrhiU
+          aggregateGrossAmount: 25655553
+          aggregateGrossAmountCardNotPresent: 25655553
+          federalIncomeTaxWithheld: 0
+          merchantCategoryCode: '4582'
+          numberOfPaymentTransactions: 767
+          pseName: Payment Entity
+          payerClassification: PSE
+          transactionsReportedClassification: PAYMENT_CARD
+          psePhoneNumber: '+15555555555'
+          grossAmountsByMonth:
+            april: 2332323
+            august: 2332323
+            december: 2332323
+            february: 2332323
+            january: 0
+            july: 2332323
+            june: 2332323
+            march: 2332323
+            may: 2332323
+            november: 2332323
+            october: 2332323
+            september: 2332323
+          stateTaxInfo:
+          - filingState: CA
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
     Form1099FormFieldsBaseSchema:
       type: object
       properties:
@@ -1451,6 +1440,17 @@ components:
       required:
       - isCorrected
       - isVoid
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http
