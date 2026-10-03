@@ -200,41 +200,9 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    TinFingerprint:
+    IdempotencyKey:
       type: string
-      description: Your unique token that points to a TIN.
-    PayerTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payer.tinFingerprint` field.
-    W9ExemptFatcaCodeSchema:
-      type: string
-      enum:
-      - A
-      - B
-      - C
-      - D
-      - E
-      - F
-      - G
-      - H
-      - I
-      - J
-      - K
-      - L
-      - M
-      - NOT_APPLICABLE
-      description: The code to identify a payee that is exempt from reporting under FATCA.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    PayeeTinFingerprint:
-      type: string
-      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+      description: The unique key used to identify a request that has already been processed.
     PayeeRequestSchema:
       allOf:
       - $ref: '#/components/schemas/AddressSchema'
@@ -255,152 +223,28 @@ components:
         - name
         - tin
       description: The payee of the document.
-    AddressSchema:
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    ErrorBadRequestSchema:
       type: object
       properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
       required:
-      - address
-      - country
-    ElectronicSignatureOfPayeeSchema:
-      type: object
-      properties:
-        signature:
-          type: string
-          description: The signature of the payee.
-        printedName:
-          type: string
-          description: The printed name of the payee.
-        signedAt:
-          type: string
-          format: date-time
-          description: The date and time in `ISO 8601` format of the signature.
-        ipAddress:
-          type: string
-          description: The IP address of the payee when signing this document.
-      required:
-      - ipAddress
-      - printedName
-      - signature
-      - signedAt
-      description: The electronic signature of the payee.
-    PayerRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payer's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-          phoneNumber:
-            type: string
-            description: The payer's phone number.
-            pattern: ^\+?\d{10,15}$
-        required:
-        - name
-        - phoneNumber
-        - tin
-      description: The payer of the document.
+      - errors
     TinTypeEnum:
       type: string
       enum:
       - INDIVIDUAL
       - BUSINESS
       description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
-    DocumentId:
-      type: string
-      description: The unique identifier for an existing document.
-    PayerSchema:
-      allOf:
-      - $ref: '#/components/schemas/PayerRequestSchema'
-      - type: object
-        properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
-        required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
-      description: The payer of the document.
-    W9FormFieldsSchema:
-      type: object
-      properties:
-        taxClassification:
-          allOf:
-          - $ref: '#/components/schemas/W9TaxClassificationSchema'
-          description: The U.S. federal tax classification of the person.
-        otherTaxClassification:
-          type: string
-          description: The tax classification of the payee if `taxClassification` is `OTHER`.
-        hasIndirectForeignOwnership:
-          type: boolean
-          description: If your `taxClassification` is `PARTNERSHIP`, `TRUST`, `ESTATE`, or `LLC_PARTNERSHIP`, and you are providing this form to a partnership, trust, or estate in which you have an ownership interest, pass `true` if you have any foreign partners, owners, or beneficiaries.
-        exemptPayeeCode:
-          allOf:
-          - $ref: '#/components/schemas/W9ExemptPayeeCodeSchema'
-          description: The code to identify a payee that is exempt from backup withholding.
-        exemptFatcaCode:
-          allOf:
-          - $ref: '#/components/schemas/W9ExemptFatcaCodeSchema'
-          description: The code to identify a payee that is exempt from reporting under FATCA.
-        accountNumbers:
-          type: array
-          items:
-            type: string
-          description: The account numbers to list on this W-9.
-        isSubjectToBackupWithholding:
-          type: boolean
-          description: If the payee is subject to backup withholding, pass `true`.
-        certifiedAt:
-          type: string
-          format: date-time
-          description: The certification date and time in `ISO 8601` format. This field is deprecated. Please use `electronicSignature` instead.
-          deprecated: true
-        electronicSignature:
-          allOf:
-          - $ref: '#/components/schemas/ElectronicSignatureOfPayeeSchema'
-          description: The electronic signature of the payee.
-      required:
-      - taxClassification
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
     PayeeSchema:
       allOf:
       - $ref: '#/components/schemas/PayeeRequestSchema'
@@ -419,23 +263,6 @@ components:
         - tinVerificationId
         - tinVerificationStatus
       description: The payee of the document.
-    W9ExemptPayeeCodeSchema:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      - '4'
-      - '5'
-      - '6'
-      - '7'
-      - '8'
-      - '9'
-      - '10'
-      - '11'
-      - '12'
-      - '13'
-      description: The code to identify a payee that is exempt from backup withholding.
     W9RequestSchema:
       type: object
       properties:
@@ -469,45 +296,37 @@ components:
             printedName: Ada Lovelace
             signedAt: '2024-01-01T00:00:00.000Z'
             ipAddress: 127.0.0.1
-    ErrorBadRequestSchema:
+    ElectronicSignatureOfPayeeSchema:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
+        signature:
+          type: string
+          description: The signature of the payee.
+        printedName:
+          type: string
+          description: The printed name of the payee.
+        signedAt:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format of the signature.
+        ipAddress:
+          type: string
+          description: The IP address of the payee when signing this document.
       required:
-      - errors
-    UserId:
+      - ipAddress
+      - printedName
+      - signature
+      - signedAt
+      description: The electronic signature of the payee.
+    PayerTinFingerprint:
       type: string
-      description: The unique identifier for a single end-user of your application.
-    W9TaxClassificationSchema:
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
+    TinFingerprint:
       type: string
-      enum:
-      - INDIVIDUAL
-      - SOLE_PROPRIETOR
-      - C_CORPORATION
-      - S_CORPORATION
-      - PARTNERSHIP
-      - TRUST
-      - ESTATE
-      - LLC_PARTNERSHIP
-      - LLC_C_CORPORATION
-      - LLC_S_CORPORATION
-      - OTHER
-      description: The U.S. federal tax classification of the person.
+      description: Your unique token that points to a TIN.
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    PayeeWithOptionalTinTypeRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/PayeeRequestSchema'
-      - type: object
-        properties:
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-      description: The payee of the document.
     W9Schema:
       type: object
       properties:
@@ -563,6 +382,60 @@ components:
             printedName: Ada Lovelace
             signedAt: '2024-01-01T00:00:00.000Z'
             ipAddress: 127.0.0.1
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
+    W9TaxClassificationSchema:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - SOLE_PROPRIETOR
+      - C_CORPORATION
+      - S_CORPORATION
+      - PARTNERSHIP
+      - TRUST
+      - ESTATE
+      - LLC_PARTNERSHIP
+      - LLC_C_CORPORATION
+      - LLC_S_CORPORATION
+      - OTHER
+      description: The U.S. federal tax classification of the person.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
     TinVerificationStatusEnum:
       type: string
       enum:
@@ -581,6 +454,133 @@ components:
           description: The error message associated with the field.
       required:
       - message
+    W9FormFieldsSchema:
+      type: object
+      properties:
+        taxClassification:
+          allOf:
+          - $ref: '#/components/schemas/W9TaxClassificationSchema'
+          description: The U.S. federal tax classification of the person.
+        otherTaxClassification:
+          type: string
+          description: The tax classification of the payee if `taxClassification` is `OTHER`.
+        hasIndirectForeignOwnership:
+          type: boolean
+          description: If your `taxClassification` is `PARTNERSHIP`, `TRUST`, `ESTATE`, or `LLC_PARTNERSHIP`, and you are providing this form to a partnership, trust, or estate in which you have an ownership interest, pass `true` if you have any foreign partners, owners, or beneficiaries.
+        exemptPayeeCode:
+          allOf:
+          - $ref: '#/components/schemas/W9ExemptPayeeCodeSchema'
+          description: The code to identify a payee that is exempt from backup withholding.
+        exemptFatcaCode:
+          allOf:
+          - $ref: '#/components/schemas/W9ExemptFatcaCodeSchema'
+          description: The code to identify a payee that is exempt from reporting under FATCA.
+        accountNumbers:
+          type: array
+          items:
+            type: string
+          description: The account numbers to list on this W-9.
+        isSubjectToBackupWithholding:
+          type: boolean
+          description: If the payee is subject to backup withholding, pass `true`.
+        certifiedAt:
+          type: string
+          format: date-time
+          description: The certification date and time in `ISO 8601` format. This field is deprecated. Please use `electronicSignature` instead.
+          deprecated: true
+        electronicSignature:
+          allOf:
+          - $ref: '#/components/schemas/ElectronicSignatureOfPayeeSchema'
+          description: The electronic signature of the payee.
+      required:
+      - taxClassification
+    PayeeWithOptionalTinTypeRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - type: object
+        properties:
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+      description: The payee of the document.
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    W9ExemptPayeeCodeSchema:
+      type: string
+      enum:
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+      - '11'
+      - '12'
+      - '13'
+      description: The code to identify a payee that is exempt from backup withholding.
+    W9ExemptFatcaCodeSchema:
+      type: string
+      enum:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - NOT_APPLICABLE
+      description: The code to identify a payee that is exempt from reporting under FATCA.
   securitySchemes:
     bearerAuth:
       type: http

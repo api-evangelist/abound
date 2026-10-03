@@ -75,28 +75,114 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    PayeeTaxProfileSchema:
+    ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
-        shouldPreloadFromUserId:
-          type: boolean
-          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
-        shouldCollectElectronicDeliveryConsent:
-          type: boolean
-          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
-        supportedTaxForms:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedTaxFormsEnum'
-          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
-        defaults:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    AccessTokenSchema:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token to authenticate your Drop-In UI Components.
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date and time of the access token in `ISO 8601` format.
+        expiresAt:
+          type: string
+          format: date-time
+          description: The expiration date and time of the access token in `ISO 8601` format.
+        customizations:
+          $ref: '#/components/schemas/CustomizationsSchema'
+        userId:
+          type: string
+          description: The unique identifier of the user associated with this access token.
+      required:
+      - accessToken
+      - createdAt
+      - expiresAt
+      examples:
+      - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
+        createdAt: '2024-01-01T00:00:00.000Z'
+        expiresAt: '2024-01-01T00:15:00.000Z'
+    CustomizationsSchema:
+      type: object
+      properties:
+        payeeTaxProfile:
           allOf:
-          - $ref: '#/components/schemas/DefaultsSchema'
-          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
-        requestingPayer:
-          allOf:
-          - $ref: '#/components/schemas/PayerRequestSchema'
-          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
+          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
+          description: The Payee Tax Profile component customizations.
+      description: The component customizations for this access token.
+    PayerRequestSchema:
+      allOf:
+      - $ref: '#/components/schemas/AddressSchema'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The payer's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
+          phoneNumber:
+            type: string
+            description: The payer's phone number.
+            pattern: ^\+?\d{10,15}$
+        required:
+        - name
+        - phoneNumber
+        - tin
+      description: The payer of the document.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    AddressSchema:
+      type: object
+      properties:
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+      required:
+      - address
+      - country
     DefaultsSchema:
       type: object
       properties:
@@ -142,50 +228,6 @@ components:
       - FORM_W_9
       - FORM_W_8BEN
       - FORM_W_8BEN_E
-    PayerRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payer's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payer's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payer's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-          phoneNumber:
-            type: string
-            description: The payer's phone number.
-            pattern: ^\+?\d{10,15}$
-        required:
-        - name
-        - phoneNumber
-        - tin
-      description: The payer of the document.
-    CustomizationsSchema:
-      type: object
-      properties:
-        payeeTaxProfile:
-          allOf:
-          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
-          description: The Payee Tax Profile component customizations.
-      description: The component customizations for this access token.
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
     ErrorBadRequestSchema:
       type: object
       properties:
@@ -196,70 +238,28 @@ components:
           description: The error message(s) associated with the response status code.
       required:
       - errors
-    AccessTokenSchema:
+    PayeeTaxProfileSchema:
       type: object
       properties:
-        accessToken:
-          type: string
-          description: The access token to authenticate your Drop-In UI Components.
-        createdAt:
-          type: string
-          format: date-time
-          description: The creation date and time of the access token in `ISO 8601` format.
-        expiresAt:
-          type: string
-          format: date-time
-          description: The expiration date and time of the access token in `ISO 8601` format.
-        customizations:
-          $ref: '#/components/schemas/CustomizationsSchema'
-        userId:
-          type: string
-          description: The unique identifier of the user associated with this access token.
-      required:
-      - accessToken
-      - createdAt
-      - expiresAt
-      examples:
-      - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
-        createdAt: '2024-01-01T00:00:00.000Z'
-        expiresAt: '2024-01-01T00:15:00.000Z'
-    AddressSchema:
-      type: object
-      properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-      required:
-      - address
-      - country
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
+        shouldPreloadFromUserId:
+          type: boolean
+          description: Determines if Abound should preload the Payee Tax Profile by `userId` lookup. Default is `true`.
+        shouldCollectElectronicDeliveryConsent:
+          type: boolean
+          description: Determines if the electronic delivery consent question should be asked in the Payee Tax Profile component. Default is `true`.
+        supportedTaxForms:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedTaxFormsEnum'
+          description: 'A list of the forms your organizaton intends to support and collect during a Payee Tax Profile submission. Default is all forms: `["FORM_W_9", "FORM_W_8BEN", "FORM_W_8BEN_E"]`.'
+        defaults:
+          allOf:
+          - $ref: '#/components/schemas/DefaultsSchema'
+          description: Used to preload the Payee Tax Profile with default values. These defaults will be ignored if data is preloaded by `userId`.
+        requestingPayer:
+          allOf:
+          - $ref: '#/components/schemas/PayerRequestSchema'
+          description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
   securitySchemes:
     bearerAuth:
       type: http

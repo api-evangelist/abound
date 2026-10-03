@@ -203,15 +203,6 @@ components:
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    TinVerificationStatusQueryParam:
-      type: string
-      description: Filters the list of TIN Verifications based on the `status` field.
-    TinTypeEnum:
-      type: string
-      enum:
-      - INDIVIDUAL
-      - BUSINESS
-      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
     TinVerificationSchema:
       allOf:
       - $ref: '#/components/schemas/TinVerificationRequestSchema'
@@ -244,37 +235,20 @@ components:
         tin: '*******00'
         tinFingerprint: tinFingerprint_samplehy2BWO6JJG
         tinType: INDIVIDUAL
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
     IdempotencyKey:
       type: string
       description: The unique key used to identify a request that has already been processed.
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
-    TinVerificationStatusEnum:
-      type: string
-      enum:
-      - MATCH
-      - MISMATCH
-      - PENDING
-      description: The status of the TIN Verification.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
     TinVerificationRequestSchema:
       type: object
       properties:
@@ -294,23 +268,49 @@ components:
       examples:
       - name: Ada Lovelace
         tin: '000000000'
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
     UserId:
       type: string
       description: The unique identifier for a single end-user of your application.
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
     TinFingerprintQueryParam:
       type: string
       description: Filters the list of TIN Verifications based on the `tinFingerprint` field.
-    ErrorBadRequestSchemaErrorsItem:
+    TinVerificationStatusEnum:
+      type: string
+      enum:
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    ErrorBadRequestSchema:
       type: object
       properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
       required:
-      - message
+      - errors
+    TinVerificationStatusQueryParam:
+      type: string
+      description: Filters the list of TIN Verifications based on the `status` field.
+    TinTypeEnum:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
   securitySchemes:
     bearerAuth:
       type: http

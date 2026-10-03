@@ -265,6 +265,40 @@ components:
     Page:
       type: integer
       description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
+    UserRequestSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The user's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
+          deprecated: true
+        foreignId:
+          type: string
+          description: The customer-specific unique identifier associated with this user.
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Use metadata for storing additional user data. For filtering, please use `foreignId`.
+      examples:
+      - foreignId: my-foreign-id
+    ForeignId:
+      type: string
+      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
     UserSchema:
       allOf:
       - $ref: '#/components/schemas/UserRequestSchema'
@@ -284,12 +318,6 @@ components:
       - id: userId_sampleXGMFnhOpeR
         createdAt: '2024-01-01T00:00:00.000Z'
         foreignId: my-foreign-id
-    ForeignId:
-      type: string
-      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
-    IdempotencyKey:
-      type: string
-      description: The unique key used to identify a request that has already been processed.
     DefaultErrorSchema:
       type: object
       properties:
@@ -298,6 +326,9 @@ components:
           description: The error message associated with the response status code.
       required:
       - message
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     ErrorBadRequestSchema:
       type: object
       properties:
@@ -308,40 +339,9 @@ components:
           description: The error message(s) associated with the response status code.
       required:
       - errors
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    UserRequestSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The user's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
-          deprecated: true
-        foreignId:
-          type: string
-          description: The customer-specific unique identifier associated with this user.
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-          description: Use metadata for storing additional user data. For filtering, please use `foreignId`.
-      examples:
-      - foreignId: my-foreign-id
     Email:
       type: string
       description: Filters the list of users based on the `email` field.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
   securitySchemes:
     bearerAuth:
       type: http
