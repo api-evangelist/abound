@@ -72,17 +72,6 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
     TaxTreatySchema:
       type: object
       properties:
@@ -109,9 +98,16 @@ components:
         residentCountry: GB
         rateOfWithholding: 0
         description: Independent personal services performed in the US
-    TaxTreatyCountry:
-      type: string
-      description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
     DefaultErrorSchema:
       type: object
       properties:
@@ -120,6 +116,20 @@ components:
           description: The error message associated with the response status code.
       required:
       - message
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    TaxTreatyCountry:
+      type: string
+      description: Filters the list of tax treaties based on the specified foreign `country`, adhering to `ISO 3166-2` standards.
     TaxTreatyAboundCodeEnum:
       type: string
       enum:
@@ -146,16 +156,6 @@ components:
       - MX_18_DEPENDENT_PERSONAL_SERVICES
       - MX_42_PUBLIC_ENTERTAINMENT
       description: The tax treaty code the payee is claiming.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
   securitySchemes:
     bearerAuth:
       type: http

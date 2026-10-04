@@ -262,23 +262,12 @@ paths:
                 message: Conflict
 components:
   schemas:
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    IdempotencyKey:
+    UserId:
       type: string
-      description: The unique key used to identify a request that has already been processed.
+      description: The unique identifier for a single end-user of your application.
+    ForeignId:
+      type: string
+      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
     UserRequestSchema:
       type: object
       properties:
@@ -296,9 +285,30 @@ components:
           description: Use metadata for storing additional user data. For filtering, please use `foreignId`.
       examples:
       - foreignId: my-foreign-id
-    ForeignId:
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    Email:
       type: string
-      description: The customer-specific unique identifier associated to an Abound record. Allows developers to forego making their own tables every time they integrate and/or add an application.
+      description: Filters the list of users based on the `email` field.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    IdempotencyKey:
+      type: string
+      description: The unique key used to identify a request that has already been processed.
     UserSchema:
       allOf:
       - $ref: '#/components/schemas/UserRequestSchema'
@@ -318,30 +328,20 @@ components:
       - id: userId_sampleXGMFnhOpeR
         createdAt: '2024-01-01T00:00:00.000Z'
         foreignId: my-foreign-id
-    DefaultErrorSchema:
+    ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
+        field:
+          type: string
+          description: The field that caused the error.
         message:
           type: string
-          description: The error message associated with the response status code.
+          description: The error message associated with the field.
       required:
       - message
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    Email:
-      type: string
-      description: Filters the list of users based on the `email` field.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
   securitySchemes:
     bearerAuth:
       type: http

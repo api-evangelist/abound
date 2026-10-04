@@ -254,40 +254,17 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    IdempotencyKey:
+    UserId:
       type: string
-      description: The unique key used to identify a request that has already been processed.
-    MailingNameSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The individual's name (first + last) or business name.
-        name2:
-          type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
+      description: The unique identifier for a single end-user of your application.
+    MailingStatusEnum:
+      type: string
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
     MailingRequestSchema:
       type: object
       properties:
@@ -315,53 +292,60 @@ components:
           postalCode: '94306'
           country: US
           name: Hooli
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
     MailingRequestFromSchema:
       allOf:
       - $ref: '#/components/schemas/MailingNameSchema'
       - $ref: '#/components/schemas/AddressSchema'
       description: The mailing address of the sender.
-    AddressSchema:
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    ErrorBadRequestSchema:
       type: object
       properties:
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
       required:
-      - address
-      - country
+      - errors
     MailingRequestToSchema:
       allOf:
       - $ref: '#/components/schemas/MailingNameSchema'
       - $ref: '#/components/schemas/AddressSchema'
       description: The mailing address of the recipient.
-    MailingStatusEnum:
+    IdempotencyKey:
       type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
+      description: The unique key used to identify a request that has already been processed.
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
+    MailingNameSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
     MailingSchema:
       allOf:
       - $ref: '#/components/schemas/MailingRequestSchema'
@@ -414,19 +398,35 @@ components:
           country: US
           name: Hooli
         mailedFromId: documentId_sampletTtqNfulW8
-    OkSchema:
-      type: object
-      additionalProperties: {}
-    ErrorBadRequestSchema:
+    AddressSchema:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state or US territory (`CA` for California, `ME` for Maine, `PR` for Puerto Rico). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
       required:
-      - errors
+      - address
+      - country
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
     MailingId:
       type: string
       description: The unique identifier for an existing mailing.
