@@ -75,6 +75,41 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
+    CustomizationsSchema:
+      type: object
+      properties:
+        payeeTaxProfile:
+          allOf:
+          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
+          description: The Payee Tax Profile component customizations.
+      description: The component customizations for this access token.
+    AccessTokenSchema:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token to authenticate your Drop-In UI Components.
+        createdAt:
+          type: string
+          format: date-time
+          description: The creation date and time of the access token in `ISO 8601` format.
+        expiresAt:
+          type: string
+          format: date-time
+          description: The expiration date and time of the access token in `ISO 8601` format.
+        customizations:
+          $ref: '#/components/schemas/CustomizationsSchema'
+        userId:
+          type: string
+          description: The unique identifier of the user associated with this access token.
+      required:
+      - accessToken
+      - createdAt
+      - expiresAt
+      examples:
+      - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
+        createdAt: '2024-01-01T00:00:00.000Z'
+        expiresAt: '2024-01-01T00:15:00.000Z'
     PayeeTaxProfileSchema:
       type: object
       properties:
@@ -97,80 +132,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/PayerRequestSchema'
           description: If supplied, a Payee Tax Profile submission that creates a Form W-9 will attach this information as the `Payer`.
-    DefaultsSchema:
-      type: object
-      properties:
-        firstName:
-          type: string
-          description: The payee's legal first name.
-        lastName:
-          type: string
-          description: The payee's legal last name.
-        businessName:
-          type: string
-          description: The payee's business name.
-        dateOfBirth:
-          type: string
-          format: date
-          description: The date, in `YYYY-MM-DD` format, the payee was born on.
-        address:
-          type: string
-          description: The legal address.
-        address2:
-          type: string
-          description: The second part of the legal address, such as an apartment or suite number.
-        city:
-          type: string
-          description: The city associated with the street address. Required if `country` is `US`.
-        state:
-          type: string
-          description: The two-letter character code for this state (`CA` for California, `ME` for Maine). Required if `country` is `US`. If foreign, use the province.
-        postalCode:
-          type: string
-          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
-        country:
-          type: string
-          description: The country adhering to `ISO 3166-2` standards.
-          minLength: 2
-          maxLength: 2
-        email:
-          type: string
-          description: The payee's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    SupportedTaxFormsEnum:
-      type: string
-      enum:
-      - FORM_W_9
-      - FORM_W_8BEN
-      - FORM_W_8BEN_E
-    CustomizationsSchema:
-      type: object
-      properties:
-        payeeTaxProfile:
-          allOf:
-          - $ref: '#/components/schemas/PayeeTaxProfileSchema'
-          description: The Payee Tax Profile component customizations.
-      description: The component customizations for this access token.
     IdempotencyKey:
       type: string
       description: The unique key used to identify a request that has already been processed.
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
@@ -233,33 +197,69 @@ components:
       required:
       - address
       - country
-    AccessTokenSchema:
+    DefaultsSchema:
       type: object
       properties:
-        accessToken:
+        firstName:
           type: string
-          description: The access token to authenticate your Drop-In UI Components.
-        createdAt:
+          description: The payee's legal first name.
+        lastName:
           type: string
-          format: date-time
-          description: The creation date and time of the access token in `ISO 8601` format.
-        expiresAt:
+          description: The payee's legal last name.
+        businessName:
           type: string
-          format: date-time
-          description: The expiration date and time of the access token in `ISO 8601` format.
-        customizations:
-          $ref: '#/components/schemas/CustomizationsSchema'
-        userId:
+          description: The payee's business name.
+        dateOfBirth:
           type: string
-          description: The unique identifier of the user associated with this access token.
+          format: date
+          description: The date, in `YYYY-MM-DD` format, the payee was born on.
+        address:
+          type: string
+          description: The legal address.
+        address2:
+          type: string
+          description: The second part of the legal address, such as an apartment or suite number.
+        city:
+          type: string
+          description: The city associated with the street address. Required if `country` is `US`.
+        state:
+          type: string
+          description: The two-letter character code for this state (`CA` for California, `ME` for Maine). Required if `country` is `US`. If foreign, use the province.
+        postalCode:
+          type: string
+          description: The postal code associated with the street address. Required to be a 5-digit numerical value if `country` is `US`. If foreign, use the foreign postal code.
+        country:
+          type: string
+          description: The country adhering to `ISO 3166-2` standards.
+          minLength: 2
+          maxLength: 2
+        email:
+          type: string
+          description: The payee's email address. Abound assume's you have taken the proper steps to verify the ownership of this email address.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
       required:
-      - accessToken
-      - createdAt
-      - expiresAt
-      examples:
-      - accessToken: accessToken_sampleeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTY5ODczNTcsImV4cCI6MTY5Njk4NzY1NywiYXVkIjoiYXBwSWRfc2FtcGxlcU5oVmNkWVFZVSIsImlzcyI6Imh0dHBzOi8vc2FuZGJveC1hcGkud2l0aGFib3VuZC5jb20vdjQiLCJzdWIiOiJ1c2VySWRfc2FtcGxlWEdNRm5oT3BlUiJ9.-NrPVQvsnM8vJouyuP5yeFGlYb1xGgR-gS3v87p5BQk
-        createdAt: '2024-01-01T00:00:00.000Z'
-        expiresAt: '2024-01-01T00:15:00.000Z'
+      - errors
+    SupportedTaxFormsEnum:
+      type: string
+      enum:
+      - FORM_W_9
+      - FORM_W_8BEN
+      - FORM_W_8BEN_E
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

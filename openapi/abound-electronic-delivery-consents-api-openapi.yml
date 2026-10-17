@@ -93,27 +93,31 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    UserId:
+    TinFingerprint:
       type: string
-      description: The unique identifier for a single end-user of your application.
+      description: Your unique token that points to a TIN.
     EDeliveryConsentStatusEnum:
       type: string
       enum:
       - ASSENTED
       - WITHDRAWN
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
-    ErrorBadRequestSchema:
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
       required:
-      - errors
+      - message
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
     EDeliveryConsentSchema:
       type: object
       properties:
@@ -141,6 +145,16 @@ components:
       - id
       - status
       - tinFingerprint
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
     DefaultErrorSchema:
       type: object
       properties:
@@ -149,20 +163,6 @@ components:
           description: The error message associated with the response status code.
       required:
       - message
-    ErrorBadRequestSchemaErrorsItem:
-      type: object
-      properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
-      required:
-      - message
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
   securitySchemes:
     bearerAuth:
       type: http

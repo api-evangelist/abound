@@ -200,23 +200,25 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    PayeeSchema:
+    PayeeRequestSchema:
       allOf:
-      - $ref: '#/components/schemas/PayeeRequestSchema'
+      - $ref: '#/components/schemas/AddressSchema'
       - type: object
         properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
-          tinType:
-            $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
+          name:
+            type: string
+            description: The payee's legal name (first + last) or business name.
+          name2:
+            type: string
+            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
+          tin:
+            type: string
+            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
+            minLength: 9
+            maxLength: 9
         required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
+        - name
+        - tin
       description: The payee of the document.
     W9Schema:
       type: object
@@ -273,91 +275,50 @@ components:
             printedName: Ada Lovelace
             signedAt: '2024-01-01T00:00:00.000Z'
             ipAddress: 127.0.0.1
-    DefaultErrorSchema:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
-    PayeeTinFingerprint:
+    UserId:
       type: string
-      description: Filters the list of documents based on the `payee.tinFingerprint` field.
-    ErrorBadRequestSchemaErrorsItem:
+      description: The unique identifier for a single end-user of your application.
+    W9RequestSchema:
       type: object
       properties:
-        field:
-          type: string
-          description: The field that caused the error.
-        message:
-          type: string
-          description: The error message associated with the field.
+        payee:
+          $ref: '#/components/schemas/PayeeWithOptionalTinTypeRequestSchema'
+        payer:
+          $ref: '#/components/schemas/PayerRequestSchema'
+        formFields:
+          $ref: '#/components/schemas/W9FormFieldsSchema'
+        userId:
+          $ref: '#/components/schemas/UserId'
       required:
-      - message
-    PayerSchema:
+      - formFields
+      - payee
+      examples:
+      - payee:
+          name: Ada Lovelace
+          address: 1401 N Shoreline Blvd
+          address2: Suite 1
+          city: Mountain View
+          country: US
+          postalCode: '94043'
+          state: CA
+          tin: '000000000'
+          tinType: INDIVIDUAL
+        formFields:
+          taxClassification: INDIVIDUAL
+          isSubjectToBackupWithholding: false
+          electronicSignature:
+            signature: Ada Lovelace
+            printedName: Ada Lovelace
+            signedAt: '2024-01-01T00:00:00.000Z'
+            ipAddress: 127.0.0.1
+    PayeeWithOptionalTinTypeRequestSchema:
       allOf:
-      - $ref: '#/components/schemas/PayerRequestSchema'
+      - $ref: '#/components/schemas/PayeeRequestSchema'
       - type: object
         properties:
-          tinFingerprint:
-            $ref: '#/components/schemas/TinFingerprint'
           tinType:
             $ref: '#/components/schemas/TinTypeEnum'
-          tinVerificationId:
-            $ref: '#/components/schemas/TinVerificationId'
-          tinVerificationStatus:
-            $ref: '#/components/schemas/TinVerificationStatusEnum'
-        required:
-        - tinFingerprint
-        - tinVerificationId
-        - tinVerificationStatus
-      description: The payer of the document.
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    TinFingerprint:
-      type: string
-      description: Your unique token that points to a TIN.
-    W9ExemptPayeeCodeSchema:
-      type: string
-      enum:
-      - '1'
-      - '2'
-      - '3'
-      - '4'
-      - '5'
-      - '6'
-      - '7'
-      - '8'
-      - '9'
-      - '10'
-      - '11'
-      - '12'
-      - '13'
-      description: The code to identify a payee that is exempt from backup withholding.
-    TinTypeEnum:
-      type: string
-      enum:
-      - INDIVIDUAL
-      - BUSINESS
-      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
-    ErrorBadRequestSchema:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
-          description: The error message(s) associated with the response status code.
-      required:
-      - errors
-    DocumentId:
-      type: string
-      description: The unique identifier for an existing document.
-    TinVerificationId:
-      type: string
-      description: The unique identifier for the TIN Verification.
+      description: The payee of the document.
     AddressSchema:
       type: object
       properties:
@@ -384,6 +345,31 @@ components:
       required:
       - address
       - country
+    ElectronicSignatureOfPayeeSchema:
+      type: object
+      properties:
+        signature:
+          type: string
+          description: The signature of the payee.
+        printedName:
+          type: string
+          description: The printed name of the payee.
+        signedAt:
+          type: string
+          format: date-time
+          description: The date and time in `ISO 8601` format of the signature.
+        ipAddress:
+          type: string
+          description: The IP address of the payee when signing this document.
+      required:
+      - ipAddress
+      - printedName
+      - signature
+      - signedAt
+      description: The electronic signature of the payee.
+    PayerTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payer.tinFingerprint` field.
     W9FormFieldsSchema:
       type: object
       properties:
@@ -424,69 +410,22 @@ components:
           description: The electronic signature of the payee.
       required:
       - taxClassification
-    PayeeRequestSchema:
-      allOf:
-      - $ref: '#/components/schemas/AddressSchema'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The payee's legal name (first + last) or business name.
-          name2:
-            type: string
-            description: The payee's trade name, DBA name, or disregarded entity name, if different from `name`.
-          tin:
-            type: string
-            description: The payee's tax identification number, commonly referred to as a TIN. No hyphens. Numerical digits only. Alternatively, you may pass the corresponding `tinFingerprint`.
-            minLength: 9
-            maxLength: 9
-        required:
-        - name
-        - tin
-      description: The payee of the document.
     IdempotencyKey:
       type: string
       description: The unique key used to identify a request that has already been processed.
-    W9ExemptFatcaCodeSchema:
+    TinVerificationStatusEnum:
       type: string
       enum:
-      - A
-      - B
-      - C
-      - D
-      - E
-      - F
-      - G
-      - H
-      - I
-      - J
-      - K
-      - L
-      - M
-      - NOT_APPLICABLE
-      description: The code to identify a payee that is exempt from reporting under FATCA.
-    ElectronicSignatureOfPayeeSchema:
-      type: object
-      properties:
-        signature:
-          type: string
-          description: The signature of the payee.
-        printedName:
-          type: string
-          description: The printed name of the payee.
-        signedAt:
-          type: string
-          format: date-time
-          description: The date and time in `ISO 8601` format of the signature.
-        ipAddress:
-          type: string
-          description: The IP address of the payee when signing this document.
-      required:
-      - ipAddress
-      - printedName
-      - signature
-      - signedAt
-      description: The electronic signature of the payee.
+      - MATCH
+      - MISMATCH
+      - PENDING
+      description: The status of the TIN Verification.
+    DocumentId:
+      type: string
+      description: The unique identifier for an existing document.
+    PayeeTinFingerprint:
+      type: string
+      description: Filters the list of documents based on the `payee.tinFingerprint` field.
     PayerRequestSchema:
       allOf:
       - $ref: '#/components/schemas/AddressSchema'
@@ -512,20 +451,83 @@ components:
         - phoneNumber
         - tin
       description: The payer of the document.
-    PayerTinFingerprint:
+    TinTypeEnum:
       type: string
-      description: Filters the list of documents based on the `payer.tinFingerprint` field.
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    PayeeWithOptionalTinTypeRequestSchema:
+      enum:
+      - INDIVIDUAL
+      - BUSINESS
+      description: The type of the TIN. `INDIVIDUAL` refers to SSNs, ITINs, or ATINs. While `BUSINESS` refers to EINs.
+    PayeeSchema:
       allOf:
       - $ref: '#/components/schemas/PayeeRequestSchema'
       - type: object
         properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
           tinType:
             $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
       description: The payee of the document.
+    TinFingerprint:
+      type: string
+      description: Your unique token that points to a TIN.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
+    PayerSchema:
+      allOf:
+      - $ref: '#/components/schemas/PayerRequestSchema'
+      - type: object
+        properties:
+          tinFingerprint:
+            $ref: '#/components/schemas/TinFingerprint'
+          tinType:
+            $ref: '#/components/schemas/TinTypeEnum'
+          tinVerificationId:
+            $ref: '#/components/schemas/TinVerificationId'
+          tinVerificationStatus:
+            $ref: '#/components/schemas/TinVerificationStatusEnum'
+        required:
+        - tinFingerprint
+        - tinVerificationId
+        - tinVerificationStatus
+      description: The payer of the document.
+    W9ExemptFatcaCodeSchema:
+      type: string
+      enum:
+      - A
+      - B
+      - C
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - NOT_APPLICABLE
+      description: The code to identify a payee that is exempt from reporting under FATCA.
+    ErrorBadRequestSchemaErrorsItem:
+      type: object
+      properties:
+        field:
+          type: string
+          description: The field that caused the error.
+        message:
+          type: string
+          description: The error message associated with the field.
+      required:
+      - message
     W9TaxClassificationSchema:
       type: string
       enum:
@@ -541,46 +543,44 @@ components:
       - LLC_S_CORPORATION
       - OTHER
       description: The U.S. federal tax classification of the person.
-    W9RequestSchema:
-      type: object
-      properties:
-        payee:
-          $ref: '#/components/schemas/PayeeWithOptionalTinTypeRequestSchema'
-        payer:
-          $ref: '#/components/schemas/PayerRequestSchema'
-        formFields:
-          $ref: '#/components/schemas/W9FormFieldsSchema'
-        userId:
-          $ref: '#/components/schemas/UserId'
-      required:
-      - formFields
-      - payee
-      examples:
-      - payee:
-          name: Ada Lovelace
-          address: 1401 N Shoreline Blvd
-          address2: Suite 1
-          city: Mountain View
-          country: US
-          postalCode: '94043'
-          state: CA
-          tin: '000000000'
-          tinType: INDIVIDUAL
-        formFields:
-          taxClassification: INDIVIDUAL
-          isSubjectToBackupWithholding: false
-          electronicSignature:
-            signature: Ada Lovelace
-            printedName: Ada Lovelace
-            signedAt: '2024-01-01T00:00:00.000Z'
-            ipAddress: 127.0.0.1
-    TinVerificationStatusEnum:
+    TinVerificationId:
+      type: string
+      description: The unique identifier for the TIN Verification.
+    W9ExemptPayeeCodeSchema:
       type: string
       enum:
-      - MATCH
-      - MISMATCH
-      - PENDING
-      description: The status of the TIN Verification.
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
+      - '6'
+      - '7'
+      - '8'
+      - '9'
+      - '10'
+      - '11'
+      - '12'
+      - '13'
+      description: The code to identify a payee that is exempt from backup withholding.
+    ErrorBadRequestSchema:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorBadRequestSchemaErrorsItem'
+          description: The error message(s) associated with the response status code.
+      required:
+      - errors
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

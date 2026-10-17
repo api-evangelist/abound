@@ -254,17 +254,11 @@ paths:
                 message: Internal Server Error
 components:
   schemas:
-    UserId:
-      type: string
-      description: The unique identifier for a single end-user of your application.
-    MailingStatusEnum:
-      type: string
-      enum:
-      - CREATED
-      - PROCESSING_FOR_DELIVERY
-      - IN_TRANSIT
-      - DELIVERED
-      - RETURNED_TO_SENDER
+    MailingRequestToSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the recipient.
     MailingRequestSchema:
       type: object
       properties:
@@ -292,14 +286,6 @@ components:
           postalCode: '94306'
           country: US
           name: Hooli
-    MailingRequestFromSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the sender.
-    OkSchema:
-      type: object
-      additionalProperties: {}
     ErrorBadRequestSchema:
       type: object
       properties:
@@ -310,22 +296,26 @@ components:
           description: The error message(s) associated with the response status code.
       required:
       - errors
-    MailingRequestToSchema:
-      allOf:
-      - $ref: '#/components/schemas/MailingNameSchema'
-      - $ref: '#/components/schemas/AddressSchema'
-      description: The mailing address of the recipient.
+    Page:
+      type: integer
+      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
     IdempotencyKey:
       type: string
       description: The unique key used to identify a request that has already been processed.
-    DefaultErrorSchema:
+    MailingNameSchema:
       type: object
       properties:
-        message:
+        name:
           type: string
-          description: The error message associated with the response status code.
-      required:
-      - message
+          description: The individual's name (first + last) or business name.
+        name2:
+          type: string
+          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
+    MailingRequestFromSchema:
+      allOf:
+      - $ref: '#/components/schemas/MailingNameSchema'
+      - $ref: '#/components/schemas/AddressSchema'
+      description: The mailing address of the sender.
     ErrorBadRequestSchemaErrorsItem:
       type: object
       properties:
@@ -337,15 +327,6 @@ components:
           description: The error message associated with the field.
       required:
       - message
-    MailingNameSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The individual's name (first + last) or business name.
-        name2:
-          type: string
-          description: The business name, trade name, DBA name, or disregarded entity name, if different from `name`.
     MailingSchema:
       allOf:
       - $ref: '#/components/schemas/MailingRequestSchema'
@@ -398,6 +379,15 @@ components:
           country: US
           name: Hooli
         mailedFromId: documentId_sampletTtqNfulW8
+    UserId:
+      type: string
+      description: The unique identifier for a single end-user of your application.
+    OkSchema:
+      type: object
+      additionalProperties: {}
+    MailingId:
+      type: string
+      description: The unique identifier for an existing mailing.
     AddressSchema:
       type: object
       properties:
@@ -424,12 +414,22 @@ components:
       required:
       - address
       - country
-    Page:
-      type: integer
-      description: The specific page of results you're requesting. Responses are limited to a maximum of 100 records.
-    MailingId:
+    MailingStatusEnum:
       type: string
-      description: The unique identifier for an existing mailing.
+      enum:
+      - CREATED
+      - PROCESSING_FOR_DELIVERY
+      - IN_TRANSIT
+      - DELIVERED
+      - RETURNED_TO_SENDER
+    DefaultErrorSchema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message associated with the response status code.
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http
