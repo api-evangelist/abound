@@ -64,46 +64,145 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Abound was a US tax-compliance API for platforms, marketplaces and fintechs serving the 1099
-economy. Its v4 REST API covered the whole information-return lifecycle: collecting Form W-9,
-W-8BEN and W-8BEN-E from payees, verifying their TIN against IRS records in real time, then
-generating, filing, correcting, voiding and physically mailing Form 1099-NEC, 1099-MISC, 1099-K and
-1099-INT to federal and state tax authorities. It also shipped drop-in UI components for payee
-onboarding and a 44-event HMAC-signed webhook surface.
+> **No longer operating.** This company or product has shut down, been discontinued, or been deprecated. This profile is kept as a historical record and is not maintained or rated.
 
-Backed by: 500-global — https://withabound.com
+**Status:** retired
 
-## Status: retired
+Abound was a US tax-compliance API company for platforms, marketplaces and fintechs serving the 1099 economy. Its v4 REST API covered the full information-return lifecycle: collecting Form W-9, W-8BEN and W-8BEN-E from payees, running real-time TIN verification against the IRS, then generating, filing, correcting, voiding and physically mailing Form 1099-NEC, 1099-MISC, 1099-K and 1099-INT to federal and state tax authorities. It also shipped drop-in UI components for payee onboarding, a 44-event webhook surface, and an official TypeScript SDK. Abound was acquired (announced November 2024) and the service has since been retired: the withabound.com DNS zone is fully de-delegated, the API and docs hosts no longer resolve, and the GitHub organization has been removed. This profile preserves the API surface, recovered from the first-party Fern API Definition shipped inside the official npm package.
 
-Abound was acquired (announced November 2024) and the service has been shut down. Probed
-2026-07-19:
+**Areas:** Company · Tax · Tax Compliance · Regulatory Compliance · Financial Services · Identity Verification · Government · Documents · Webhook · Retired
 
-- `withabound.com` has **no delegated nameservers** — the apex, `www`, `docs`, `status`,
-  `production-api` and `sandbox-api` hosts all return NXDOMAIN.
-- `github.com/withabound` returns **404**; the `abound-node` repository is gone.
-- The domain is still registered (GoDaddy Corporate Domains, expires 2026-10-30) and locked with
-  `serverUpdateProhibited` / `serverDeleteProhibited`.
+## Abound on APIs.io (historical record)
 
-The one surviving first-party artifact is the official npm package
-[`@withabound/node-sdk`](https://www.npmjs.com/package/@withabound/node-sdk) (v6.0.68, last
-published 2025-06-23). It is Fern-generated and ships the **complete first-party API definition**
-under `.mock/definition/`. Every spec and artifact in this repo was recovered from it — nothing
-here was reconstructed by guesswork.
+Everything profiled for Abound is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/abound/](https://apis.io/providers/abound/)** — or go straight to one of the APIs or properties below.
 
-## What is in this repo
+### APIs (14)
 
-| Path | What it is |
-|---|---|
-| `openapi/abound-v4-openapi.yml` | OpenAPI 3.1 — 55 operations, 39 paths, 149 schemas, 44 webhooks |
-| `asyncapi/abound-webhooks-asyncapi.yml` | AsyncAPI 3.0 for the 44 HMAC-signed webhook events |
-| `overlays/abound-v4-overlay.yaml` | API Evangelist annotations over the OpenAPI |
-| `authentication/`, `conventions/`, `errors/` | Bearer auth, idempotency/pagination/ids, error envelopes |
-| `data-model/` | Entity graph plus the 1099, TIN-verification and mailing state machines |
-| `lifecycle/` | Versioning, the shutdown evidence, and the acquisition record |
-| `sandbox/`, `components/`, `conformance/` | Historical sandbox, drop-in UI components, standards conformance |
-| `packages/` | The surviving official SDK |
-| `skills/` | Four Agent Skills grounded in real operationIds |
-| `llms/`, `mcp/`, `agentic-access/`, `security/`, `well-known/` | Agent-facing and security artifacts |
+- [Abound 1099-INT API](https://apis.io/apis/abound/abound-1099-int-api/) — The 1099-INT API from Abound — 6 operation(s) for 1099-int.
+- [Abound 1099-K API](https://apis.io/apis/abound/abound-1099-k-api/) — The 1099-K API from Abound — 6 operation(s) for 1099-k.
+- [Abound 1099-MISC API](https://apis.io/apis/abound/abound-1099-misc-api/) — The 1099-MISC API from Abound — 6 operation(s) for 1099-misc.
+- [Abound 1099-NEC API](https://apis.io/apis/abound/abound-1099-nec-api/) — The 1099-NEC API from Abound — 6 operation(s) for 1099-nec.
+- [Abound Access Tokens API](https://apis.io/apis/abound/abound-access-tokens-api/) — The Access Tokens API from Abound — 1 operation(s) for access tokens.
+- [Abound Electronic Delivery Consents API](https://apis.io/apis/abound/abound-electronic-delivery-consents-api/) — The Electronic Delivery Consents API from Abound — 1 operation(s) for electronic delivery consents.
+- [Abound Mailings API](https://apis.io/apis/abound/abound-mailings-api/) — The Mailings API from Abound — 2 operation(s) for mailings.
+- [Abound Tax Treaties API](https://apis.io/apis/abound/abound-tax-treaties-api/) — The Tax Treaties API from Abound — 1 operation(s) for tax treaties.
+- [Abound TIN Verifications API](https://apis.io/apis/abound/abound-tin-verifications-api/) — The TIN Verifications API from Abound — 2 operation(s) for tin verifications.
+- [Abound Users API](https://apis.io/apis/abound/abound-users-api/) — The Users API from Abound — 2 operation(s) for users.
+- [Abound W-8BEN API](https://apis.io/apis/abound/abound-w-8ben-api/) — The W-8BEN API from Abound — 2 operation(s) for w-8ben.
+- [Abound W-8BEN-E API](https://apis.io/apis/abound/abound-w-8ben-e-api/) — The W-8BEN-E API from Abound — 2 operation(s) for w-8ben-e.
+- [Abound W-9 API](https://apis.io/apis/abound/abound-w-9-api/) — The W-9 API from Abound — 2 operation(s) for w-9.
+- [Abound API V4 API](https://apis.io/apis/abound/abound-abound-api-v4-api/) — The Abound API V4 API from Abound — 0 operation(s) for abound api v4.
 
-Because the API is retired, none of the recorded endpoints are callable. The value here is as a
-preserved reference model for information-return and tax-compliance API design.
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (3)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Collect a W-9 and verify the payee TIN](https://apis.io/arazzos/abound/abound-collect-w9-and-verify-tin.arazzo/)
+- [Correct or void a filed 1099-NEC](https://apis.io/arazzos/abound/abound-correct-or-void-1099.arazzo/)
+- [Create, file and mail a Form 1099-NEC](https://apis.io/arazzos/abound/abound-file-1099-nec.arazzo/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Abound API v4 - Webhooks](https://apis.io/asyncapis/abound/abound-webhooks-asyncapi/)
+
+#### Event channels (44)
+
+Individual events and webhooks the provider emits.
+
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-10/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-11/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-12/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-13/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-14/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-15/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-16/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-17/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-18/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-19/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-2/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-20/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-21/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-22/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-23/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-24/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-25/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-26/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-27/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-28/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-29/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-3/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-30/)
+- [/{subscriberUrl}](https://apis.io/channels/abound/abound-api-v4---webhooks-subscriberurl-31/)
+- …and 19 more published on APIs.io
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [abound](https://apis.io/servers/abound/abound/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Abound Agentic Access](https://apis.io/agentic-access/abound/abound-agentic-access/)
+
+#### Collections (13)
+
+Postman and Open Collection request collections.
+
+- [Abound API - v4 1099-INT API](https://apis.io/collections/abound/open-abound-1099-int-api/)
+- [Abound API - v4 1099-INT 1099-K API](https://apis.io/collections/abound/open-abound-1099-k-api/)
+- [Abound API - v4 1099-INT 1099-MISC API](https://apis.io/collections/abound/open-abound-1099-misc-api/)
+- [Abound API - v4 1099-INT 1099-NEC API](https://apis.io/collections/abound/open-abound-1099-nec-api/)
+- [Abound API - v4 1099-INT Access Tokens API](https://apis.io/collections/abound/open-abound-access-tokens-api/)
+- [Abound API - v4 1099-INT Electronic Delivery Consents API](https://apis.io/collections/abound/open-abound-electronic-delivery-consents-api/)
+- [Abound API - v4 1099-INT Mailings API](https://apis.io/collections/abound/open-abound-mailings-api/)
+- [Abound API - v4 1099-INT Tax Treaties API](https://apis.io/collections/abound/open-abound-tax-treaties-api/)
+- [Abound API - v4 1099-INT TIN Verifications API](https://apis.io/collections/abound/open-abound-tin-verifications-api/)
+- [Abound API - v4 1099-INT Users API](https://apis.io/collections/abound/open-abound-users-api/)
+- [Abound API - v4 1099-INT W-8BEN API](https://apis.io/collections/abound/open-abound-w-8ben-api/)
+- [Abound API - v4 1099-INT W-8BEN-E API](https://apis.io/collections/abound/open-abound-w-8ben-e-api/)
+- [Abound API - v4 1099-INT W-9 API](https://apis.io/collections/abound/open-abound-w-9-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Abound V4 Overlay](https://apis.io/overlays/abound/abound-v4-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Abound Authentication](https://apis.io/security/abound/abound-authentication/)
+- [Abound Domain Security](https://apis.io/security/abound/abound-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://withabound.com)
+
+## API Evangelist rating
+
+**Not rated** — this company is recorded as no longer operating, so no score is published. If it is in fact operating, say so on this repository and it will be re-profiled.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Abound: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/abound/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
